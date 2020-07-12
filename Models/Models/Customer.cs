@@ -9,5 +9,7 @@ namespace Models.Models
         public string Id { get; set; }
         public User User { get; set; }
         public ICollection<Order> Orders { get; set; }
+        public string ShoppingCardId { get; set; }
+        public ShoppingCard ShoppingCard { get; set; }
     }
 }

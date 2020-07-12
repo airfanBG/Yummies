@@ -11,7 +11,5 @@ namespace Models.Models
     {
         public string Id { get; set; }
         public ICollection<Meal> Meals { get; set; }
-
-       
     }
 }

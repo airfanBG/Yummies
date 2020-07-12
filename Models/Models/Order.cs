@@ -10,6 +10,7 @@ namespace Models.Models
         public string Id { get; set; }
         public Customer Customer { get; set; }
         public ICollection<Meal> OrderedMeals { get; set; }
+        public ShoppingCard ShoppingCard { get; set; }
         public bool HasPaid { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }

@@ -11,6 +11,7 @@ namespace Models.Models
         public string MealName { get; set; }
         public double Price { get; set; }
         public string TimeForPrepare { get; set; }
+        public string Image { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         public DateTime DeletedAt { get; set; }
