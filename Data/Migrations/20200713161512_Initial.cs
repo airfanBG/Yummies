@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,10 @@ namespace Data.Migrations
                     Discriminator = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    LastName = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTime>(nullable: true),
+                    ModifiedAt = table.Column<DateTime>(nullable: true),
+                    DeletedAt = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

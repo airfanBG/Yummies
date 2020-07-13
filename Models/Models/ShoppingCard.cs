@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class ShoppingCard : IBaseEntity
+    public class ShoppingCard : BaseEntity
     {
         private CardStatus _cardStatus;
-        public string Id { get; set; }
+       
         public CardStatus CardStatus
         {
             get

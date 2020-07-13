@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Models.Models.IdentityModels
 {
-    public class User:IdentityUser, IAuditInfo
+    public class User: IdentityUser, IAuditInfo
     {
         public string Address { get; set; }
         public string FirstName { get; set; }

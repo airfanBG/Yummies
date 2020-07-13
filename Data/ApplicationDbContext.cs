@@ -45,26 +45,49 @@ namespace Data
 
         private void ApplyEntityChanges()
         {
-            var entries = this.ChangeTracker.Entries().Where(x => x.Entity is IAuditInfo && x.State == EntityState.Added || x.State == EntityState.Deleted || x.State == EntityState.Modified).ToList();
+            var entries = this.ChangeTracker.Entries().Where(x => (x.Entity is BaseEntity || x.Entity is User) && x.State == EntityState.Added || x.State == EntityState.Deleted || x.State == EntityState.Modified).ToList();
 
             foreach (var entry in entries)
             {
-                var entity = (IAuditInfo)entry.Entity;
-
-                if (entry.State == EntityState.Added)
+                if (entry.Entity is User)
                 {
-                    //entity.Id = Guid.NewGuid().ToString();
-                    entity.CreatedAt = DateTime.Now;
-                }
-                else if (entry.State == EntityState.Deleted)
-                {
-                    entity.DeletedAt = DateTime.Now;
+                    var entity = (User)entry.Entity;
 
+                    if (entry.State == EntityState.Added)
+                    {
+                        entity.Id = Guid.NewGuid().ToString();
+                        entity.CreatedAt = DateTime.Now;
+                    }
+                    else if (entry.State == EntityState.Deleted)
+                    {
+                        entity.DeletedAt = DateTime.Now;
+
+                    }
+                    else
+                    {
+                        entity.ModifiedAt = DateTime.Now;
+                    }
                 }
                 else
                 {
-                    entity.ModifiedAt = DateTime.Now;
+                    var entity = (BaseEntity)entry.Entity;
+
+                    if (entry.State == EntityState.Added)
+                    {
+                        entity.Id = Guid.NewGuid().ToString();
+                        entity.CreatedAt = DateTime.Now;
+                    }
+                    else if (entry.State == EntityState.Deleted)
+                    {
+                        entity.DeletedAt = DateTime.Now;
+
+                    }
+                    else
+                    {
+                        entity.ModifiedAt = DateTime.Now;
+                    }
                 }
+               
             }
         }
         public override int SaveChanges()

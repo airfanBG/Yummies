@@ -5,12 +5,6 @@
     <UserSecretsId>f6fc91bb-3009-4abd-b59f-6351b5003f3d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20200711121739_initial.cs" />
-    <Compile Remove="Migrations\20200711121739_initial.Designer.cs" />
-    <Compile Remove="Migrations\20200711122709_initial.cs" />
-    <Compile Remove="Migrations\20200711122709_initial.Designer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
   <ItemGroup>

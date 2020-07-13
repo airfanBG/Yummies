@@ -8,9 +8,9 @@ namespace Services.Interfaces
 {
     public interface IBaseOperations
     {
-        Task Add(IModel model);
+        Task Add(BaseEntity model);
         Task Remove(string id);
-        Task<ICollection<IModel>> GetAll();
-        Task Update(IModel model);
+        Task<ICollection<BaseEntity>> GetAll();
+        Task Update(BaseEntity model);
     }
 }
