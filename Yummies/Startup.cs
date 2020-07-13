@@ -17,6 +17,8 @@ namespace Yummies
 {
     public class Startup
     {
+        private string _appApiKey = null;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +29,8 @@ namespace Yummies
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _appApiKey = Configuration["Yummies:ServiceApiKey"];
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

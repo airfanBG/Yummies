@@ -1,16 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>f6fc91bb-3009-4abd-b59f-6351b5003f3d</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Migrations\20200711121739_initial.cs" />
     <Compile Remove="Migrations\20200711121739_initial.Designer.cs" />
     <Compile Remove="Migrations\20200711122709_initial.cs" />
     <Compile Remove="Migrations\20200711122709_initial.Designer.cs" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Remove="appsettings.json" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
@@ -25,16 +27,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

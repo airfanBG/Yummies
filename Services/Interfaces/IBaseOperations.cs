@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
     public interface IBaseOperations
     {
-        void Add(IModel model);
-        void Remove(string id);
-        ICollection<IModel> GetAll();
-        void Update(IModel model);
+        Task Add(IModel model);
+        Task Remove(string id);
+        Task<ICollection<IModel>> GetAll();
+        Task Update(IModel model);
     }
 }

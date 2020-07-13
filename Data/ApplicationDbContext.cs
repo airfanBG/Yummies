@@ -8,6 +8,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Data
 {
@@ -31,7 +33,7 @@ namespace Data
         public DbSet<Meal> Meals { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            configuration = new ConfigurationBuilder().SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).AddJsonFile("appsettings.json").Build();
+            configuration = new ConfigurationBuilder().SetBasePath(Path.GetDirectoryName(@"C:\Users\airfan\AppData\Roaming\Microsoft\UserSecrets\f6fc91bb-3009-4abd-b59f-6351b5003f3d\"/*Assembly.GetExecutingAssembly().Location*/)).AddJsonFile("secrets.json").Build();
             optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection"));
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -73,6 +75,15 @@ namespace Data
         {
             this.ApplyEntityChanges();
             return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            this.ApplyEntityChanges();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess);
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return SaveChangesAsync(true);
         }
     }
 }
