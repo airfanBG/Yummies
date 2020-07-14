@@ -42,9 +42,12 @@ namespace Services.Implementations
             Context.Update((Order)model);
             await Context.SaveChangesAsync();
         }
-        public async Task<double> TotalSum(string clientId)
+        public async Task<decimal> TotalSum(string clientId)
         {
-            double res = await Context.Orders.Where(x => x.CustomerId == clientId && x.HasPaid == false).Select(x => x.OrderedMeals.Sum(p => p.Meal.Price)).FirstOrDefaultAsync();
+            decimal res = await Context.Orders
+                .Where(x => x.CustomerId == clientId && x.HasPaid == false)
+                .Select(x => x.OrderedMeals.Sum(p => p.Meal.Price) - ((decimal)x.Customer.ShoppingCard.CardStatus /(decimal) 100))
+                .FirstOrDefaultAsync();
             return res;
         }
         public async Task<int> FinishOrder(string orderId)
@@ -53,7 +56,7 @@ namespace Services.Implementations
             getOrder.HasPaid = true;
 
             Context.Orders.Update(getOrder);
-            int res= await Context.SaveChangesAsync();
+            int res = await Context.SaveChangesAsync();
             return res;
         }
     }

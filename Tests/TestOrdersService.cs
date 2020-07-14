@@ -71,7 +71,7 @@ namespace Tests
                 OrderedMeals = new List<OrderMeals>() { new OrderMeals() { MealId = "499ffbad-8dba-4f5b-afa4-a30ccb4857ea" } }
             });
             var res= await OrderService.TotalSum(clientId);
-            Assert.Equal(10, res);
+            Assert.Equal((decimal)9.97, res);
         }
         [Fact]
         public async Task Test_Finish_Order()

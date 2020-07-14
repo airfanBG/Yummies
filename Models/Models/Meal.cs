@@ -9,7 +9,7 @@ namespace Models.Models
     {
         public string Id { get; set; }
         public string MealName { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public string TimeForPrepare { get; set; }
         public string Image { get; set; }
         public ICollection<OrderMeals> OrderMeals { get; set; }
