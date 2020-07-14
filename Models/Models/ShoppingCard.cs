@@ -7,7 +7,7 @@ namespace Models.Models
 {
     public class ShoppingCard : BaseEntity
     {
-        private CardStatus _cardStatus;
+        private CardStatus _cardStatus=CardStatus.Regular;
        
         public CardStatus CardStatus
         {
@@ -21,11 +21,9 @@ namespace Models.Models
                 {
                     _cardStatus = value;
                 }
-                else
-                {
-                    _cardStatus = CardStatus.Regular;
-                }
+               
             }
         }
+
     }
 }

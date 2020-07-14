@@ -7,8 +7,8 @@ namespace Models.Models
 
     public enum CardStatus
     {
-        Regular,
-        Silver,
-        Golden
+        Regular=3,
+        Silver=5,
+        Golden=10
     }
 }

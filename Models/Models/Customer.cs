@@ -11,5 +11,6 @@ namespace Models.Models
         public ICollection<Order> Orders { get; set; }
         public string ShoppingCardId { get; set; }
         public ShoppingCard ShoppingCard { get; set; }
+
     }
 }

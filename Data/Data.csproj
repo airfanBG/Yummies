@@ -5,6 +5,18 @@
     <UserSecretsId>f6fc91bb-3009-4abd-b59f-6351b5003f3d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20200714054342_Edit_Order_Discounts.cs" />
+    <Compile Remove="Migrations\20200714054342_Edit_Order_Discounts.Designer.cs" />
+    <Compile Remove="Migrations\20200714055759_Edit_Order_Discounts_1.cs" />
+    <Compile Remove="Migrations\20200714055759_Edit_Order_Discounts_1.Designer.cs" />
+    <Compile Remove="Migrations\20200714060927_Edit_Order.cs" />
+    <Compile Remove="Migrations\20200714060927_Edit_Order.Designer.cs" />
+    <Compile Remove="Migrations\20200714061550_OrderedMeals.cs" />
+    <Compile Remove="Migrations\20200714061550_OrderedMeals.Designer.cs" />
+    <Compile Remove="Migrations\20200714062159_OrderedMeals1.cs" />
+    <Compile Remove="Migrations\20200714062159_OrderedMeals1.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
   <ItemGroup>

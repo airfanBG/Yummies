@@ -27,7 +27,7 @@ namespace Services.Implementations
 
         public async Task Remove(string id)
         {
-            var order = await Context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            Order order = await Context.Orders.FirstOrDefaultAsync(x => x.Id == id);
             Context.Orders.Remove(order);
             await Context.SaveChangesAsync();
         }
@@ -41,6 +41,20 @@ namespace Services.Implementations
         {
             Context.Update((Order)model);
             await Context.SaveChangesAsync();
+        }
+        public async Task<double> TotalSum(string clientId)
+        {
+            double res = await Context.Orders.Where(x => x.CustomerId == clientId && x.HasPaid == false).Select(x => x.OrderedMeals.Sum(p => p.Meal.Price)).FirstOrDefaultAsync();
+            return res;
+        }
+        public async Task<int> FinishOrder(string orderId)
+        {
+            Order getOrder = Context.Orders.Where(x => x.Id == orderId).FirstOrDefault();
+            getOrder.HasPaid = true;
+
+            Context.Orders.Update(getOrder);
+            int res= await Context.SaveChangesAsync();
+            return res;
         }
     }
 }
