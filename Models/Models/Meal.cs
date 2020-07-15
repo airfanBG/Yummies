@@ -5,16 +5,15 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Meal : IModel
+    public class Meal : BaseEntity
     {
-        public string Id { get; set; }
         public string MealName { get; set; }
         public decimal Price { get; set; }
         public string TimeForPrepare { get; set; }
         public string Image { get; set; }
         public ICollection<OrderMeals> OrderMeals { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime ModifiedAt { get; set; }
-        public DateTime DeletedAt { get; set; }
+        public string MealCategoryId { get; set; }
+        public MealCategory MealCategory { get; set; }
+
     }
 }

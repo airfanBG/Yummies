@@ -5,40 +5,42 @@ using Models.Models;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Services.Implementations
 {
-    public class CustomerService:IBaseService
+    public class MenuService:IBaseService
     {
-        private ApplicationDbContext Context { get; }
-        public CustomerService(ApplicationDbContext context)
-        {
-            Context = context;
-        }
+        private ApplicationDbContext Context { get; set; }
+
 
         public async Task Add(BaseEntity model)
         {
-            Context.Customers.Add((Customer)model);
+            Context = new ApplicationDbContext();
+            Context.Menus.Add((Menu)model);
             await Context.SaveChangesAsync();
         }
 
         public async Task Remove(string id)
         {
-            var order = await Context.Customers.FirstOrDefaultAsync(x => x.Id == id);
-            Context.Customers.Remove(order);
+            Context = new ApplicationDbContext();
+            var menu= await Context.Menus.FirstOrDefaultAsync(x => x.Id == id);
+            Context.Menus.Remove(menu);
             await Context.SaveChangesAsync();
         }
 
         public async Task<ICollection<BaseEntity>> GetAll()
         {
-            return await Context.Customers.ToListAsync<BaseEntity>();
+            Context = new ApplicationDbContext();
+            return await Context.Menus.ToListAsync<BaseEntity>();
         }
 
         public async Task Update(BaseEntity model)
         {
-            Context.Update((Customer)model);
+            Context = new ApplicationDbContext();
+            Context.Menus.Update((Menu)model);
             await Context.SaveChangesAsync();
         }
     }

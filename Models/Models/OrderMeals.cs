@@ -11,5 +11,7 @@ namespace Models.Models
         public Order Order { get; set; }
         public string MealId { get; set; }
         public Meal Meal { get; set; }
+        public int Quantity { get; set; }
+        public Statuses Statuses { get; set; }
     }
 }

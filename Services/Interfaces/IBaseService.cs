@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IBaseOperations
+    public interface IBaseService
     {
         Task Add(BaseEntity model);
         Task Remove(string id);

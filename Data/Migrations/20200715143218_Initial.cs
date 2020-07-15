@@ -54,10 +54,28 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MealCategory",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    CategoryName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MealCategory", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,6 +87,9 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: false),
                     CardStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -183,10 +204,45 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Meals",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    MealName = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    TimeForPrepare = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    MealCategoryId = table.Column<string>(nullable: true),
+                    MenuId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Meals_MealCategory_MealCategoryId",
+                        column: x => x.MealCategoryId,
+                        principalTable: "MealCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Meals_Menus_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     ShoppingCardId = table.Column<string>(nullable: true)
                 },
@@ -212,12 +268,12 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    CustomerId = table.Column<string>(nullable: true),
-                    ShoppingCardId = table.Column<string>(nullable: true),
-                    HasPaid = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     ModifiedAt = table.Column<DateTime>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false)
+                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    CustomerId = table.Column<string>(nullable: true),
+                    HasPaid = table.Column<bool>(nullable: false),
+                    OrderComment = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,44 +284,62 @@ namespace Data.Migrations
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_ShoppingCards_ShoppingCardId",
-                        column: x => x.ShoppingCardId,
-                        principalTable: "ShoppingCards",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meals",
+                name: "OrderMeals",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    MealName = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
-                    TimeForPrepare = table.Column<string>(nullable: true),
-                    Image = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     ModifiedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: false),
-                    MenuId = table.Column<string>(nullable: true),
-                    OrderId = table.Column<string>(nullable: true)
+                    OrderId = table.Column<string>(nullable: true),
+                    MealId = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    Statuses = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meals", x => x.Id);
+                    table.PrimaryKey("PK_OrderMeals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Meals_Menus_MenuId",
-                        column: x => x.MenuId,
-                        principalTable: "Menus",
+                        name: "FK_OrderMeals_Meals_MealId",
+                        column: x => x.MealId,
+                        principalTable: "Meals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Meals_Orders_OrderId",
+                        name: "FK_OrderMeals_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "MealCategory",
+                columns: new[] { "Id", "CategoryName", "CreatedAt", "DeletedAt", "ModifiedAt" },
+                values: new object[,]
+                {
+                    { "3bd9417f-8196-4076-8a9f-3d8987cd4d90", "Soups", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "fce72683-49f9-4164-bfe3-6a118a7eb0fc", "Meals", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "54f661d1-73ae-4de5-b5bb-1ce0c68094a5", "Desserts", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "6982c492-f782-45f6-8e73-3f5330eb4c10", "Drinks", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Meals",
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Image", "MealCategoryId", "MealName", "MenuId", "ModifiedAt", "Price", "TimeForPrepare" },
+                values: new object[,]
+                {
+                    { "65c99f3d-5226-4e9e-be18-0479793fc042", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "3bd9417f-8196-4076-8a9f-3d8987cd4d90", "Chicken soup", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "cbfa45dc-6d4f-4cdd-ae88-1d0368db7099", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "3bd9417f-8196-4076-8a9f-3d8987cd4d90", "Fish soup", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "3b2d020d-fabb-4ff9-939c-92b5198f5230", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "fce72683-49f9-4164-bfe3-6a118a7eb0fc", "Pizza", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "056aea55-91e3-4324-bff1-7b8302fc70a9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "fce72683-49f9-4164-bfe3-6a118a7eb0fc", "Fish", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "6bb8dafc-a22c-42d8-971d-057b3e9d21a2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "54f661d1-73ae-4de5-b5bb-1ce0c68094a5", "Cake", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "a24616fe-b818-4b12-9c8e-9a48329c0c5d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "54f661d1-73ae-4de5-b5bb-1ce0c68094a5", "Pancakes", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "b6d60791-54c0-4fc5-bcbe-3a658046dab6", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "6982c492-f782-45f6-8e73-3f5330eb4c10", "Vine", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "665dd055-fd88-4047-9b83-45a8626e1fc7", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "6982c492-f782-45f6-8e73-3f5330eb4c10", "Water", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -318,24 +392,29 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Meals_MealCategoryId",
+                table: "Meals",
+                column: "MealCategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Meals_MenuId",
                 table: "Meals",
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Meals_OrderId",
-                table: "Meals",
+                name: "IX_OrderMeals_MealId",
+                table: "OrderMeals",
+                column: "MealId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderMeals_OrderId",
+                table: "OrderMeals",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ShoppingCardId",
-                table: "Orders",
-                column: "ShoppingCardId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -356,16 +435,22 @@ namespace Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Meals");
+                name: "OrderMeals");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Menus");
+                name: "Meals");
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "MealCategory");
+
+            migrationBuilder.DropTable(
+                name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "Customers");

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Data.Seed;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Models.Interfaces;
@@ -38,8 +39,8 @@ namespace Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //SeedData seed = new SeedData(builder);
-            //seed.Generate();
+            DbSeed seed = new DbSeed(builder);
+            seed.Generate();
             base.OnModelCreating(builder);
         }
 

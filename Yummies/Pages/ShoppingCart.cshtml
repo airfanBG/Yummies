@@ -1,0 +1,44 @@
+﻿@page "/ShoppingCart"
+@model Yummies.Pages.ShoppingCartModel
+@{
+    ViewData["Title"] = "ShoppingCart";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>Ordered: @Model.Orders.Count</h1>
+
+
+<form method="post" asp-page="ShoppingCart" asp-page-handler="update">
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Photo</th>
+            <th>Price</th>
+            <th>Quantity <input type="submit" value="Update" /></th>
+            <th>Sub Total</th>
+        </tr>
+        @foreach (Order order in Model.Orders)
+        {
+            @foreach (OrderMeals meal in order.OrderedMeals)
+            {
+                <tr align="center">
+                    <td align="center">
+                        <a asp-page="ShoppingCart" asp-page-handler="delete" asp-route-id="@meal.Meal.Id">X</a>
+                    </td>
+                    <td>@meal.Meal.MealName</td>
+
+                    <td><img src="~/images/@meal.Meal.Image" width="120" height="100" /></td>
+                    <td>$@meal.Meal.Price</td>
+                    <td><input type="number" name="quantities" value="@meal.Quantity" min="1" style="width: 50px;" /></td>
+                    <td>
+                        $@(meal.Meal.Price * meal.Quantity)
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td colspan="6" align="right">Total</td>
+            <td align="center">$@Model.Total</td>
+        </tr>
+    </table>
+</form>
+<a asp-page="index">Continue Shopping</a>

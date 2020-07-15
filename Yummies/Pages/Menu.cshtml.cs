@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Yummies.Pages.Shared
+namespace Yummies.Pages
 {
-    public class _BasketModel : PageModel
+    public class MenuModel : PageModel
     {
+        public MenuModel()
+        {
+
+        }
         public void OnGet()
         {
 
