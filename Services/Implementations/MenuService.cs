@@ -34,7 +34,7 @@ namespace Services.Implementations
         public async Task<ICollection<BaseEntity>> GetAll()
         {
             Context = new ApplicationDbContext();
-            return await Context.Menus.ToListAsync<BaseEntity>();
+            return await Context.Menus.Include(x=>x.MenuMealCategories).ThenInclude(x=>x.MealCategory.Meals).ToListAsync<BaseEntity>();
         }
 
         public async Task Update(BaseEntity model)

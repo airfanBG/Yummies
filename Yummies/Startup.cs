@@ -50,6 +50,7 @@ namespace Yummies
             services.AddScoped<SignInManager<User>>();
             services.AddScoped<IBaseService,OrderService>();
             services.AddScoped<OrderService>();
+            services.AddScoped<MenuService>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }

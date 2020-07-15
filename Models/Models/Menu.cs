@@ -9,6 +9,7 @@ namespace Models.Models
 {
     public class Menu:BaseEntity
     {
-        public ICollection<Meal> Meals { get; set; }
+        public string MenuName { get; set; }
+        public ICollection<MenuMealCategory> MenuMealCategories { get; set; }
     }
 }
