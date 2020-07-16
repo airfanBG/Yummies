@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200715152022_MenuEdit")]
-    partial class MenuEdit
+    [Migration("20200715193004_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -292,88 +292,88 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e0311b12-2f46-4a3b-a628-5ac17a4eebae",
+                            Id = "dfaeb253-6174-4dd4-ac9d-d42befa6682f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "pizza.jpg",
-                            MealCategoryId = "91418c8d-e2fa-4857-b022-1389609a5558",
+                            MealCategoryId = "9e057e66-e3ba-40f3-b7dd-0664f046995a",
                             MealName = "Pizza",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "28fdd8ff-08c2-45ec-be1c-aa07d897a95b",
+                            Id = "22cd84cb-0f0c-45e6-bf8f-9065e8bbff79",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "chicken.jpg",
-                            MealCategoryId = "217bc187-8b57-4b5e-956f-dec1c113e5fa",
+                            MealCategoryId = "fff81c9c-754c-43fa-970a-340962704aa5",
                             MealName = "Chicken soup",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "a8aac5e7-894f-4a0c-b510-3bb68c5052bf",
+                            Id = "c1cc7365-09d7-4b00-bdf6-445d51cf5cda",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "cake.jpg",
-                            MealCategoryId = "2b653674-6ea1-4ac4-bb11-6e3a47aebbf8",
+                            MealCategoryId = "beb6f6d3-f406-4494-96c2-f299cf653ef0",
                             MealName = "Cake",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "0698ef9f-3f3c-4a66-9bff-6a0af174e5ef",
+                            Id = "b16ffddc-60c4-4bf6-aed9-e15dcb6cd1e3",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "wine.jpg",
-                            MealCategoryId = "42b75f51-1435-4336-a9f1-6082d9989b25",
+                            MealCategoryId = "5ce35e66-609f-4824-98af-2d402478afc4",
                             MealName = "Wine",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "860bf0c3-7475-48a4-8e0a-964fb8cfedfe",
+                            Id = "8c5420b5-dcc7-4fa4-b6d0-7882fc483632",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "fish.jpg",
-                            MealCategoryId = "91418c8d-e2fa-4857-b022-1389609a5558",
+                            MealCategoryId = "9e057e66-e3ba-40f3-b7dd-0664f046995a",
                             MealName = "Fish",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "c02f3d14-6cb5-49f8-aba9-c68241fd33b3",
+                            Id = "8a8b452c-bc8e-4526-9e46-cef97fc8c429",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "fish-soup.jpg",
-                            MealCategoryId = "217bc187-8b57-4b5e-956f-dec1c113e5fa",
+                            MealCategoryId = "fff81c9c-754c-43fa-970a-340962704aa5",
                             MealName = "Fish soup",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "7df58bab-b678-46fb-99e6-4d33decaf780",
+                            Id = "a5ea5162-89b7-4ac2-8849-d5f3d87691b7",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "pancakes.jpg",
-                            MealCategoryId = "2b653674-6ea1-4ac4-bb11-6e3a47aebbf8",
+                            MealCategoryId = "beb6f6d3-f406-4494-96c2-f299cf653ef0",
                             MealName = "Pancakes",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "476d2f46-fdb3-439b-b2d4-4a90f0c372cf",
+                            Id = "f06e7b3a-d16b-4055-bf98-1d0f82ce1f81",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "water.jpg",
-                            MealCategoryId = "42b75f51-1435-4336-a9f1-6082d9989b25",
+                            MealCategoryId = "5ce35e66-609f-4824-98af-2d402478afc4",
                             MealName = "Water",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
@@ -398,22 +398,17 @@ namespace Data.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MenuId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MenuId");
 
                     b.ToTable("MealCategory");
 
                     b.HasData(
                         new
                         {
-                            Id = "217bc187-8b57-4b5e-956f-dec1c113e5fa",
+                            Id = "fff81c9c-754c-43fa-970a-340962704aa5",
                             CategoryName = "Soups",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -422,7 +417,7 @@ namespace Data.Migrations
                         },
                         new
                         {
-                            Id = "91418c8d-e2fa-4857-b022-1389609a5558",
+                            Id = "9e057e66-e3ba-40f3-b7dd-0664f046995a",
                             CategoryName = "Meals",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -431,7 +426,7 @@ namespace Data.Migrations
                         },
                         new
                         {
-                            Id = "2b653674-6ea1-4ac4-bb11-6e3a47aebbf8",
+                            Id = "beb6f6d3-f406-4494-96c2-f299cf653ef0",
                             CategoryName = "Desserts",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -440,7 +435,7 @@ namespace Data.Migrations
                         },
                         new
                         {
-                            Id = "42b75f51-1435-4336-a9f1-6082d9989b25",
+                            Id = "5ce35e66-609f-4824-98af-2d402478afc4",
                             CategoryName = "Drinks",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -461,6 +456,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MenuName")
                         .HasColumnType("nvarchar(max)");
 
@@ -470,6 +468,76 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Menus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "90ae3d52-28aa-4ad2-9387-c402d7a168d2",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Image = "book_left_image.jpg",
+                            MenuName = "Standard",
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("Models.Models.MenuMealCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MealCategoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MenuId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MealCategoryId");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("MenuMealCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "86657802-4599-4851-b6aa-4df4360d1da9",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealCategoryId = "fff81c9c-754c-43fa-970a-340962704aa5",
+                            MenuId = "90ae3d52-28aa-4ad2-9387-c402d7a168d2",
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = "f51b092d-c216-4b53-b6bb-d7ef916b0f99",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealCategoryId = "9e057e66-e3ba-40f3-b7dd-0664f046995a",
+                            MenuId = "90ae3d52-28aa-4ad2-9387-c402d7a168d2",
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = "d682870d-9ee1-46b2-96b8-07ad617fcc12",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealCategoryId = "beb6f6d3-f406-4494-96c2-f299cf653ef0",
+                            MenuId = "90ae3d52-28aa-4ad2-9387-c402d7a168d2",
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Models.Models.Order", b =>
@@ -657,10 +725,14 @@ namespace Data.Migrations
                         .HasForeignKey("MealCategoryId");
                 });
 
-            modelBuilder.Entity("Models.Models.MealCategory", b =>
+            modelBuilder.Entity("Models.Models.MenuMealCategory", b =>
                 {
-                    b.HasOne("Models.Models.Menu", null)
-                        .WithMany("MealCategories")
+                    b.HasOne("Models.Models.MealCategory", "MealCategory")
+                        .WithMany("MenuMealCategories")
+                        .HasForeignKey("MealCategoryId");
+
+                    b.HasOne("Models.Models.Menu", "Menu")
+                        .WithMany("MenuMealCategories")
                         .HasForeignKey("MenuId");
                 });
 

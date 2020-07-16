@@ -20,6 +20,7 @@ using SendGrid;
 using Yummies.InnerServices;
 using Services.Implementations;
 using Services.Interfaces;
+using Services.ViewModels;
 
 namespace Yummies
 {
@@ -48,11 +49,12 @@ namespace Yummies
             services.AddScoped<UserManager<User>>();
             services.AddScoped<CustomerService>();
             services.AddScoped<SignInManager<User>>();
-            services.AddScoped<IBaseService,OrderService>();
+            services.AddScoped<ApplicationDbContext>();
             services.AddScoped<OrderService>();
             services.AddScoped<MenuService>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

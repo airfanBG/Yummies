@@ -39,8 +39,8 @@ namespace Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //DbSeed seed = new DbSeed(builder);
-            //seed.Generate();
+        //    DbSeed seed = new DbSeed(builder);
+        //    seed.Generate();
             base.OnModelCreating(builder);
         }
 

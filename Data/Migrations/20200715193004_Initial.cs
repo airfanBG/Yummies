@@ -61,7 +61,8 @@ namespace Data.Migrations
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     ModifiedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: false),
-                    CategoryName = table.Column<string>(nullable: true)
+                    CategoryName = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,7 +76,9 @@ namespace Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     ModifiedAt = table.Column<DateTime>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: false)
+                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    MenuName = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -215,8 +218,7 @@ namespace Data.Migrations
                     Price = table.Column<decimal>(nullable: false),
                     TimeForPrepare = table.Column<string>(nullable: true),
                     Image = table.Column<string>(nullable: true),
-                    MealCategoryId = table.Column<string>(nullable: true),
-                    MenuId = table.Column<string>(nullable: true)
+                    MealCategoryId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,8 +229,30 @@ namespace Data.Migrations
                         principalTable: "MealCategory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuMealCategory",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: false),
+                    MenuId = table.Column<string>(nullable: true),
+                    MealCategoryId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuMealCategory", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Meals_Menus_MenuId",
+                        name: "FK_MenuMealCategory_MealCategory_MealCategoryId",
+                        column: x => x.MealCategoryId,
+                        principalTable: "MealCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MenuMealCategory_Menus_MenuId",
                         column: x => x.MenuId,
                         principalTable: "Menus",
                         principalColumn: "Id",
@@ -318,28 +342,43 @@ namespace Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "MealCategory",
-                columns: new[] { "Id", "CategoryName", "CreatedAt", "DeletedAt", "ModifiedAt" },
+                columns: new[] { "Id", "CategoryName", "CreatedAt", "DeletedAt", "Image", "ModifiedAt" },
                 values: new object[,]
                 {
-                    { "3bd9417f-8196-4076-8a9f-3d8987cd4d90", "Soups", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "fce72683-49f9-4164-bfe3-6a118a7eb0fc", "Meals", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "54f661d1-73ae-4de5-b5bb-1ce0c68094a5", "Desserts", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { "6982c492-f782-45f6-8e73-3f5330eb4c10", "Drinks", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { "fff81c9c-754c-43fa-970a-340962704aa5", "Soups", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "soup.jpg", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "9e057e66-e3ba-40f3-b7dd-0664f046995a", "Meals", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "meal.jpg", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "beb6f6d3-f406-4494-96c2-f299cf653ef0", "Desserts", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "desserts.jpg", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "5ce35e66-609f-4824-98af-2d402478afc4", "Drinks", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "drinks.jpg", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
+                table: "Menus",
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Image", "MenuName", "ModifiedAt" },
+                values: new object[] { "90ae3d52-28aa-4ad2-9387-c402d7a168d2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "book_left_image.jpg", "Standard", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
                 table: "Meals",
-                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Image", "MealCategoryId", "MealName", "MenuId", "ModifiedAt", "Price", "TimeForPrepare" },
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Image", "MealCategoryId", "MealName", "ModifiedAt", "Price", "TimeForPrepare" },
                 values: new object[,]
                 {
-                    { "65c99f3d-5226-4e9e-be18-0479793fc042", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "3bd9417f-8196-4076-8a9f-3d8987cd4d90", "Chicken soup", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "cbfa45dc-6d4f-4cdd-ae88-1d0368db7099", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "3bd9417f-8196-4076-8a9f-3d8987cd4d90", "Fish soup", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "3b2d020d-fabb-4ff9-939c-92b5198f5230", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "fce72683-49f9-4164-bfe3-6a118a7eb0fc", "Pizza", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "056aea55-91e3-4324-bff1-7b8302fc70a9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "fce72683-49f9-4164-bfe3-6a118a7eb0fc", "Fish", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "6bb8dafc-a22c-42d8-971d-057b3e9d21a2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "54f661d1-73ae-4de5-b5bb-1ce0c68094a5", "Cake", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "a24616fe-b818-4b12-9c8e-9a48329c0c5d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "54f661d1-73ae-4de5-b5bb-1ce0c68094a5", "Pancakes", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "b6d60791-54c0-4fc5-bcbe-3a658046dab6", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "6982c492-f782-45f6-8e73-3f5330eb4c10", "Vine", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
-                    { "665dd055-fd88-4047-9b83-45a8626e1fc7", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "6982c492-f782-45f6-8e73-3f5330eb4c10", "Water", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null }
+                    { "22cd84cb-0f0c-45e6-bf8f-9065e8bbff79", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "chicken.jpg", "fff81c9c-754c-43fa-970a-340962704aa5", "Chicken soup", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "8a8b452c-bc8e-4526-9e46-cef97fc8c429", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "fish-soup.jpg", "fff81c9c-754c-43fa-970a-340962704aa5", "Fish soup", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "dfaeb253-6174-4dd4-ac9d-d42befa6682f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "pizza.jpg", "9e057e66-e3ba-40f3-b7dd-0664f046995a", "Pizza", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "8c5420b5-dcc7-4fa4-b6d0-7882fc483632", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "fish.jpg", "9e057e66-e3ba-40f3-b7dd-0664f046995a", "Fish", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "c1cc7365-09d7-4b00-bdf6-445d51cf5cda", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "cake.jpg", "beb6f6d3-f406-4494-96c2-f299cf653ef0", "Cake", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "a5ea5162-89b7-4ac2-8849-d5f3d87691b7", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "pancakes.jpg", "beb6f6d3-f406-4494-96c2-f299cf653ef0", "Pancakes", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "b16ffddc-60c4-4bf6-aed9-e15dcb6cd1e3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "wine.jpg", "5ce35e66-609f-4824-98af-2d402478afc4", "Wine", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null },
+                    { "f06e7b3a-d16b-4055-bf98-1d0f82ce1f81", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "water.jpg", "5ce35e66-609f-4824-98af-2d402478afc4", "Water", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MenuMealCategory",
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "MealCategoryId", "MenuId", "ModifiedAt" },
+                values: new object[,]
+                {
+                    { "86657802-4599-4851-b6aa-4df4360d1da9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "fff81c9c-754c-43fa-970a-340962704aa5", "90ae3d52-28aa-4ad2-9387-c402d7a168d2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "f51b092d-c216-4b53-b6bb-d7ef916b0f99", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "9e057e66-e3ba-40f3-b7dd-0664f046995a", "90ae3d52-28aa-4ad2-9387-c402d7a168d2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { "d682870d-9ee1-46b2-96b8-07ad617fcc12", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "beb6f6d3-f406-4494-96c2-f299cf653ef0", "90ae3d52-28aa-4ad2-9387-c402d7a168d2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -397,8 +436,13 @@ namespace Data.Migrations
                 column: "MealCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Meals_MenuId",
-                table: "Meals",
+                name: "IX_MenuMealCategory_MealCategoryId",
+                table: "MenuMealCategory",
+                column: "MealCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuMealCategory_MenuId",
+                table: "MenuMealCategory",
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
@@ -435,10 +479,16 @@ namespace Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "MenuMealCategory");
+
+            migrationBuilder.DropTable(
                 name: "OrderMeals");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "Meals");
@@ -448,9 +498,6 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "MealCategory");
-
-            migrationBuilder.DropTable(
-                name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "Customers");

@@ -35,7 +35,7 @@ namespace Data.Seed
             {
                 Id =menuId,
                 MenuName ="Standard",
-                
+                Image="book_left_image.jpg"
             };
 
             ModelBuilder.Entity<Menu>().HasData(menu);

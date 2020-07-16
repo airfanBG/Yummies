@@ -10,6 +10,7 @@ namespace Models.Models
     public class Menu:BaseEntity
     {
         public string MenuName { get; set; }
+        public string Image { get; set; }
         public ICollection<MenuMealCategory> MenuMealCategories { get; set; }
     }
 }

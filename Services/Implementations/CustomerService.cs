@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Models.Interfaces;
 using Models.Models;
 using Services.Interfaces;
+using Services.Mapping;
+using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Services.Implementations
 {
-    public class CustomerService:IBaseService
+    public class CustomerService
     {
         private ApplicationDbContext Context { get; }
         public CustomerService(ApplicationDbContext context)
@@ -18,9 +20,10 @@ namespace Services.Implementations
             Context = context;
         }
 
-        public async Task Add(BaseEntity model)
+        public async Task Add(CustomerViewModel model)
         {
-            Context.Customers.Add((Customer)model);
+            var res = MapperConfigurator.Mapper.Map<Customer>(model);
+            Context.Customers.Add(res);
             await Context.SaveChangesAsync();
         }
 
@@ -31,15 +34,20 @@ namespace Services.Implementations
             await Context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<BaseEntity>> GetAll()
+        public async Task<ICollection<CustomerViewModel>> GetAll()
         {
-            return await Context.Customers.ToListAsync<BaseEntity>();
+            var models= await Context.Customers.ToListAsync();
+
+            return MapperConfigurator.Mapper.Map<List<CustomerViewModel>>(models);
         }
 
-        public async Task Update(BaseEntity model)
+        public async Task Update(CustomerViewModel model)
         {
-            Context.Update((Customer)model);
+            var res = MapperConfigurator.Mapper.Map<Customer>(model);
+
+            Context.Customers.Update(res);
             await Context.SaveChangesAsync();
         }
+
     }
 }

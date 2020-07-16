@@ -9,6 +9,7 @@ using Models.Interfaces;
 using Models.Models;
 using Models.Models.IdentityModels;
 using Services.Implementations;
+using Services.ViewModels;
 
 namespace Yummies.Pages
 {
@@ -19,7 +20,7 @@ namespace Yummies.Pages
         private string userId;
 
         [BindProperty]
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<OrderViewModel> Orders { get; set; }
         [BindProperty]
         public decimal Total { get; set; }
         public ShoppingCartModel(OrderService service, UserManager<User> userManager)

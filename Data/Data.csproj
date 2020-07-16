@@ -5,10 +5,8 @@
     <UserSecretsId>f6fc91bb-3009-4abd-b59f-6351b5003f3d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20200715190334_MenuMealCategory_Add.cs" />
-    <Compile Remove="Migrations\20200715190334_MenuMealCategory_Add.Designer.cs" />
-    <Compile Remove="Migrations\20200715191639_MenuMealCategory_Add.cs" />
-    <Compile Remove="Migrations\20200715191639_MenuMealCategory_Add.Designer.cs" />
+    <Compile Remove="Migrations\20200715192924_Menu_Edit_Image.cs" />
+    <Compile Remove="Migrations\20200715192924_Menu_Edit_Image.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="appsettings.json" />

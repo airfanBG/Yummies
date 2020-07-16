@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,8 @@ using Microsoft.Extensions.Logging;
 using Models.Models;
 using Models.Models.IdentityModels;
 using Services.Implementations;
+using Services.Mapping;
+using Services.ViewModels;
 
 namespace Yummies.Areas.Identity.Pages.Account
 {
@@ -81,11 +84,12 @@ namespace Yummies.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = Input.Email, Email = Input.Email,PhoneNumber=Input.PhoneNumber };
+                var userMapped = MapperConfigurator.Mapper.Map<UserViewModel>(user);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                         _logger.LogInformation("User created a new account with password.");
-                        await _customerService.Add(new Customer() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular },User=user });
+                        await _customerService.Add(new CustomerViewModel() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular },User=userMapped });
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     
