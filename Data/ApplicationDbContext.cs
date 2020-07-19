@@ -6,6 +6,7 @@ using Models.Interfaces;
 using Models.Models;
 using Models.Models.IdentityModels;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -31,6 +32,9 @@ namespace Data
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ShoppingCard> ShoppingCards { get; set; }
+        public DbSet<MenuMealCategory> MenuMealCategories { get; set; }
+
+        public DbSet<MealCategory> MealCategories { get; set; }
         public DbSet<Meal> Meals { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,8 +43,9 @@ namespace Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-        //    DbSeed seed = new DbSeed(builder);
-        //    seed.Generate();
+            DbSeed seed = new DbSeed(builder);
+            seed.Generate();
+
             base.OnModelCreating(builder);
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Interfaces;
 using Models.Models;
@@ -28,16 +29,6 @@ namespace Yummies.Pages
         {
             Menus = await MenuService.GetAll();
         }
-        public RedirectToPageResult OnGetMenu(string id)
-        {
-            var categories = MenuService.GetAll().Result.Where(x => x.Id == id).Cast<Menu>()
-                .Select(x => new MealCategory()
-                {
-                    CategoryName = x.MenuMealCategories.Select(z => z.MealCategory.CategoryName).FirstOrDefault(),
-                    Image = x.Image,
-                    Meals = x.MenuMealCategories.FirstOrDefault().MealCategory.Meals
-                }).ToList();
-            return RedirectToPage("Categories", categories);
-        }
+        
     }
 }

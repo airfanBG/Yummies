@@ -52,6 +52,8 @@ namespace Yummies
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped<OrderService>();
             services.AddScoped<MenuService>();
+            services.AddScoped<MealService>();
+            services.AddScoped<CategoryService>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
            

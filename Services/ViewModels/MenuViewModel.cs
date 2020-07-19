@@ -10,6 +10,6 @@ namespace Services.ViewModels
         public string Id { get; set; }
         public string MenuName { get; set; }
         public string Image { get; set; }
-        public ICollection<MealCategoryViewModel> MenuMealCategories { get; set; }
+        public List<MenuMealCategoryViewModel> MenuMealCategoryViewModels { get; set; }
     }
 }

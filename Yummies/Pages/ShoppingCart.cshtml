@@ -16,9 +16,9 @@
             <th>Quantity <input type="submit" value="Update" /></th>
             <th>Sub Total</th>
         </tr>
-        @foreach (Order order in Model.Orders)
+        @foreach (OrderViewModel order in Model.Orders)
         {
-            @foreach (OrderMeals meal in order.OrderedMeals)
+            @foreach (OrderMealsViewModel meal in order.OrderedMeals)
             {
                 <tr align="center">
                     <td align="center">

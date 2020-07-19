@@ -1,22 +1,20 @@
 ﻿@page
-@model ICollection<MealCategory>
+@model Yummies.Pages.CategoriesModel
 @{
     ViewData["Title"] = "Categories";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@foreach (var menu in Model)
+@foreach (var category in Model.MealCategoryViewModels)
 {
     <form>
-        <a asp-page="Menu" asp-page-handler="menu" asp-route-id="@menu.Id">
+        <a asp-page="Meal" asp-page-handler="meal" asp-route-id="@category.Id">
             <div class="col-md-5">
-                <img src="~/images/@menu.Image" />
-                @*<p>@menu.MenuName</p>*@
+                <img src="~/images/@category.Image" />
+                <p>@category.CategoryName</p>
             </div>
 
         </a>
     </form>
 }
-
-
 
