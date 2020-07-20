@@ -13,6 +13,7 @@ namespace Services.Interfaces
         Task<int> Remove(string id);
         Task<List<T>> GetAll(Func<T,bool> func=null);
         Task<int> Update(T model);
+        Task<T> FindById(string id);
         public Task<int> SaveChanges();
     }
 }

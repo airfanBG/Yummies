@@ -7,17 +7,19 @@ using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Implementations
 {
     public class ServiceConnector : IServiceConnector
     {
+        private ApplicationDbContext context;
+        public DbContext Context { get { return this.context; } }
         private readonly Dictionary<Type, object> repositories;
        
-        public DbContext Context { get; }
-        public ServiceConnector(DbContext applicationDb)
+        public ServiceConnector(ApplicationDbContext applicationDb)
         {
-            this.Context = applicationDb;
+            this.context = applicationDb;
             repositories = new Dictionary<Type, object>();
         }
         public IBaseService<Order> Orders
@@ -52,6 +54,40 @@ namespace Services.Implementations
             }
         }
 
+        public IBaseService<MealCategory> MealCategories
+        {
+            get
+            {
+                return GetRepository<MealCategory>();
+            }
+        }
+
+        public IBaseService<MenuMealCategory> MenuMealCategories
+        {
+            get
+            {
+                return GetRepository<MenuMealCategory>();
+            }
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.context != null)
+                {
+                    this.context.Dispose();
+                }
+            }
+        }
+        public async Task<int> SaveChangesAsync()
+        {
+            return await this.context.SaveChangesAsync();
+        }
         private BaseService<T> GetRepository<T>() where T : class
         {
             if (!this.repositories.ContainsKey(typeof(T)))

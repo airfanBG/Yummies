@@ -1,6 +1,7 @@
 ﻿using Data;
 using Microsoft.EntityFrameworkCore;
 using Models.Models;
+using Services.Interfaces;
 using Services.Mapping;
 using Services.ViewModels;
 using System;
@@ -13,41 +14,37 @@ namespace Services.Implementations
 {
     public class CategoryService
     {
-        private ApplicationDbContext Context { get; }
-        public CategoryService(ApplicationDbContext context)
+        private IServiceConnector ServiceConnector { get; }
+        public CategoryService(ServiceConnector serviceConnector)
         {
-            Context = context;
+            ServiceConnector = serviceConnector;
         }
         public async Task Add(MealCategoryViewModel model)
         {
 
             var res = MapperConfigurator.Mapper.Map<MealCategory>(model);
 
-            Context.MealCategories.Add(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.MealCategories.Add(res);
+            await ServiceConnector.SaveChangesAsync();
         }
         public async Task<ICollection<MenuMealCategory>> GetAll(string id)
         {
-         
-            var all = await Context.MenuMealCategories.Where(x => x.MenuId == id).Include(x => x.MealCategory).ThenInclude(x=>x.Meals).ToListAsync();
+           
+            var all = await ServiceConnector.Context.Set<MenuMealCategory>().Where(x=>x.MenuId==id).Include(x => x.MealCategory).ThenInclude(x=>x.Meals).ToListAsync();
             var mapped = MapperConfigurator.Mapper.Map<List<MenuMealCategory>>(all);
             return mapped;
         }
         public async Task Remove(string id)
         {
-
-            var menu = await Context.MealCategories.FirstOrDefaultAsync(x => x.Id == id);
-            Context.MealCategories.Remove(menu);
-            await Context.SaveChangesAsync();
+            var menu = await ServiceConnector.MealCategories.Remove(id);
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task Update(MealCategoryViewModel model)
         {
-
             var res = MapperConfigurator.Mapper.Map<MealCategory>(model);
-
-            Context.MealCategories.Update(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.MealCategories.Update(res);
+            await ServiceConnector.SaveChangesAsync();
         }
     }
 }

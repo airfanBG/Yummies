@@ -14,29 +14,29 @@ namespace Services.Implementations
 {
     public class CustomerService
     {
-        private ApplicationDbContext Context { get; }
-        public CustomerService(ApplicationDbContext context)
+        private ServiceConnector ServiceConnector { get; }
+        public CustomerService(ServiceConnector serviceConnector)
         {
-            Context = context;
+            ServiceConnector = serviceConnector;
         }
 
         public async Task Add(CustomerViewModel model)
         {
             var res = MapperConfigurator.Mapper.Map<Customer>(model);
-            Context.Customers.Add(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Customers.Add(res);
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task Remove(string id)
         {
-            var order = await Context.Customers.FirstOrDefaultAsync(x => x.Id == id);
-            Context.Customers.Remove(order);
-            await Context.SaveChangesAsync();
+            var order = await ServiceConnector.Customers.Remove(id);
+          
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task<ICollection<CustomerViewModel>> GetAll()
         {
-            var models= await Context.Customers.ToListAsync();
+            var models= await ServiceConnector.Customers.GetAll();
 
             return MapperConfigurator.Mapper.Map<List<CustomerViewModel>>(models);
         }
@@ -45,8 +45,8 @@ namespace Services.Implementations
         {
             var res = MapperConfigurator.Mapper.Map<Customer>(model);
 
-            Context.Customers.Update(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Customers.Update(res);
+            await ServiceConnector.SaveChangesAsync();
         }
 
     }

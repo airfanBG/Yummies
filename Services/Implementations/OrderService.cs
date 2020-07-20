@@ -17,23 +17,22 @@ namespace Services.Implementations
 {
     public class OrderService
     {
-        private ApplicationDbContext Context { get; set; }
+        private ServiceConnector ServiceConnector { get; set; }
 
-        public OrderService(ApplicationDbContext context)
+        public OrderService(ServiceConnector serviceConnector)
         {
-            Context = context;
+            ServiceConnector = serviceConnector;
         }
 
         public async Task Add(OrderViewModel model)
         {
-           // Context = new ApplicationDbContext();
             var res = MapperConfigurator.Mapper.Map<Order>(model);
-            Context.Orders.Add(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Orders.Add(res);
+            await ServiceConnector.SaveChangesAsync();
         }
         public async Task<OrderViewModel> FindOrder(string id)
         {
-            var order = await Context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            var order = await ServiceConnector.Orders.FindById(id);
             if (order!=null)
             {
                 var res = MapperConfigurator.Mapper.Map<OrderViewModel>(order);
@@ -44,16 +43,14 @@ namespace Services.Implementations
 
         public async Task Remove(string id)
         {
-           // Context = new ApplicationDbContext();
-            Order order = await Context.Orders.FirstOrDefaultAsync(x => x.Id == id);
-            Context.Orders.Remove(order);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Orders.Remove(id);
+           
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task<ICollection<OrderViewModel>> GetAll()
         {
-            // Context = new ApplicationDbContext();
-            var models =await Context.Orders.ToListAsync();
+            var models =await ServiceConnector.Orders.GetAll();
 
             return MapperConfigurator.Mapper.Map<List<OrderViewModel>>(models);
         }
@@ -61,22 +58,19 @@ namespace Services.Implementations
         public async Task<ICollection<OrderViewModel>> GetNotFinishedOrders(string userId)
         {
             //Context = new ApplicationDbContext();
-            var orders = await Context.Orders.Include(x => x.Customer).Include(x => x.OrderedMeals).ThenInclude(x => x.Meal).Where(x => x.Customer.UserId == userId).Where(x => x.HasPaid == false).ToListAsync();
+            var orders = await ServiceConnector.Context.Set<Order>().Include(x => x.Customer).Include(x => x.OrderedMeals).ThenInclude(x => x.Meal).Where(x => x.Customer.UserId == userId).Where(x => x.HasPaid == false).ToListAsync();
             var result = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(orders);
             return result;
         }
         public async Task Update(OrderViewModel model)
         {
-            // Context = new ApplicationDbContext();
             var res = MapperConfigurator.Mapper.Map<Order>(model);
-
-            Context.Update(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Orders.Update(res);
+            await ServiceConnector.SaveChangesAsync();
         }
         public async Task<decimal> TotalSum(string clientId)
         {
-            //Context = new ApplicationDbContext();
-            decimal res = await Context.Orders
+            decimal res = await ServiceConnector.Context.Set<Order>()
                 .Where(x => x.CustomerId == clientId && x.HasPaid == false)
                 .Select(x => x.OrderedMeals.Sum(p => p.Meal.Price) / (1 + ((decimal)x.Customer.ShoppingCard.CardStatus / (decimal)100)))
                 .FirstOrDefaultAsync();
@@ -84,12 +78,12 @@ namespace Services.Implementations
         }
         public async Task<int> FinishOrder(string orderId)
         {
-            //Context = new ApplicationDbContext();
-            Order getOrder = Context.Orders.Where(x => x.Id == orderId).FirstOrDefault();
+         
+            var getOrder =await this.ServiceConnector.Orders.FindById(orderId);
             getOrder.HasPaid = true;
 
-            Context.Orders.Update(getOrder);
-            int res = await Context.SaveChangesAsync();
+            await this.ServiceConnector.Orders.Update(getOrder);
+            int res = await ServiceConnector.SaveChangesAsync();
             return res;
         }
     }

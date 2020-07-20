@@ -93,9 +93,28 @@ namespace Services.Implementations
                 throw e;
             }
         }
+        public async Task<T> FindById(string id)
+        {
+            try
+            {
+                var res =await DbContext.Set<T>().FindAsync(id);
+                if (res!=null)
+                {
+                    return res;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
         public async Task<int> SaveChanges()
         {
             return await DbContext.SaveChangesAsync();
         }
+
+      
     }
 }

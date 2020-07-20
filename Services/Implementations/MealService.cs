@@ -15,44 +15,39 @@ namespace Services.Implementations
 {
     public class MealService
     {
-        private ApplicationDbContext Connector { get;}
+        private ServiceConnector ServiceConnector { get;}
 
-        public MealService()
+        public MealService(ServiceConnector serviceConnector)
         {
-           // Connector = new ServiceConnector(new ApplicationDbContext());
+            this.ServiceConnector = serviceConnector;
         }
 
         public async Task Add(MealViewModel model)
         {
             var res = MapperConfigurator.Mapper.Map<Meal>(model);
-            Connector.Meals.Add(res);
-            await Connector.SaveChangesAsync();
+            await ServiceConnector.Meals.Add(res);
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task Remove(string id)
         {
-           // Context = new ApplicationDbContext();
-            //var meal = await Context.Meals.FirstOrDefaultAsync(x => x.Id == id);
-            //Context.Meals.Remove(meal);
-            //await Context.SaveChangesAsync();
+            await this.ServiceConnector.Meals.Remove(id);
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task<ICollection<MealViewModel>> GetAll(string id)
         {
-           // Context = new ApplicationDbContext();
-          
-            var models = await Connector.Meals.ToListAsync();
+            var models = await ServiceConnector.Meals.GetAll();
 
             return MapperConfigurator.Mapper.Map<List<MealViewModel>>(models);
         }
 
         public async Task Update(MealViewModel model)
         {
-           // Context = new ApplicationDbContext();
             var res = MapperConfigurator.Mapper.Map<Meal>(model);
 
-            Connector.Meals.Update(res);
-            await Connector.SaveChangesAsync();
+            await ServiceConnector.Meals.Update(res);
+            await ServiceConnector.SaveChangesAsync();
         }
     }
 }

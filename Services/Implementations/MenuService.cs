@@ -16,41 +16,38 @@ namespace Services.Implementations
 {
     public class MenuService
     {
-        private ApplicationDbContext Context { get; }
-        public MenuService(ApplicationDbContext context)
+        private ServiceConnector ServiceConnector { get; }
+        public MenuService(ServiceConnector serviceConnector)
         {
-            Context = context;
+            ServiceConnector = serviceConnector;
         }
         public async Task Add(MenuViewModel model)
         {
-            
             var res = MapperConfigurator.Mapper.Map<Menu>(model);
 
-            Context.Menus.Add(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Menus.Add(res);
+            await ServiceConnector.SaveChangesAsync();
         }
         public async Task<ICollection<MenuViewModel>> GetAll()
         {
-          
-            var all = await Context.Menus.Include(x => x.MenuMealCategories).ThenInclude(x => x.MealCategory.Meals).ToListAsync();
+
+            var all = await ServiceConnector.Context.Set<Menu>().Include(x => x.MenuMealCategories).ThenInclude(x => x.MealCategory.Meals).ToListAsync();
             var mapped = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(all);
             return mapped;
         }
         public async Task Remove(string id)
         {
-           
-            var menu = await Context.Menus.FirstOrDefaultAsync(x => x.Id == id);
-            Context.Menus.Remove(menu);
-            await Context.SaveChangesAsync();
+
+            var menu = await ServiceConnector.Menus.Remove(id);
+            
+            await ServiceConnector.SaveChangesAsync();
         }
 
         public async Task Update(MenuViewModel model)
         {
-           
             var res = MapperConfigurator.Mapper.Map<Menu>(model);
-
-            Context.Menus.Update(res);
-            await Context.SaveChangesAsync();
+            await ServiceConnector.Menus.Update(res);
+            await ServiceConnector.SaveChangesAsync();
         }
 
     }
