@@ -1,4 +1,6 @@
-﻿using Services.Implementations;
+﻿using Models.Models;
+using Services.Implementations;
+using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +9,9 @@ namespace Services.Interfaces
 {
     public interface IServiceConnector
     {
-        public IBaseService<OrderService> OrderService { get;}
-        public IBaseService<MenuService> MenuService { get; }
-        public IBaseService<MealService> MealService { get; }
-        public IBaseService<CustomerService> CustomerService { get; }
+        public IBaseService<Order> Orders { get;}
+        public IBaseService<Menu> Menus { get; }
+        public IBaseService<Meal> Meals { get; }
+        public IBaseService<Customer> Customers { get; }
     }
 }

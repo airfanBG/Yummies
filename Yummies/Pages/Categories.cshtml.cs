@@ -26,12 +26,14 @@ namespace Yummies.Pages
             var res =await CategoryService.GetAll(id);
             MealCategoryViewModels = res.Select(x => new MealCategoryViewModel()
             {
+                Id=x.Id,
                 CategoryName = x.MealCategory.CategoryName,
                 Image = x.MealCategory.Image,
                 Meals = x.MealCategory.Meals.Select(z =>MapperConfigurator.Mapper.Map<MealViewModel>(z)).ToList()
-
+                
             }).ToList();
             return Page();
         }
+
     }
 }

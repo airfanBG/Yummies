@@ -11,7 +11,7 @@ namespace Services.Interfaces
     {
         Task<int> Add(T model);
         Task<int> Remove(string id);
-        Task<IQueryable<T>> GetAll(Func<T,bool> func=null);
+        Task<List<T>> GetAll(Func<T,bool> func=null);
         Task<int> Update(T model);
         public Task<int> SaveChanges();
     }

@@ -9,26 +9,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Interfaces;
 using Models.Models;
 using Services.Implementations;
+using Services.Mapping;
 using Services.ViewModels;
 
 namespace Yummies.Pages
 {
     public class MenuModel : PageModel
     {
-        private MenuService MenuService { get; }
+        private ServiceConnector MenuService { get; }
 
         [BindProperty]
         public ICollection<MenuViewModel> Menus { get; set; }
 
 
-        public MenuModel(MenuService menuService)
+        public MenuModel(ServiceConnector service)
         {
-            MenuService = menuService;
+            MenuService = service;
         }
         public async Task OnGet()
         {
-            Menus = await MenuService.GetAll();
+            Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await MenuService.Menus.GetAll());
         }
-        
+
     }
 }

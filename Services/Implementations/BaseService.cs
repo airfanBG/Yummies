@@ -42,9 +42,17 @@ namespace Services.Implementations
             }
         }
 
-        public async Task<IQueryable<T>> GetAll(Func<T, bool> func = null)
-        {           
-            return await Task.Run(()=>Set.Where(func).AsQueryable());
+        public async Task<List<T>> GetAll(Func<T, bool> func = null)
+        {
+            if (func==null)
+            {
+                Task<List<T>> result = new Task<List<T>>(() => Set.ToList());
+                result.Start();
+                return await result;
+            }
+            Task<List<T>> task = new Task<List<T>>(() => Set.Where(func).ToList());
+            task.Start();
+            return await task;
         }
 
         public async Task<int> Remove(string id)

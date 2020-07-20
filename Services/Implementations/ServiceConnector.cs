@@ -1,7 +1,9 @@
 ﻿using Data;
 using Microsoft.EntityFrameworkCore;
 using Models.Interfaces;
+using Models.Models;
 using Services.Interfaces;
+using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,42 +13,42 @@ namespace Services.Implementations
     public class ServiceConnector : IServiceConnector
     {
         private readonly Dictionary<Type, object> repositories;
-        private DbContext context;
-        public DbContext Context { get { return this.context; } }
+       
+        public DbContext Context { get; }
         public ServiceConnector(DbContext applicationDb)
         {
-            this.context = applicationDb;
+            this.Context = applicationDb;
             repositories = new Dictionary<Type, object>();
         }
-        public IBaseService<OrderService> OrderService
+        public IBaseService<Order> Orders
         {
             get
             {
-                return GetRepository<OrderService>();
+                return GetRepository<Order>();
             }
         }
 
-        public IBaseService<MenuService> MenuService
+        public IBaseService<Menu> Menus
         {
             get
             {
-                return GetRepository<MenuService>();
+                return GetRepository<Menu>();
             }
         }
 
-        public IBaseService<MealService> MealService
+        public IBaseService<Meal> Meals
         {
             get
             {
-                return GetRepository<MealService>();
+                return GetRepository<Meal>();
             }
         }
 
-        public IBaseService<CustomerService> CustomerService
+        public IBaseService<Customer> Customers
         {
             get
             {
-                return GetRepository<CustomerService>();
+                return GetRepository<Customer>();
             }
         }
 
@@ -56,7 +58,7 @@ namespace Services.Implementations
             {
                 var type = typeof(BaseService<T>);
 
-                this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.context));
+                this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.Context));
             }
 
             return (BaseService<T>)this.repositories[typeof(T)];

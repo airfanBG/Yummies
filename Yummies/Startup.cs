@@ -49,11 +49,12 @@ namespace Yummies
             services.AddScoped<UserManager<User>>();
             services.AddScoped<CustomerService>();
             services.AddScoped<SignInManager<User>>();
-            services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<DbContext,ApplicationDbContext>();
             services.AddScoped<OrderService>();
             services.AddScoped<MenuService>();
             services.AddScoped<MealService>();
             services.AddScoped<CategoryService>();
+            services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
            

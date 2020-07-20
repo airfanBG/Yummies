@@ -1,0 +1,21 @@
+﻿@page
+@model Yummies.Pages.MealsModel
+@{
+    ViewData["Title"] = "Meals";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@foreach (var meal in Model.MealViewModels)
+{
+    <form>
+        <a href="#" style="width:200px;">
+            <div class="col-md-5">
+                <img src="~/images/@meal.Image" />
+                <p>@meal.MealName</p>
+            </div>
+        </a>
+    </form>
+}
+
+
+

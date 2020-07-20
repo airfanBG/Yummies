@@ -7,6 +7,7 @@ using Services.Mapping;
 using Services.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,32 +15,33 @@ namespace Services.Implementations
 {
     public class MealService
     {
-        private ApplicationDbContext Context { get;}
+        private ApplicationDbContext Connector { get;}
 
-        public MealService(ApplicationDbContext context)
+        public MealService()
         {
-            Context = context;
+           // Connector = new ServiceConnector(new ApplicationDbContext());
         }
 
         public async Task Add(MealViewModel model)
         {
             var res = MapperConfigurator.Mapper.Map<Meal>(model);
-            Context.Meals.Add(res);
-            await Context.SaveChangesAsync();
+            Connector.Meals.Add(res);
+            await Connector.SaveChangesAsync();
         }
 
         public async Task Remove(string id)
         {
            // Context = new ApplicationDbContext();
-            var meal = await Context.Meals.FirstOrDefaultAsync(x => x.Id == id);
-            Context.Meals.Remove(meal);
-            await Context.SaveChangesAsync();
+            //var meal = await Context.Meals.FirstOrDefaultAsync(x => x.Id == id);
+            //Context.Meals.Remove(meal);
+            //await Context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<MealViewModel>> GetAll()
+        public async Task<ICollection<MealViewModel>> GetAll(string id)
         {
            // Context = new ApplicationDbContext();
-            var models = await Context.Meals.ToListAsync();
+          
+            var models = await Connector.Meals.ToListAsync();
 
             return MapperConfigurator.Mapper.Map<List<MealViewModel>>(models);
         }
@@ -49,8 +51,8 @@ namespace Services.Implementations
            // Context = new ApplicationDbContext();
             var res = MapperConfigurator.Mapper.Map<Meal>(model);
 
-            Context.Meals.Update(res);
-            await Context.SaveChangesAsync();
+            Connector.Meals.Update(res);
+            await Connector.SaveChangesAsync();
         }
     }
 }
