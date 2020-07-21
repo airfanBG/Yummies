@@ -13,23 +13,25 @@ namespace Yummies.Pages
 {
     public class CategoriesModel : PageModel
     {
-        private CategoryService CategoryService { get; }
+        private ServiceConnector ServiceConnector { get; }
 
         [BindProperty]
         public List<MealCategoryViewModel> MealCategoryViewModels { get; set; }
-        public CategoriesModel(CategoryService categoryService)
+        public CategoriesModel(ServiceConnector categoryService)
         {
-            CategoryService = categoryService;
+            ServiceConnector = categoryService;
         }
         public async Task<IActionResult> OnGet(string id)
         {
-            var res =await CategoryService.GetAll(id);
+            var res =await ServiceConnector.MealCategories.GetAll(x=>x.Id==id);
+            
             MealCategoryViewModels = res.Select(x => new MealCategoryViewModel()
             {
                 Id=x.Id,
-                CategoryName = x.MealCategory.CategoryName,
-                Image = x.MealCategory.Image,
-                Meals = x.MealCategory.Meals.Select(z =>MapperConfigurator.Mapper.Map<MealViewModel>(z)).ToList()
+                MealCategoryId=x.Id,
+                CategoryName = x.CategoryName,
+                Image = x.Image,
+                Meals = x.Meals.Select(z =>MapperConfigurator.Mapper.Map<MealViewModel>(z)).ToList()
                 
             }).ToList();
             return Page();

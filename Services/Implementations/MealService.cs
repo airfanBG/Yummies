@@ -37,7 +37,7 @@ namespace Services.Implementations
 
         public async Task<ICollection<MealViewModel>> GetAll(string id)
         {
-            var models = await ServiceConnector.Meals.GetAll();
+            var models = await ServiceConnector.Meals.GetAll(x=>x.MealCategoryId==id);
 
             return MapperConfigurator.Mapper.Map<List<MealViewModel>>(models);
         }

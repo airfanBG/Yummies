@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Models.Interfaces;
 using Models.Models;
+using Models.Models.IdentityModels;
 using Services.Interfaces;
 using Services.ViewModels;
 using System;
@@ -59,6 +60,13 @@ namespace Services.Implementations
             get
             {
                 return GetRepository<MealCategory>();
+            }
+        }
+        public IBaseService<User> Users
+        {
+            get
+            {
+                return GetRepository<User>();
             }
         }
 

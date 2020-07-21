@@ -28,8 +28,7 @@ namespace Services.Implementations
             await ServiceConnector.SaveChangesAsync();
         }
         public async Task<ICollection<MenuMealCategory>> GetAll(string id)
-        {
-           
+        { 
             var all = await ServiceConnector.Context.Set<MenuMealCategory>().Where(x=>x.MenuId==id).Include(x => x.MealCategory).ThenInclude(x=>x.Meals).ToListAsync();
             var mapped = MapperConfigurator.Mapper.Map<List<MenuMealCategory>>(all);
             return mapped;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models.Models;
+using Models.Models.IdentityModels;
 using Services.Implementations;
 using Services.ViewModels;
 using System;
@@ -18,6 +19,7 @@ namespace Services.Interfaces
         public IBaseService<Customer> Customers { get; }
         public IBaseService<MealCategory> MealCategories { get; }
         public IBaseService<MenuMealCategory> MenuMealCategories { get; }
+        public IBaseService<User> Users { get; }
         void Dispose();
 
         Task<int> SaveChangesAsync();

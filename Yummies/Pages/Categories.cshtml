@@ -4,17 +4,29 @@
     ViewData["Title"] = "Categories";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<style>
+    img {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 265px;
+        height: 150px;
+    }
+</style>
+<form class="col-md-12" >
+    @foreach (var category in Model.MealCategoryViewModels)
+    {
 
-@foreach (var category in Model.MealCategoryViewModels)
-{
-    <form>
-        <a asp-page="Meals" asp-route-id="@category.Id" style="width:200px;">
-            <div class="col-md-5">
-                <img src="~/images/@category.Image" />
-                <p>@category.CategoryName</p>
-            </div>
+        <div class="col-md-3" style="display:inline-block;">
+            <a asp-page="Meals" asp-route-categoryId="@category.MealCategoryId">
+                <div class="col-md-5">
+                    <img src="~/images/@category.Image" />
+                    <p>@category.CategoryName</p>
+                </div>
 
-        </a>
-    </form>
-}
+            </a>
+        </div>
+
+    }
+</form>
 

@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Implementations\CategoryService.cs" />
+    <Compile Remove="Implementations\CustomerService.cs" />
+    <Compile Remove="Implementations\MealService.cs" />
+    <Compile Remove="Implementations\MenuService.cs" />
+    <Compile Remove="Implementations\OrderService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
   </ItemGroup>

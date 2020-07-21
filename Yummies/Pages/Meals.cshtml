@@ -4,16 +4,32 @@
     ViewData["Title"] = "Meals";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<style>
+    img {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 265px;
+        height: 150px;
+    }
+</style>
+
 
 @foreach (var meal in Model.MealViewModels)
 {
-    <form>
-        <a href="#" style="width:200px;">
-            <div class="col-md-5">
-                <img src="~/images/@meal.Image" />
-                <p>@meal.MealName</p>
-            </div>
-        </a>
+    <form asp-page=""> 
+        <div class="col-md-3" style="display:inline-block;">
+            <img src="~/images/@meal.Image" />
+            <p>@meal.MealName</p>
+            <p>Time for prepare: @meal.TimeForPrepare</p>
+            <p>@meal.Price</p>
+            @if (User.Identity.IsAuthenticated)
+            {
+            <input type="number" min="1" name="name" value="" />
+            <div class="btn btn-default">Add to cart</div>
+            }
+        </div>
+
     </form>
 }
 

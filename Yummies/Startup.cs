@@ -21,6 +21,7 @@ using Yummies.InnerServices;
 using Services.Implementations;
 using Services.Interfaces;
 using Services.ViewModels;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Yummies
 {
@@ -47,17 +48,37 @@ namespace Yummies
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddScoped<UserManager<User>>();
-            services.AddScoped<CustomerService>();
+            //services.AddScoped<CustomerService>();
             services.AddScoped<SignInManager<User>>();
             //services.AddScoped<DbContext,ApplicationDbContext>();
-            services.AddScoped<OrderService>();
-            services.AddScoped<MenuService>();
-            services.AddScoped<MealService>();
-            services.AddScoped<CategoryService>();
+            //services.AddScoped<OrderService>();
+            //services.AddScoped<MenuService>();
+            //services.AddScoped<MealService>();
+            //services.AddScoped<CategoryService>();
             //services.AddScoped<IServiceConnector, ServiceConnector>();
             services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddSession(session =>
+            {
+                session.Cookie.HttpOnly = true;
+                session.Cookie.IsEssential = true;
+                session.IdleTimeout = TimeSpan.FromSeconds(60 * 5);
+
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.Cookie.Name = "OnTime";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                options.LoginPath = "/Identity/Account/Login";
+                // ReturnUrlParameter requires 
+                //using Microsoft.AspNetCore.Authentication.Cookies;
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.SlidingExpiration = true;
+            });
            
         }
 

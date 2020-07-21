@@ -31,6 +31,7 @@ namespace Services.Implementations
                 else
                 {
                     await this.DbContext.AddAsync(model);
+                    await this.SaveChanges();
                     return 1;
                 }
                 return 0;

@@ -4,18 +4,29 @@
     ViewData["Title"] = "Menu";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+    <style>
+        img {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            width: 265px;
+            height: 150px;
+        }
+    </style>
+<form>
+    @foreach (MenuViewModel menu in Model.Menus)
+    {
 
-@foreach (MenuViewModel menu in Model.Menus)
-{
-    <form>
-        <a asp-page="Categories"  asp-route-id="@menu.Id">
-            <div class="col-md-5">
-                <img src="~/images/@menu.Image" />
-                <p>@menu.MenuName</p>
-            </div>
-           
-        </a>
-    </form>
-}
+        <div class="col-md-3" style="display:inline-block;">
+            <a asp-page="Categories" asp-route-id="@menu.Id">
+                <div class="col-md-5">
+                    <img src="~/images/@menu.Image" />
+                    <p>@menu.MenuName</p>
+                </div>
 
+            </a>
+        </div>
+
+    }
+</form>
 

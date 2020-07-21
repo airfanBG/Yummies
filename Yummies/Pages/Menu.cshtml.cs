@@ -16,7 +16,7 @@ namespace Yummies.Pages
 {
     public class MenuModel : PageModel
     {
-        private ServiceConnector MenuService { get; }
+        private ServiceConnector ServiceConnector { get; }
 
         [BindProperty]
         public ICollection<MenuViewModel> Menus { get; set; }
@@ -24,11 +24,11 @@ namespace Yummies.Pages
 
         public MenuModel(ServiceConnector service)
         {
-            MenuService = service;
+            ServiceConnector = service;
         }
         public async Task OnGet()
         {
-            Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await MenuService.Menus.GetAll());
+            Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await ServiceConnector.Menus.GetAll());
         }
 
     }

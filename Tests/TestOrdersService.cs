@@ -13,14 +13,14 @@ namespace Tests
 {
     public class TestOrdersService
     {
-        private ApplicationDbContext Context { get; set; }
+        private ServiceConnector ServiceConnector { get; set; }
         private OrderService OrderService { get; set; }
        
         [Fact]
         public async Task Test_Add_Order_Method_SaveChangesAsync()
         {
-            Context = new ApplicationDbContext();
-            OrderService = new OrderService(Context);
+            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
+            OrderService = new OrderService(ServiceConnector);
 
             OrderViewModel order = new OrderViewModel()
             {
@@ -38,8 +38,8 @@ namespace Tests
         [Fact]
         public async Task Test_Edit_Order_Method_SaveChangesAsync()
         {
-            Context = new ApplicationDbContext();
-            OrderService = new OrderService(Context);
+            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
+            OrderService = new OrderService(ServiceConnector);
             var id = "e95779c4-f474-4363-814a-5cb30bb5a138";
             var res =await OrderService.FindOrder(id);
 
@@ -47,7 +47,7 @@ namespace Tests
 
             await OrderService.Update(res);
 
-            var afterUpdate = Context.Orders.FirstOrDefault(x => x.Id == id);
+            var afterUpdate =await ServiceConnector.Orders.FindById(id);
 
             Assert.False(afterUpdate.HasPaid);
 
@@ -55,8 +55,8 @@ namespace Tests
         [Fact]
         public async Task Test_Get_All_Orders_Method_SaveChangesAsync()
         {
-            Context = new ApplicationDbContext();
-            OrderService = new OrderService(Context);
+            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
+            OrderService = new OrderService(ServiceConnector);
             var res = await OrderService.GetAll();
 
             Assert.NotEmpty(res);
@@ -64,9 +64,10 @@ namespace Tests
         [Fact]
         public async Task Test_TotalSum_Of_Order()
         {
-            Context = new ApplicationDbContext();
+            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
+            OrderService = new OrderService(ServiceConnector);
             var clientId = "e5ea694e-cd4e-43a3-bde1-58d13e81f468";
-            OrderService = new OrderService(Context);
+            OrderService = new OrderService(ServiceConnector);
             await OrderService.Add(new OrderViewModel()
             {
                 CustomerId = clientId,
@@ -79,8 +80,8 @@ namespace Tests
         [Fact]
         public async Task Test_Finish_Order()
         {
-            Context = new ApplicationDbContext();
-            OrderService = new OrderService(Context);
+            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
+            OrderService = new OrderService(ServiceConnector);
             var orderId = "e95779c4-f474-4363-814a-5cb30bb5a138";
             var res= await OrderService.FinishOrder(orderId);
             Assert.Equal(1, res);
@@ -88,9 +89,10 @@ namespace Tests
         [Fact]
         public async Task Get_Not_Finished_Orders()
         {
-            Context = new ApplicationDbContext();
+            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
+            OrderService = new OrderService(ServiceConnector);
             var userId = "57b577f9-8fa6-49c4-b07c-fccb29f1cf54";
-            OrderService = new OrderService(Context);
+            OrderService = new OrderService(ServiceConnector);
            var res= await OrderService.GetNotFinishedOrders(userId);
             Assert.NotEmpty(res);
         }

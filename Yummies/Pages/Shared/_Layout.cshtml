@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<User> _userManager
+@inject Services.Implementations.ServiceConnector ServiceConnector
+@{
+    int TotalAdded = 0;
+    string userId = _userManager.GetUserId(User);
+    if (userId!=null)
+    {
+        Customer customer = await Task.Run(() => ServiceConnector.Customers.GetAll(x => x.UserId == userId).Result.FirstOrDefault());
+        if (customer!=null)
+        {
+            TotalAdded = await Task.Run(() => ServiceConnector.Orders.GetAll(x => x.HasPaid == false && x.CustomerId == customer.Id).Result.Count);
+        }
+
+    }
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,11 +36,13 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Menu">Menu</a>
                     </li>
                     @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ShoppingCart">Cart</a>
-                        </li>
-                    }
+                                        {
+                    <li class="nav-item">
+                        <i class="fa fa-shopping-cart"></i>
+                        @*<partial name="_Cart" />*@
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ShoppingCart">Cart</a>
+                    </li>
+                }
                 </ul>
             </div>
             <div class="container">

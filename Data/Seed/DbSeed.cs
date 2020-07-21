@@ -122,6 +122,7 @@ namespace Data.Seed
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Pizza",
                     Image="pizza.jpg",
+                    Price=10,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id
                 },
                 new Meal()
@@ -129,6 +130,7 @@ namespace Data.Seed
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Chicken soup",
                     Image="chicken.jpg",
+                     Price=20,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id
                 },
                 new Meal()
@@ -137,6 +139,7 @@ namespace Data.Seed
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Cake",
                     Image="cake.jpg",
+                     Price=5,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id
                 },new Meal()
                 {
@@ -150,6 +153,7 @@ namespace Data.Seed
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Fish",
                     Image="fish.jpg",
+                     Price=15,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id
                 },
                 new Meal()
@@ -157,6 +161,7 @@ namespace Data.Seed
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Fish soup",
                     Image="fish-soup.jpg",
+                     Price=10,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id
                 },
                 new Meal()
@@ -164,12 +169,14 @@ namespace Data.Seed
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Pancakes",
                     Image="pancakes.jpg",
+                     Price=7,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id
                 },new Meal()
                 {
                     Id = Guid.NewGuid().ToString(),
                     MealName= "Water",
                     Image="water.jpg",
+                     Price=3,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Drinks").Id
                 }
             };

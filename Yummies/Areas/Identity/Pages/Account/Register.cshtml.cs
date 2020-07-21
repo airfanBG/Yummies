@@ -28,18 +28,18 @@ namespace Yummies.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly CustomerService _customerService;
+        private readonly ServiceConnector serviceConnector;
         
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger, CustomerService customerService
+            ILogger<RegisterModel> logger, ServiceConnector customerService
            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _customerService = customerService;
+            serviceConnector = customerService;
         }
 
         [BindProperty]
@@ -84,12 +84,12 @@ namespace Yummies.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = Input.Email, Email = Input.Email,PhoneNumber=Input.PhoneNumber };
-                var userMapped = MapperConfigurator.Mapper.Map<UserViewModel>(user);
+               
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                         _logger.LogInformation("User created a new account with password.");
-                        await _customerService.Add(new CustomerViewModel() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular },User=userMapped });
+                        await serviceConnector.Customers.Add(new Customer() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular },User=user });
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     
