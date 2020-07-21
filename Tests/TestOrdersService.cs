@@ -13,41 +13,40 @@ namespace Tests
 {
     public class TestOrdersService
     {
-        private ServiceConnector ServiceConnector { get; set; }
         private OrderService OrderService { get; set; }
-       
+      
         [Fact]
         public async Task Test_Add_Order_Method_SaveChangesAsync()
         {
-            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
-            OrderService = new OrderService(ServiceConnector);
+            OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
+           
 
-            OrderViewModel order = new OrderViewModel()
+            Order order = new Order()
             {
                 Id = "499ffbad-8dba-4f5b-afa4-a30ccb4857e",
                 HasPaid = true,
                 CustomerId = "e5ea694e-cd4e-43a3-bde1-58d13e81f468",
-                OrderedMeals=new List<OrderMealsViewModel>() { new OrderMealsViewModel() { MealId= "e5ea694e-cd4e-43a3-bde1-58d13e01f468",Id= "e5ea694e-cd4e-43a3-bde1-58d13e01f460" } }
+                OrderedMeals=new List<OrderMeals>() { new OrderMeals() { MealId= "e5ea694e-cd4e-43a3-bde1-58d13e01f468",Id= "e5ea694e-cd4e-43a3-bde1-58d13e01f460" } }
                 //OrderedMeals = new List<Meal>() { new Meal() { Id = "499ffbad-8dba-4f5b-afa4-a30ccb4857ea", MealName = "Pizza", Price = 10, TimeForPrepare = "30" }, new Meal() { Id = "499ffbad-8dba-4f5b-afa4-a30ccb4857eq", MealName = "Pizza", Price = 10, TimeForPrepare = "30" } }
 
             };
 
-            await OrderService.Add(order);
+            await OrderService.ServiceConnector.Orders.Add(order);
 
         }
         [Fact]
         public async Task Test_Edit_Order_Method_SaveChangesAsync()
         {
-            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
-            OrderService = new OrderService(ServiceConnector);
+            OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
+
             var id = "e95779c4-f474-4363-814a-5cb30bb5a138";
-            var res =await OrderService.FindOrder(id);
+            var res =await OrderService.ServiceConnector.Orders.FindById(id);
 
             res.HasPaid = false;
 
-            await OrderService.Update(res);
+            await OrderService.ServiceConnector.Orders.Update(res);
 
-            var afterUpdate =await ServiceConnector.Orders.FindById(id);
+            var afterUpdate =await OrderService.ServiceConnector.Orders.FindById(id);
 
             Assert.False(afterUpdate.HasPaid);
 
@@ -55,24 +54,24 @@ namespace Tests
         [Fact]
         public async Task Test_Get_All_Orders_Method_SaveChangesAsync()
         {
-            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
-            OrderService = new OrderService(ServiceConnector);
-            var res = await OrderService.GetAll();
+            OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
+
+            var res = await OrderService.ServiceConnector.Orders.GetAll();
 
             Assert.NotEmpty(res);
         }
         [Fact]
         public async Task Test_TotalSum_Of_Order()
         {
-            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
-            OrderService = new OrderService(ServiceConnector);
+            OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
+
             var clientId = "e5ea694e-cd4e-43a3-bde1-58d13e81f468";
-            OrderService = new OrderService(ServiceConnector);
-            await OrderService.Add(new OrderViewModel()
+           
+            await OrderService.ServiceConnector.Orders.Add(new Order()
             {
                 CustomerId = clientId,
                 OrderComment = "Test",
-                OrderedMeals = new List<OrderMealsViewModel>() { new OrderMealsViewModel() { MealId = "e5ea694e-cd4e-43a3-bde1-58d13e01f468" } }
+                OrderedMeals = new List<OrderMeals>() { new OrderMeals() { MealId = "e5ea694e-cd4e-43a3-bde1-58d13e01f468" } }
             });
             var res= await OrderService.TotalSum(clientId);
             Assert.Equal((decimal)9.708737, res);
@@ -80,8 +79,8 @@ namespace Tests
         [Fact]
         public async Task Test_Finish_Order()
         {
-            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
-            OrderService = new OrderService(ServiceConnector);
+            OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
+
             var orderId = "e95779c4-f474-4363-814a-5cb30bb5a138";
             var res= await OrderService.FinishOrder(orderId);
             Assert.Equal(1, res);
@@ -89,10 +88,10 @@ namespace Tests
         [Fact]
         public async Task Get_Not_Finished_Orders()
         {
-            ServiceConnector = new ServiceConnector(new ApplicationDbContext());
-            OrderService = new OrderService(ServiceConnector);
+            OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
+        
             var userId = "57b577f9-8fa6-49c4-b07c-fccb29f1cf54";
-            OrderService = new OrderService(ServiceConnector);
+           
            var res= await OrderService.GetNotFinishedOrders(userId);
             Assert.NotEmpty(res);
         }

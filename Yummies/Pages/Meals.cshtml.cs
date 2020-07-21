@@ -21,7 +21,7 @@ namespace Yummies.Pages
         }
         public async Task OnGet(string categoryId)
         {
-            var res =await ServiceConnector.Meals.GetAll(x=>x.MealCategoryId== categoryId);
+            var res = await ServiceConnector.Meals.GetAll(x => x.MealCategoryId == categoryId);
             MealViewModels = MapperConfigurator.Mapper.Map<List<MealViewModel>>(res);
         }
     }

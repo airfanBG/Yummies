@@ -43,10 +43,6 @@ namespace Data.Seed
             ModelBuilder.Entity<Meal>().HasData(meals);
 
 
-
-
-
-
             var menumealcat1=new MenuMealCategory()
             {
                 Id = Guid.NewGuid().ToString(),

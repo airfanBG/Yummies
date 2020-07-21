@@ -15,39 +15,13 @@ namespace Services.Implementations
 {
     public class MealService
     {
-        private ServiceConnector ServiceConnector { get;}
+        private IServiceConnector ServiceConnector { get;}
 
-        public MealService(ServiceConnector serviceConnector)
+        public MealService(IServiceConnector serviceConnector)
         {
             this.ServiceConnector = serviceConnector;
         }
 
-        public async Task Add(MealViewModel model)
-        {
-            var res = MapperConfigurator.Mapper.Map<Meal>(model);
-            await ServiceConnector.Meals.Add(res);
-            await ServiceConnector.SaveChangesAsync();
-        }
-
-        public async Task Remove(string id)
-        {
-            await this.ServiceConnector.Meals.Remove(id);
-            await ServiceConnector.SaveChangesAsync();
-        }
-
-        public async Task<ICollection<MealViewModel>> GetAll(string id)
-        {
-            var models = await ServiceConnector.Meals.GetAll(x=>x.MealCategoryId==id);
-
-            return MapperConfigurator.Mapper.Map<List<MealViewModel>>(models);
-        }
-
-        public async Task Update(MealViewModel model)
-        {
-            var res = MapperConfigurator.Mapper.Map<Meal>(model);
-
-            await ServiceConnector.Meals.Update(res);
-            await ServiceConnector.SaveChangesAsync();
-        }
+        
     }
 }

@@ -230,10 +230,10 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ShoppingCardId")
@@ -260,7 +260,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
@@ -272,7 +272,7 @@ namespace Data.Migrations
                     b.Property<string>("MealName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
@@ -290,91 +290,75 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a6fe5fba-c30e-4a7e-9dce-f9f7019862bf",
+                            Id = "e54655bc-46b7-4330-aed4-aaed853cb431",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "pizza.jpg",
-                            MealCategoryId = "28a8e671-e246-49ee-add9-6b299b95b895",
+                            MealCategoryId = "4540de4c-14f7-4e47-abad-c58ee5455daa",
                             MealName = "Pizza",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 10m
                         },
                         new
                         {
-                            Id = "d9f9e1d3-1990-4eae-81a4-0c235863b93e",
+                            Id = "7811f8ed-b169-4b1c-9ece-ee365410d132",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "chicken.jpg",
-                            MealCategoryId = "cbc883e3-e478-451a-9ccb-87e207392743",
+                            MealCategoryId = "b7e9a668-d147-4e80-ad98-4f27e72b6fa0",
                             MealName = "Chicken soup",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 20m
                         },
                         new
                         {
-                            Id = "b3a6046b-f417-49f8-b783-fdb6d6c7b3c6",
+                            Id = "ff303c65-50b3-4b24-94cb-392f3783a3d0",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "cake.jpg",
-                            MealCategoryId = "6e3fb4cf-2891-491f-85f8-c9e17319b1e8",
+                            MealCategoryId = "802079fd-c528-45a0-b095-0a11e7214386",
                             MealName = "Cake",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 5m
                         },
                         new
                         {
-                            Id = "356631bc-ead5-4d9a-87bb-9a9f63a8fb56",
+                            Id = "5f3a6f43-cc93-47f1-9c15-1c0ab3cb09db",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "wine.jpg",
-                            MealCategoryId = "a923f49f-62cb-4d7a-8128-013f4cad4913",
+                            MealCategoryId = "f840c9f9-9dff-4fa6-aa48-31014b0c4eb7",
                             MealName = "Wine",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Price = 0m
                         },
                         new
                         {
-                            Id = "50c1cee5-d73a-4afa-bb9e-a5f2600cd000",
+                            Id = "bb46f713-681a-4da1-953b-2bc988cac146",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "fish.jpg",
-                            MealCategoryId = "28a8e671-e246-49ee-add9-6b299b95b895",
+                            MealCategoryId = "4540de4c-14f7-4e47-abad-c58ee5455daa",
                             MealName = "Fish",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 15m
                         },
                         new
                         {
-                            Id = "babbca5e-91c6-4f09-bc59-ba95bf57b92e",
+                            Id = "0d644235-6dd0-4ed0-900f-23c4b34af62c",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "fish-soup.jpg",
-                            MealCategoryId = "cbc883e3-e478-451a-9ccb-87e207392743",
+                            MealCategoryId = "b7e9a668-d147-4e80-ad98-4f27e72b6fa0",
                             MealName = "Fish soup",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 10m
                         },
                         new
                         {
-                            Id = "cfb036e2-cee5-4a47-93fe-2594c9d65a9f",
+                            Id = "3d04bc9e-7889-4ac8-88fa-44dd156e85e6",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "pancakes.jpg",
-                            MealCategoryId = "6e3fb4cf-2891-491f-85f8-c9e17319b1e8",
+                            MealCategoryId = "802079fd-c528-45a0-b095-0a11e7214386",
                             MealName = "Pancakes",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 7m
                         },
                         new
                         {
-                            Id = "c682d896-07fc-4654-9e1a-b814eadbbbe4",
+                            Id = "3142ac50-4abc-48af-9d2a-e345bbcd7985",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "water.jpg",
-                            MealCategoryId = "a923f49f-62cb-4d7a-8128-013f4cad4913",
+                            MealCategoryId = "f840c9f9-9dff-4fa6-aa48-31014b0c4eb7",
                             MealName = "Water",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Price = 0m
+                            Price = 3m
                         });
                 });
 
@@ -390,13 +374,13 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -406,39 +390,31 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cbc883e3-e478-451a-9ccb-87e207392743",
+                            Id = "b7e9a668-d147-4e80-ad98-4f27e72b6fa0",
                             CategoryName = "Soups",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "soup.jpg",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Image = "soup.jpg"
                         },
                         new
                         {
-                            Id = "28a8e671-e246-49ee-add9-6b299b95b895",
+                            Id = "4540de4c-14f7-4e47-abad-c58ee5455daa",
                             CategoryName = "Meals",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "meal.jpg",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Image = "meal.jpg"
                         },
                         new
                         {
-                            Id = "6e3fb4cf-2891-491f-85f8-c9e17319b1e8",
+                            Id = "802079fd-c528-45a0-b095-0a11e7214386",
                             CategoryName = "Desserts",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "desserts.jpg",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Image = "desserts.jpg"
                         },
                         new
                         {
-                            Id = "a923f49f-62cb-4d7a-8128-013f4cad4913",
+                            Id = "f840c9f9-9dff-4fa6-aa48-31014b0c4eb7",
                             CategoryName = "Drinks",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "drinks.jpg",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Image = "drinks.jpg"
                         });
                 });
 
@@ -451,7 +427,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
@@ -460,7 +436,7 @@ namespace Data.Migrations
                     b.Property<string>("MenuName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -470,12 +446,10 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a5387eba-a3be-4b0e-9743-c798f0090cd1",
+                            Id = "1a960bd5-6641-443e-967a-7b31ad5ea3ba",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "book_left_image.jpg",
-                            MenuName = "Standard",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            MenuName = "Standard"
                         });
                 });
 
@@ -488,7 +462,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MealCategoryId")
@@ -497,7 +471,7 @@ namespace Data.Migrations
                     b.Property<string>("MenuId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -511,30 +485,24 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2a77c6fd-69fe-4114-a035-fda65a49b982",
+                            Id = "2137dc4a-c776-4dfb-8d36-0f0942ffa8fb",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "cbc883e3-e478-451a-9ccb-87e207392743",
-                            MenuId = "a5387eba-a3be-4b0e-9743-c798f0090cd1",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            MealCategoryId = "b7e9a668-d147-4e80-ad98-4f27e72b6fa0",
+                            MenuId = "1a960bd5-6641-443e-967a-7b31ad5ea3ba"
                         },
                         new
                         {
-                            Id = "2b4f3d62-8d75-4d58-be5d-d9f93e32ce98",
+                            Id = "a343b8eb-8dba-4380-a462-2faf29fbc8b4",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "28a8e671-e246-49ee-add9-6b299b95b895",
-                            MenuId = "a5387eba-a3be-4b0e-9743-c798f0090cd1",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            MealCategoryId = "4540de4c-14f7-4e47-abad-c58ee5455daa",
+                            MenuId = "1a960bd5-6641-443e-967a-7b31ad5ea3ba"
                         },
                         new
                         {
-                            Id = "f54ae289-27d0-4f8e-9fff-2458a528885f",
+                            Id = "409c75c8-6497-4b2a-a70e-ce4354912969",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "6e3fb4cf-2891-491f-85f8-c9e17319b1e8",
-                            MenuId = "a5387eba-a3be-4b0e-9743-c798f0090cd1",
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            MealCategoryId = "802079fd-c528-45a0-b095-0a11e7214386",
+                            MenuId = "1a960bd5-6641-443e-967a-7b31ad5ea3ba"
                         });
                 });
 
@@ -550,13 +518,13 @@ namespace Data.Migrations
                     b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("HasPaid")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderComment")
@@ -579,13 +547,13 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MealId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderId")
@@ -618,10 +586,10 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -639,7 +607,7 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeletedAt")
+                    b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
@@ -648,7 +616,7 @@ namespace Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("User");

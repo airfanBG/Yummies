@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Implementations\CategoryService.cs" />
     <Compile Remove="Implementations\CustomerService.cs" />
-    <Compile Remove="Implementations\MealService.cs" />
-    <Compile Remove="Implementations\MenuService.cs" />
-    <Compile Remove="Implementations\OrderService.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -52,10 +52,10 @@ namespace Yummies
             services.AddScoped<SignInManager<User>>();
             //services.AddScoped<DbContext,ApplicationDbContext>();
             //services.AddScoped<OrderService>();
-            //services.AddScoped<MenuService>();
+            services.AddScoped<MenuService>();
             //services.AddScoped<MealService>();
-            //services.AddScoped<CategoryService>();
-            //services.AddScoped<IServiceConnector, ServiceConnector>();
+            services.AddScoped<CategoryService>();
+            services.AddScoped<IServiceConnector, ServiceConnector>();
             services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);

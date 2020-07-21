@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Interfaces;
 using Models.Models;
 using Services.Implementations;
+using Services.Interfaces;
 using Services.Mapping;
 using Services.ViewModels;
 
@@ -16,19 +17,19 @@ namespace Yummies.Pages
 {
     public class MenuModel : PageModel
     {
-        private ServiceConnector ServiceConnector { get; }
+        private MenuService MenuService { get; }
 
         [BindProperty]
         public ICollection<MenuViewModel> Menus { get; set; }
 
 
-        public MenuModel(ServiceConnector service)
+        public MenuModel(MenuService service)
         {
-            ServiceConnector = service;
+            MenuService = service;
         }
         public async Task OnGet()
         {
-            Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await ServiceConnector.Menus.GetAll());
+            Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await MenuService.ServiceConnector.Menus.GetAll());
         }
 
     }

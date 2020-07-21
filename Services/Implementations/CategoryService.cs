@@ -14,36 +14,16 @@ namespace Services.Implementations
 {
     public class CategoryService
     {
-        private IServiceConnector ServiceConnector { get; }
-        public CategoryService(ServiceConnector serviceConnector)
+        public IServiceConnector ServiceConnector { get; }
+        public CategoryService(IServiceConnector serviceConnector)
         {
             ServiceConnector = serviceConnector;
         }
-        public async Task Add(MealCategoryViewModel model)
+        public async Task<List<MenuMealCategoryViewModel>> GetCategories(string menuId)
         {
-
-            var res = MapperConfigurator.Mapper.Map<MealCategory>(model);
-
-            await ServiceConnector.MealCategories.Add(res);
-            await ServiceConnector.SaveChangesAsync();
-        }
-        public async Task<ICollection<MenuMealCategory>> GetAll(string id)
-        { 
-            var all = await ServiceConnector.Context.Set<MenuMealCategory>().Where(x=>x.MenuId==id).Include(x => x.MealCategory).ThenInclude(x=>x.Meals).ToListAsync();
-            var mapped = MapperConfigurator.Mapper.Map<List<MenuMealCategory>>(all);
-            return mapped;
-        }
-        public async Task Remove(string id)
-        {
-            var menu = await ServiceConnector.MealCategories.Remove(id);
-            await ServiceConnector.SaveChangesAsync();
-        }
-
-        public async Task Update(MealCategoryViewModel model)
-        {
-            var res = MapperConfigurator.Mapper.Map<MealCategory>(model);
-            await ServiceConnector.MealCategories.Update(res);
-            await ServiceConnector.SaveChangesAsync();
+            var res =await ServiceConnector.Context.Set<MenuMealCategory>().Include(x => x.MealCategory).Where(x => x.MenuId == menuId).ToListAsync();
+            return MapperConfigurator.Mapper.Map<List<MenuMealCategoryViewModel>>(res);
+           
         }
     }
 }
