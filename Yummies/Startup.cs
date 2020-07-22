@@ -51,7 +51,7 @@ namespace Yummies
             //services.AddScoped<CustomerService>();
             services.AddScoped<SignInManager<User>>();
             //services.AddScoped<DbContext,ApplicationDbContext>();
-            //services.AddScoped<OrderService>();
+            services.AddScoped<OrderService>();
             services.AddScoped<MenuService>();
             //services.AddScoped<MealService>();
             services.AddScoped<CategoryService>();

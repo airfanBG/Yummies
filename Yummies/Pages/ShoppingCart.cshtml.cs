@@ -15,7 +15,7 @@ namespace Yummies.Pages
 {
     public class ShoppingCartModel : PageModel
     {
-        private ServiceConnector ServiceConnector;
+        private OrderService OrderService;
         private UserManager<User> _userManager;
         private string userId;
 
@@ -23,9 +23,9 @@ namespace Yummies.Pages
         public ICollection<OrderViewModel> Orders { get; set; }
         [BindProperty]
         public decimal Total { get; set; }
-        public ShoppingCartModel(ServiceConnector service, UserManager<User> userManager)
+        public ShoppingCartModel(OrderService service, UserManager<User> userManager)
         {
-            ServiceConnector = service;
+            OrderService = service;
             _userManager = userManager;
         }
         public async Task OnGetAsync()
@@ -35,37 +35,62 @@ namespace Yummies.Pages
             //Total = await ServiceConnector.TotalSum(userId);
             
         }
-        public async Task OnGetDelete(string id)
+        public async Task OnGetDeleteOrder(string id)
         {
-          // await ServiceConnector.Remove(id);
+           await OrderService.ServiceConnector.Orders.Remove(id);
         }
-        public async Task<ICollection<OrderViewModel>> GetNotFinishedOrders(string userId)
+        public async Task OnGetDeleteMealOrder(string id)
         {
-            //var orders = await Services.Implementations.ServiceConnector.Context.Set<Order>().Include((object x) => x.Customer).Include((object x) => x.OrderedMeals).ThenInclude((object x) => x.Meal).Where((object x) => x.Customer.UserId == userId).Where((object x) => x.HasPaid == false).ToListAsync();
-            //var result = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(orders);
-            // return result;
-            return null;
+            await OrderService.ServiceConnector.OrderMeals.Remove(id);
         }
-       
-        public async Task<decimal> TotalSum(string clientId)
-        {
-            //decimal res = await ServiceConnector.Context.Set<Order>()
-            //    .Where(x => x.CustomerId == clientId && x.HasPaid == false)
-            //    .Select(x => x.OrderedMeals.Sum(p => p.Meal.Price) / (1 + ((decimal)x.Customer.ShoppingCard.CardStatus / (decimal)100)))
-            //    .FirstOrDefaultAsync();
-            //return res;
-            return 0;
-        }
-        public async Task<int> FinishOrder(string orderId)
-        {
 
-            //var getOrder = await this.ServiceConnector.Orders.FindById(orderId);
-            //getOrder.HasPaid = true;
+        public async Task<ActionResult> OnPost(OrderDataViewModel model)
+        {
+            if (model.MealId==null)
+            {
+                return Page();
+            }
+            userId = _userManager.GetUserId(User);
+            var customer = OrderService.ServiceConnector.Customers.GetAll(x=>x.UserId==userId).Result.FirstOrDefault();
+            if (customer!=null)
+            {
 
-            //await this.ServiceConnector.Orders.Update(getOrder);
-            //int res = await Services.Implementations.ServiceConnector.SaveChangesAsync();
-            //return res;
-            return 0;
+                var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).Result.Where(x => x.HasPaid == false);
+                if (orders.Count() > 0)
+                {
+                    var lastOrder = orders.OrderByDescending(x => x.CreatedAt).First();
+                    lastOrder.OrderedMeals.Add(new OrderMeals()
+                    {
+                        MealId = model.MealId,
+                        Quantity = model.Quantity,
+
+                    });
+                    return Page();
+                }
+                else
+                {
+                    await OrderService.ServiceConnector.Orders.Add(new Order()
+                    {
+                        CustomerId = customer.Id,
+                        HasPaid = false,
+                        OrderComment = model.Comment,
+                        OrderedMeals = new List<OrderMeals>()
+                       {
+                           new OrderMeals()
+                           {
+                               MealId=model.MealId,
+                               Quantity=model.Quantity,
+
+                           }
+                       }
+                    });
+                    return Page();
+                }
+            }
+          
+
+            return Page();
         }
+        
     }
 }

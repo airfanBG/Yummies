@@ -19,6 +19,7 @@ namespace Services.Interfaces
         public IBaseService<Customer> Customers { get; }
         public IBaseService<MealCategory> MealCategories { get; }
         public IBaseService<MenuMealCategory> MenuMealCategories { get; }
+        public IBaseService<OrderMeals> OrderMeals { get; }
         public IBaseService<User> Users { get; }
         void Dispose();
 

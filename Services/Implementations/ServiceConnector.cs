@@ -30,6 +30,13 @@ namespace Services.Implementations
                 return GetRepository<Order>();
             }
         }
+        public IBaseService<OrderMeals> OrderMeals
+        {
+            get
+            {
+                return GetRepository<OrderMeals>();
+            }
+        }
 
         public IBaseService<Menu> Menus
         {

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Implementations\CustomerService.cs" />
+    <Compile Remove="Implementations\ShoppingCartService.cs" />
   </ItemGroup>
 
   <ItemGroup>

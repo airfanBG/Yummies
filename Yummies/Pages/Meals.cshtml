@@ -1,5 +1,12 @@
 ﻿@page
 @model Yummies.Pages.MealsModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{
+    public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken;
+    }
+}
 @{
     ViewData["Title"] = "Meals";
     Layout = "~/Pages/Shared/_Layout.cshtml";
@@ -14,24 +21,56 @@
     }
 </style>
 
+<div class="row">
+    @foreach (var meal in Model.MealViewModels)
+    {
+        <div class="col-md-5">
+            <form id="meal">
+                <div style="display:inline-block; text-align:center;">
+                    <img src="~/images/@meal.Image" />
+                    <p>@meal.MealName</p>
+                    <p>Time for prepare: @meal.TimeForPrepare</p>
+                    <p>@meal.Price <span>$</span></p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <input id="quantity" type="number" min="1" name="Quantity" value="" />
+                        <input type="text" name="MealId" value="@meal.Id" hidden />
+                        <div>
+                            <input id="submit" type="button" class="btn btn-success" value="Order">
+                        </div>
+                    }
+                </div>
 
-@foreach (var meal in Model.MealViewModels)
-{
-    <form asp-page=""> 
-        <div class="col-md-3" style="display:inline-block;">
-            <img src="~/images/@meal.Image" />
-            <p>@meal.MealName</p>
-            <p>Time for prepare: @meal.TimeForPrepare</p>
-            <p>@meal.Price</p>
-            @if (User.Identity.IsAuthenticated)
-            {
-            <input type="number" min="1" name="name" value="" />
-            <div class="btn btn-default">Add to cart</div>
-            }
+            </form>
         </div>
+    }
+</div>
 
-    </form>
+@section Scripts{
+    <script>
+
+
+        $("#submit").click(function () {
+            var mealId = $("input[name=MealId]").val();
+            var qty = $("input[name=Quantity]").val();
+            $.ajax({
+                url: "/ShoppingCart",
+                type: "POST",
+                    headers:
+                    {
+                        "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
+                    },
+                //dataType: 'json',
+                //contentType: 'application/json; charset=utf-8',
+                data: {
+                    model: { Quantity: qty, MealId: mealId }
+                },
+                success: function () {
+
+                }
+            });
+        });
+    </script>
+
 }
-
-
 
