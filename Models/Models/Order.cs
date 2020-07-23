@@ -8,6 +8,10 @@ namespace Models.Models
 {
     public class Order : BaseEntity
     {
+        public Order()
+        {
+            OrderedMeals = new List<OrderMeals>();
+        }
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
         public ICollection<OrderMeals> OrderedMeals { get; set; }

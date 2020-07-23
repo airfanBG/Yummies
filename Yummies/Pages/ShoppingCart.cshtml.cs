@@ -30,10 +30,10 @@ namespace Yummies.Pages
         }
         public async Task OnGetAsync()
         {
-            //userId = _userManager.GetUserId(User);
-            //Orders = await ServiceConnector.GetNotFinishedOrders(userId);
-            //Total = await ServiceConnector.TotalSum(userId);
-            
+            userId = _userManager.GetUserId(User);
+            Orders = await OrderService.GetNotFinishedOrders(userId);
+            Total = await OrderService.TotalSum(userId);
+
         }
         public async Task OnGetDeleteOrder(string id)
         {
@@ -48,14 +48,17 @@ namespace Yummies.Pages
         {
             if (model.MealId==null)
             {
-                return Page();
+                return null;
             }
             userId = _userManager.GetUserId(User);
             var customer = OrderService.ServiceConnector.Customers.GetAll(x=>x.UserId==userId).Result.FirstOrDefault();
+            var totalOrders = 0;
             if (customer!=null)
             {
 
                 var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).Result.Where(x => x.HasPaid == false);
+                totalOrders = orders.Count();
+
                 if (orders.Count() > 0)
                 {
                     var lastOrder = orders.OrderByDescending(x => x.CreatedAt).First();
@@ -65,7 +68,8 @@ namespace Yummies.Pages
                         Quantity = model.Quantity,
 
                     });
-                    return Page();
+                    await OrderService.ServiceConnector.Orders.Update(lastOrder);
+                    await OrderService.ServiceConnector.Orders.SaveChangesAsync();
                 }
                 else
                 {
@@ -84,12 +88,13 @@ namespace Yummies.Pages
                            }
                        }
                     });
-                    return Page();
+                   
                 }
+               
             }
-          
 
-            return Page();
+            return Partial("_Cart", totalOrders);
+           
         }
         
     }

@@ -33,6 +33,7 @@ namespace Services.Mapping
             CreateMap<MealCategory, MealCategoryViewModel>().ReverseMap();
             CreateMap<Meal, MealViewModel>().ReverseMap();
             CreateMap<Order, OrderViewModel>().ReverseMap();
+            CreateMap<OrderMeals, OrderMealsViewModel>().ReverseMap();
             CreateMap<Customer, CustomerViewModel>().ReverseMap();
             CreateMap<User, UserViewModel>().ReverseMap();
            

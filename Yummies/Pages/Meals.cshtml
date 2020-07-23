@@ -50,9 +50,14 @@
     <script>
 
 
-        $("#submit").click(function () {
-            var mealId = $("input[name=MealId]").val();
-            var qty = $("input[name=Quantity]").val();
+        $("#submit").click(function (e) {
+            e.preventDefault();
+
+            var model = {
+                MealId : $("input[name=MealId]").val(),
+                Quantity : $("input[name=Quantity]").val()
+            };
+
             $.ajax({
                 url: "/ShoppingCart",
                 type: "POST",
@@ -60,13 +65,11 @@
                     {
                         "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
                     },
-                //dataType: 'json',
-                //contentType: 'application/json; charset=utf-8',
-                data: {
-                    model: { Quantity: qty, MealId: mealId }
-                },
-                success: function () {
-
+                
+                data: model,
+                success: function (data) {
+                    $('#cart').html(data);
+                    console.log(data);
                 }
             });
         });

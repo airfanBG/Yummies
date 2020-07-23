@@ -31,7 +31,7 @@ namespace Services.Implementations
                 else
                 {
                     await this.DbContext.AddAsync(model);
-                    await this.SaveChanges();
+                    await this.SaveChangesAsync();
                     return 1;
                 }
                 return 0;
@@ -45,7 +45,7 @@ namespace Services.Implementations
 
         public async Task<List<T>> GetAll(Func<T, bool> func = null)
         {
-            if (func==null)
+            if (func == null)
             {
                 Task<List<T>> result = new Task<List<T>>(() => Set.ToList());
                 result.Start();
@@ -60,11 +60,11 @@ namespace Services.Implementations
         {
             try
             {
-                var entry =await Set.FindAsync(id);
-                if (entry!=null)
+                var entry = await Set.FindAsync(id);
+                if (entry != null)
                 {
                     Set.Remove(entry);
-                    var res=await this.SaveChanges();
+                    var res = await this.SaveChangesAsync();
                     return res;
                 }
                 return 0;
@@ -81,12 +81,14 @@ namespace Services.Implementations
             try
             {
                 EntityEntry entry = DbContext.Entry<T>(model);
-                if (entry.State==EntityState.Detached)
+                if (entry.State == EntityState.Detached)
                 {
                     Set.Attach(model);
                 }
+
                 entry.State = EntityState.Modified;
-                return await Task.Run(()=>1);
+                var res = await DbContext.SaveChangesAsync();
+                return await Task.Run(() => res);
             }
             catch (Exception e)
             {
@@ -98,8 +100,8 @@ namespace Services.Implementations
         {
             try
             {
-                var res =await DbContext.Set<T>().FindAsync(id);
-                if (res!=null)
+                var res = await DbContext.Set<T>().FindAsync(id);
+                if (res != null)
                 {
                     return res;
                 }
@@ -111,12 +113,12 @@ namespace Services.Implementations
                 throw e;
             }
         }
-    
-        public async Task<int> SaveChanges()
+
+        public async Task<int> SaveChangesAsync()
         {
             return await DbContext.SaveChangesAsync();
         }
 
-      
+
     }
 }
