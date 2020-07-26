@@ -68,12 +68,32 @@
                 
                 data: model,
                 success: function (data) {
-                    $('#cart').html(data);
-                    console.log(data);
+                    $('#cart').remove();
+                    $('#partialCart').html(data);
+                    $('#modal').modal('toggle');
+                    $('#modal').modal('show');
+                    $('#modal').modal('hide');
                 }
             });
         });
     </script>
 
 }
-
+<div class="modal hide fade" style="opacity:0.4;" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Meal added to cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Success</p>
+            </div>
+            <div class="modal-footer">
+                <button id="modalClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

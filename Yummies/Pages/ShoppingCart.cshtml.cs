@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Models.Interfaces;
 using Models.Models;
 using Models.Models.IdentityModels;
@@ -39,9 +40,22 @@ namespace Yummies.Pages
         {
            await OrderService.ServiceConnector.Orders.Remove(id);
         }
-        public async Task OnGetDeleteMealOrder(string id)
+        public async Task<IActionResult> OnGetDeleteMealOrderAsync(string mealId, string orderId)
         {
-            await OrderService.ServiceConnector.OrderMeals.Remove(id);
+            if (mealId==null||orderId==null)
+            {
+                return null;
+            }
+            var res = OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId == orderId).Result.FirstOrDefault();
+         
+            var status=await OrderService.ServiceConnector.OrderMeals.Remove(res.Id);
+
+            var checkOrderedMealsInOrder =await OrderService.ServiceConnector.Orders.FindById(orderId);
+            if (checkOrderedMealsInOrder.OrderedMeals.Count() == 0)
+            {
+                await OrderService.ServiceConnector.Orders.Remove(checkOrderedMealsInOrder.Id);
+            }
+            return Content(status.ToString());
         }
 
         public async Task<ActionResult> OnPost(OrderDataViewModel model)
@@ -51,13 +65,14 @@ namespace Yummies.Pages
                 return null;
             }
             userId = _userManager.GetUserId(User);
-            var customer = OrderService.ServiceConnector.Customers.GetAll(x=>x.UserId==userId).Result.FirstOrDefault();
+            var customer =await OrderService.ServiceConnector.Context.Set<Customer>().Include(x=>x.ShoppingCard).FirstOrDefaultAsync();
             var totalOrders = 0;
             if (customer!=null)
             {
 
                 var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).Result.Where(x => x.HasPaid == false);
                 totalOrders = orders.Count();
+                var meal =await OrderService.ServiceConnector.Meals.GetAll(x => x.Id == model.MealId);
 
                 if (orders.Count() > 0)
                 {
@@ -66,7 +81,7 @@ namespace Yummies.Pages
                     {
                         MealId = model.MealId,
                         Quantity = model.Quantity,
-
+                       SubTotal=(model.Quantity*meal.FirstOrDefault().Price)/(1+((decimal)customer.ShoppingCard.CardStatus/100))
                     });
                     await OrderService.ServiceConnector.Orders.Update(lastOrder);
                     await OrderService.ServiceConnector.Orders.SaveChangesAsync();
@@ -84,7 +99,7 @@ namespace Yummies.Pages
                            {
                                MealId=model.MealId,
                                Quantity=model.Quantity,
-
+                               SubTotal=(model.Quantity*meal.FirstOrDefault().Price)/(1+((decimal)customer.ShoppingCard.CardStatus/100))
                            }
                        }
                     });

@@ -35,12 +35,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Menu">Menu</a>
                     </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                    <li id="partialCart">
+                        @if (User.Identity.IsAuthenticated)
+                        {
 
-                        <partial id="cart" name="_Cart" model="TotalAdded" />
+                            <partial name="_Cart" model="TotalAdded" />
 
-                    }
+                        }
+                    </li>
+                   
                 </ul>
                
             </div>

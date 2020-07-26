@@ -12,6 +12,7 @@ namespace Models.Models
         public string MealId { get; set; }
         public Meal Meal { get; set; }
         public int Quantity { get; set; }
+        public decimal SubTotal { get; set; }
         public Statuses Statuses { get; set; }
     }
 }

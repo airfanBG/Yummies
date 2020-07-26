@@ -61,6 +61,7 @@ namespace Services.Implementations
             try
             {
                 var entry = await Set.FindAsync(id);
+               
                 if (entry != null)
                 {
                     Set.Remove(entry);

@@ -27,16 +27,16 @@ namespace Services.Implementations
 
         public async Task<ICollection<OrderViewModel>> GetNotFinishedOrders(string userId)
         {
-            var orders = await ServiceConnector.Context.Set<Order>().Include(x => x.Customer).Include(x => x.OrderedMeals).ThenInclude(x => x.Meal).Where(x => x.Customer.UserId == userId).Where(x => x.HasPaid == false).ToListAsync();
+            var orders = await ServiceConnector.Context.Set<Order>().Include(x => x.Customer).Include(x=>x.Customer.ShoppingCard).Include(x => x.OrderedMeals).ThenInclude(x => x.Meal).Where(x => x.Customer.UserId == userId).Where(x => x.HasPaid == false).ToListAsync();
             var result = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(orders);
             return result;
         }
        
-        public async Task<decimal> TotalSum(string clientId)
+        public async Task<decimal> TotalSum(string userId)
         {
-            decimal res = await Task.Run(()=>ServiceConnector.Orders.GetAll(x => x.CustomerId == clientId && x.HasPaid == false).Result
-                .Select(x => x.OrderedMeals.Sum(p => p.Meal.Price) / (1 + ((decimal)x.Customer.ShoppingCard.CardStatus / (decimal)100)))
-                .FirstOrDefault());
+            var clientId = ServiceConnector.Context.Set<Customer>().FirstOrDefault(x => x.UserId == userId).Id;
+            var res = await Task.Run(() => ServiceConnector.Orders.GetAll(x => x.CustomerId == clientId && x.HasPaid == false).Result.Select(x=>x.OrderedMeals.Sum(p=>p.Meal.Price)/(1+((decimal)x.Customer.ShoppingCard.CardStatus/(decimal)100))).FirstOrDefault());
+               
             return res;
         }
         public async Task<int> FinishOrder(string orderId)

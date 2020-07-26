@@ -4,41 +4,152 @@
     ViewData["Title"] = "ShoppingCart";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+@{
+    int counter = 1;
+}
 <h1>Ordered: @Model.Orders.Count</h1>
+<style>
+    .param {
+        margin-bottom: 7px;
+        line-height: 1.4;
+    }
+
+    .param-inline dt {
+        display: inline-block;
+    }
+
+    .param dt {
+        margin: 0;
+        margin-right: 7px;
+        font-weight: 600;
+    }
+
+    .param-inline dd {
+        vertical-align: baseline;
+        display: inline-block;
+    }
+
+    .param dd {
+        margin: 0;
+        vertical-align: baseline;
+    }
+
+    .shopping-cart-wrap .price {
+        color: #007bff;
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 5px;
+        display: block;
+    }
+
+    var {
+        font-style: normal;
+    }
+
+    .media img {
+        margin-right: 1rem;
+    }
+
+    .img-sm {
+        width: 90px;
+        max-height: 75px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container">
+
+    <hr>
 
 
-<form method="post" asp-page="ShoppingCart" asp-page-handler="update">
-    <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Photo</th>
-            <th>Price</th>
-            <th>Quantity <input type="submit" value="Update" /></th>
-            <th>Sub Total</th>
-        </tr>
-        @foreach (OrderViewModel order in Model.Orders)
-        {
-            @foreach (OrderMealsViewModel meal in order.OrderedMeals)
-            {
-                <tr align="center">
-                    <td align="center">
-                        <a asp-page="ShoppingCart" asp-page-handler="delete" asp-route-id="@meal.Meal.Id">X</a>
-                    </td>
-                    <td>@meal.Meal.MealName</td>
 
-                    <td><img src="~/images/@meal.Meal.Image" width="120" height="100" /></td>
-                    <td>$@meal.Meal.Price</td>
-                    <td><input type="number" name="quantities" value="@meal.Quantity" min="1" style="width: 50px;" /></td>
-                    <td>
-                        $@(meal.Meal.Price * meal.Quantity)
-                    </td>
+    <div class="card">
+        <table class="table table-hover shopping-cart-wrap">
+            <thead class="text-muted">
+                <tr>
+
+                    <th scope="col">#</th>
+                    <th scope="col">Order</th>
+
+                    <th scope="col" width="120">Discount</th>
+
+                    <th scope="col" width="200" class="text-right">Action</th>
+                    <th scope="col" width="200" class="text-right">Sub Total</th>
                 </tr>
-            }
-        }
-        <tr>
-            <td colspan="6" align="right">Total</td>
-            <td align="center">$@Model.Total</td>
-        </tr>
-    </table>
-</form>
+            </thead>
+            <tbody>
+                @foreach (OrderViewModel order in Model.Orders)
+                {
+
+                    @foreach (OrderMealsViewModel meal in order.OrderedMeals)
+                    {
+                        <tr id="order" data-id="@order.Id">
+                            <td>@counter</td>
+                            <td>
+                                <figure class="media">
+                                    <div class="img-wrap"><img src="~/images/@meal.Meal.Image" class="img-thumbnail img-sm"></div>
+                                    <figcaption class="media-body">
+                                        <h6 class="title text-truncate">@meal.Meal.MealName </h6>
+                                        <dl class="param param-inline small">
+                                            <dt>Quantity: </dt>
+                                            <dd>@meal.Quantity</dd>
+                                        </dl>
+                                        <dl class="param param-inline small">
+                                            <dt>Price: </dt>
+                                            <dd>USD @meal.Meal.Price</dd>
+                                        </dl>
+                                    </figcaption>
+                                </figure>
+                            </td>
+
+                            <td>
+                                <div class="price-wrap">
+                                    <var class="price">@meal.Order.Customer.ShoppingCard.CardStatus</var>
+                                    <small class="text-muted">(Discount)</small>
+                                </div> <!-- price-wrap .// -->
+                            </td>
+                            <td class="text-right">
+
+                                <a id="removeMeal" href="" data-id="@meal.MealId" class="btn btn-outline-danger"> × Remove</a>
+                            </td>
+                            <td style="float:right;">@meal.SubTotal</td>
+                        </tr>
+                        counter++;
+                    }
+
+                }
+
+            </tbody>
+
+        </table>
+
+    </div> <!-- card.// -->
+    <div style="float:right;font-size:18px; "><span>Total:</span> @Model.Total.ToString("#.##")</div>
+</div>
+<!--container end.//--> 
+
+
+<br>
+
 <a asp-page="index">Continue Shopping</a>
+
+@section Scripts{
+    <script>
+
+        $("#removeMeal").click(function (e) {
+            e.preventDefault();
+            var mealId = $("#removeMeal").data("id");
+            var orderId = $("#order").data("id");
+            $.ajax({
+                method: "get",
+                url: "/ShoppingCart?handler=DeleteMealOrder",
+                data: { mealId: mealId, orderId: orderId },
+                success: function (data) {
+                    if (data == 1) {
+                        window.location.reload();
+                    }
+                }
+            });
+        });
+    </script>
+}

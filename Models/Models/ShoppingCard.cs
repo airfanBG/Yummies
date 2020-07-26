@@ -13,7 +13,7 @@ namespace Models.Models
         {
             get
             {
-                return this.CardStatus;
+                return this._cardStatus;
             }
             set
             {
