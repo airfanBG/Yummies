@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Models.Interfaces
 {
-    public interface IBaseEntity
+    public interface IBaseEntity<T> where T:class
     {
-        public string Id { get; set; }
+        public T Id { get; set; }
     }
 }

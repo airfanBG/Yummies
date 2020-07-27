@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Models.Interfaces
 {
-    public interface IModel:IBaseEntity,IAuditInfo
+    public interface IModel:IBaseEntity<string>,IAuditInfo
     {
         public string MealName { get; set; }
         public decimal Price { get; set; }
