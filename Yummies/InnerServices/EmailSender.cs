@@ -28,7 +28,7 @@ namespace Yummies.InnerServices
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("Joe@contoso.com", Options.SendGridUser),
+                From = new EmailAddress("fall_out@abv.bg", Options.SendGridUser),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

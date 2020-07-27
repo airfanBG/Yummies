@@ -44,7 +44,15 @@ namespace Yummies
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<User>(options =>
+           {
+               options.SignIn.RequireConfirmedAccount = true;
+               options.SignIn.RequireConfirmedEmail = true;
+            
+           }
+            
+
+            )
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             //store services
@@ -61,8 +69,7 @@ namespace Yummies
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             //email services
-            services.AddTransient<Services.Interfaces.IEmailSender,Services.EmailService.EmailSender>();
-            //services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             //facebook login
             services.AddAuthentication().AddFacebook(facebookOptions =>
