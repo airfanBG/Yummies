@@ -15,7 +15,7 @@ namespace Services.Implementations
 {
     public class MealService
     {
-        private IServiceConnector ServiceConnector { get;}
+        public IServiceConnector ServiceConnector { get;}
 
         public MealService(IServiceConnector serviceConnector)
         {

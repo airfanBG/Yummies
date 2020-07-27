@@ -38,7 +38,7 @@ namespace Data
         public DbSet<Meal> Meals { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            configuration = new ConfigurationBuilder().SetBasePath(Path.GetDirectoryName(@"C:\Users\airfan\AppData\Roaming\Microsoft\UserSecrets\f6fc91bb-3009-4abd-b59f-6351b5003f3d\"/*Assembly.GetExecutingAssembly().Location*/)).AddJsonFile("secrets.json").Build();
+            configuration = new ConfigurationBuilder().SetBasePath(Path.GetDirectoryName(@"C:\Users\airfan\AppData\Roaming\Microsoft\UserSecrets\aspnet-Yummies-E2CE51DC-08AA-4BA0-96E9-49E9F3FF58C5\"/*Assembly.GetExecutingAssembly().Location*/)).AddJsonFile("secrets.json").Build();
             optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection"));
         }
         protected override void OnModelCreating(ModelBuilder builder)

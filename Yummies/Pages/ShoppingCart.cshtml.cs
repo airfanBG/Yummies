@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Models.Interfaces;
 using Models.Models;
 using Models.Models.IdentityModels;
 using Services.Implementations;
+using Services.Mapping;
 using Services.ViewModels;
 
 namespace Yummies.Pages
@@ -23,7 +26,7 @@ namespace Yummies.Pages
         [BindProperty]
         public ICollection<OrderViewModel> Orders { get; set; }
         [BindProperty]
-        public decimal Total { get; set; }
+        public decimal Total { get; set; } = 0;
         public ShoppingCartModel(OrderService service, UserManager<User> userManager)
         {
             OrderService = service;
@@ -32,8 +35,12 @@ namespace Yummies.Pages
         public async Task OnGetAsync()
         {
             userId = _userManager.GetUserId(User);
-            Orders = await OrderService.GetNotFinishedOrders(userId);
-            Total = await OrderService.TotalSum(userId);
+            if (userId!=null)
+            {
+                Orders = await OrderService.GetNotFinishedOrders(userId);
+                Total = await OrderService.TotalSum(userId);
+            }
+           
 
         }
         public async Task OnGetDeleteOrder(string id)
@@ -58,7 +65,7 @@ namespace Yummies.Pages
             return Content(status.ToString());
         }
 
-        public async Task<ActionResult> OnPost(OrderDataViewModel model)
+        public async Task<IActionResult> OnPost(OrderDataViewModel model)
         {
             if (model.MealId==null)
             {
@@ -111,6 +118,12 @@ namespace Yummies.Pages
             return Partial("_Cart", totalOrders);
            
         }
-        
+
+        public async Task<IActionResult> OnGetShowEditOrderAsync(string mealId, string orderId)
+        {
+            var orderMeals =await OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId==orderId);
+            var res = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(orderMeals);
+            return RedirectToPage("EditOrder" ,res);
+        }
     }
 }

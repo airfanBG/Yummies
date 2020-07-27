@@ -1,0 +1,32 @@
+﻿@page
+@model ICollection<OrderMealsViewModel>
+@{
+    ViewData["Title"] = "EditOrder";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>EditOrder</h2>
+<div class="row">
+    @foreach (var order in Model)
+    {
+        <div class="col-md-5">
+            <form id="meal">
+                <div style="display:inline-block; text-align:center;">
+                    <img src="~/images/@order.Meal.Image" />
+                    <p>@order.Meal.MealName</p>
+                    <p>Time for prepare: @order.Meal.TimeForPrepare</p>
+                    <p>@order.Meal.Price <span>$</span></p>
+                   
+                        <input id="quantity" type="number" min="1" name="Quantity" value="@order.Quantity" />
+                        <input type="text" name="MealId" value="@order.MealId" hidden />
+                        <div>
+                            <input id="submit" type="button" class="btn btn-success" value="Order">
+                        </div>
+                   
+                </div>
+
+            </form>
+        </div>
+    }
+</div>
+

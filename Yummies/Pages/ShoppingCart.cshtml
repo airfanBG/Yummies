@@ -73,7 +73,7 @@
 
                     <th scope="col" width="120">Discount</th>
 
-                    <th scope="col" width="200" class="text-right">Action</th>
+                    <th scope="col" width="200" class="text-center">Action</th>
                     <th scope="col" width="200" class="text-right">Sub Total</th>
                 </tr>
             </thead>
@@ -108,8 +108,8 @@
                                     <small class="text-muted">(Discount)</small>
                                 </div> <!-- price-wrap .// -->
                             </td>
-                            <td class="text-right">
-
+                            <td class="text-center">
+                                <a id="editMeal" asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id" class="btn btn-outline-success"> + Edit</a>
                                 <a id="removeMeal" href="" data-id="@meal.MealId" class="btn btn-outline-danger"> × Remove</a>
                             </td>
                             <td style="float:right;">@meal.SubTotal</td>

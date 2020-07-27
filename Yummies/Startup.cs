@@ -47,6 +47,7 @@ namespace Yummies
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            //store services
             services.AddScoped<UserManager<User>>();
             //services.AddScoped<CustomerService>();
             services.AddScoped<SignInManager<User>>();
@@ -59,6 +60,16 @@ namespace Yummies
             services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            //email services
+            services.AddTransient<Services.Interfaces.IEmailSender,Services.EmailService.EmailSender>();
+            //services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+            //facebook login
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
 
             services.AddSession(session =>
             {
@@ -66,6 +77,10 @@ namespace Yummies
                 session.Cookie.IsEssential = true;
                 session.IdleTimeout = TimeSpan.FromSeconds(60 * 5);
 
+            });
+            services.ConfigureApplicationCookie(o => {
+                o.ExpireTimeSpan = TimeSpan.FromDays(5);
+                o.SlidingExpiration = true;
             });
             services.ConfigureApplicationCookie(options =>
             {

@@ -12,17 +12,18 @@ namespace Yummies.Pages
 {
     public class MealsModel : PageModel
     {
-        private ServiceConnector ServiceConnector { get; }
+        private MealService MealService { get; }
         [BindProperty]
         public ICollection<MealViewModel> MealViewModels { get; set; }
-        public MealsModel(ServiceConnector mealService)
+        public MealsModel(MealService mealService)
         {
-            ServiceConnector = mealService;
+            MealService = mealService;
         }
         public async Task OnGet(string categoryId)
         {
-            var res = await ServiceConnector.Meals.GetAll(x => x.MealCategoryId == categoryId);
+            var res = await MealService.ServiceConnector.Meals.GetAll(x => x.MealCategoryId == categoryId);
             MealViewModels = MapperConfigurator.Mapper.Map<List<MealViewModel>>(res);
         }
+        
     }
 }
