@@ -5,7 +5,7 @@
 
     <section class="cook-delecious">
         <div class="container">
-            <div class="row">
+            <div class="row" style="margin-left:150px;">
                 <div class="col-md-3 col-md-offset-1">
                     <div class="first-image">
                         <img src="~/images/cook_01.jpg" alt="">
@@ -161,40 +161,44 @@
 
     <section class="featured-food">
         <div class="container">
-            <div class="row">
+            <div class="row" style="display:block;">
                 <div class="heading">
                     <h2>Most ordered foods</h2>
                 </div>
             </div>
-            @foreach (var item in Model.TopOrdered)
-            {
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="food-item">
-                            <h2>@item.MealName</h2>
-                            <img src="~/images/@item.Image" alt="">
-                            <div class="price">$@item.Price</div>
-                            <div class="text-content">
-                                <h4>Description</h4>
-                                @{
-                                    string res="";
-                                    if (item.MealDescription!=null)
-                                    {
-                                        res = item.MealDescription.Length > 30 ? string.Format("{0}...", item.MealDescription.Take(30)) : item.MealDescription;
-                                    }
-                                    }
-                                   
-                                <p>@res</p>
-                            </div>
+                    @foreach (var item in Model.TopOrdered)
+                    {
 
+                        <div class="col-md-4" style="margin-bottom:10px;">
+                            <a title="Order this" asp-page="Meals" asp-page-handler="Meal" asp-route-mealId="@item.Id">
+                                <div class="food-item">
+                                    <h2>@item.MealName</h2>
+                                    <img src="~/images/@item.Image" alt="">
+                                    <div class="price">$@item.Price</div>
+                                    <div class="text-content">
+                                        <h4>Description</h4>
+                                        @{
+                                            string res = "";
+                                            if (item.MealDescription != null)
+                                            {
+                                                res = item.MealDescription.Length > 30 ? string.Format("{0}...", item.MealDescription.Take(30)) : item.MealDescription;
+                                            }
+                                        }
+
+                                        <p>@res</p>
+                                    </div>
+
+                                </div>
+                            </a>
                         </div>
 
-                    </div>
 
 
+                    }
                 </div>
-                                            }
-
+            </div>
         </div>
     </section>
 

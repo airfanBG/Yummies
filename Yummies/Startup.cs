@@ -62,7 +62,7 @@ namespace Yummies
             services.AddScoped<IndexService>();
             services.AddScoped<OrderService>();
             services.AddScoped<MenuService>();
-            //services.AddScoped<MealService>();
+            services.AddScoped<MealService>();
             services.AddScoped<CategoryService>();
             services.AddScoped<IServiceConnector, ServiceConnector>();
             services.AddScoped<ServiceConnector>();

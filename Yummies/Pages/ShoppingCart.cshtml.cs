@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -17,6 +18,7 @@ using Services.ViewModels;
 
 namespace Yummies.Pages
 {
+    [Authorize]
     public class ShoppingCartModel : PageModel
     {
         private OrderService OrderService;
@@ -35,13 +37,9 @@ namespace Yummies.Pages
         public async Task OnGetAsync()
         {
             userId = _userManager.GetUserId(User);
-            if (userId!=null)
-            {
-                Orders = await OrderService.GetNotFinishedOrders(userId);
-                Total = await OrderService.TotalSum(userId);
-            }
+             Orders = await OrderService.GetNotFinishedOrders(userId);
+             Total = await OrderService.TotalSum(userId);
            
-
         }
         public async Task OnGetDeleteOrder(string id)
         {

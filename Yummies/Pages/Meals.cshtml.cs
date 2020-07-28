@@ -10,6 +10,7 @@ using Services.ViewModels;
 
 namespace Yummies.Pages
 {
+    
     public class MealsModel : PageModel
     {
         private MealService MealService { get; }
@@ -23,6 +24,16 @@ namespace Yummies.Pages
         {
             var res = await MealService.ServiceConnector.Meals.GetAll(x => x.MealCategoryId == categoryId);
             MealViewModels = MapperConfigurator.Mapper.Map<List<MealViewModel>>(res);
+        }
+        public async Task<IActionResult> OnGetMealAsync(string mealId)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Redirect("/Identity/Account/Login");
+            }
+            var res = await MealService.ServiceConnector.Meals.GetAll(x => x.Id==mealId);
+            MealViewModels = MapperConfigurator.Mapper.Map<List<MealViewModel>>(res);
+            return Page();
         }
         
     }
