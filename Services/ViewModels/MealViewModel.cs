@@ -12,7 +12,7 @@ namespace Services.ViewModels
         public decimal Price { get; set; }
         public string TimeForPrepare { get; set; }
         public string Image { get; set; }
-       
+        public string MealDescription { get; set; }
         public string MealCategoryId { get; set; }
     }
 }

@@ -249,6 +249,14 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fb116e9e-ce4e-47e8-84b7-755cc78a47c8",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = "acee5192-9b10-4cf8-8512-f19dc980953f"
+                        });
                 });
 
             modelBuilder.Entity("Models.Models.Meal", b =>
@@ -268,6 +276,9 @@ namespace Data.Migrations
 
                     b.Property<string>("MealCategoryId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MealDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MealName")
                         .HasColumnType("nvarchar(max)");
@@ -290,73 +301,73 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "adc7a5df-f746-4b57-acd2-a895dfa1c213",
+                            Id = "b7db5f47-4a53-4729-bae3-52d7b98cbf3c",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "pizza.jpg",
-                            MealCategoryId = "69693534-36aa-4159-a1f6-16f0acd6bb5b",
+                            MealCategoryId = "ce4a0fec-bd02-4a7a-9851-bb7663909762",
                             MealName = "Pizza",
                             Price = 10m
                         },
                         new
                         {
-                            Id = "43733fc8-d950-400b-9a37-ef21253eb37a",
+                            Id = "eb3ddfc0-0442-4dd5-89c3-eaef28928d92",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "chicken.jpg",
-                            MealCategoryId = "87c5b917-352b-4b1e-9044-86e9f25bd5ea",
+                            MealCategoryId = "d93bb0d7-a7d4-414e-a879-6694caab07c6",
                             MealName = "Chicken soup",
                             Price = 20m
                         },
                         new
                         {
-                            Id = "0eae2b68-5f69-4928-9771-b91e43d2dc45",
+                            Id = "c4a304d5-7d74-4dc9-b7a6-521ea0dcf0fc",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "cake.jpg",
-                            MealCategoryId = "db6d7657-e7f9-435f-a49a-ed6bd93fb644",
+                            MealCategoryId = "3ab32f6b-96a3-457a-83e5-7ea6560cefac",
                             MealName = "Cake",
                             Price = 5m
                         },
                         new
                         {
-                            Id = "27bbb4d5-3b99-42ed-8397-78a9707bbcaa",
+                            Id = "063e398a-b82c-4277-ade6-8d796450b7d1",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "wine.jpg",
-                            MealCategoryId = "11877112-4c4c-4b42-9704-aff72a34539f",
+                            MealCategoryId = "8e287e30-7a66-4abf-98cb-d23f666a7da7",
                             MealName = "Wine",
                             Price = 0m
                         },
                         new
                         {
-                            Id = "1f6102da-ed89-4ee4-bde0-6bf534316d93",
+                            Id = "0a3ef0d0-e0da-4efe-9363-a0212bd268a1",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "fish.jpg",
-                            MealCategoryId = "69693534-36aa-4159-a1f6-16f0acd6bb5b",
+                            MealCategoryId = "ce4a0fec-bd02-4a7a-9851-bb7663909762",
                             MealName = "Fish",
                             Price = 15m
                         },
                         new
                         {
-                            Id = "b3d9bf39-f0a9-445f-93e5-f2d43f6eb32c",
+                            Id = "8ead8bd0-0379-4c97-b40f-34efa8d96c7b",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "fish-soup.jpg",
-                            MealCategoryId = "87c5b917-352b-4b1e-9044-86e9f25bd5ea",
+                            MealCategoryId = "d93bb0d7-a7d4-414e-a879-6694caab07c6",
                             MealName = "Fish soup",
                             Price = 10m
                         },
                         new
                         {
-                            Id = "0cfd0cce-d0ae-45b0-b850-04260c59b8d8",
+                            Id = "5cc908da-f6b9-414c-b9f2-dd8b35b63161",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "pancakes.jpg",
-                            MealCategoryId = "db6d7657-e7f9-435f-a49a-ed6bd93fb644",
+                            MealCategoryId = "3ab32f6b-96a3-457a-83e5-7ea6560cefac",
                             MealName = "Pancakes",
                             Price = 7m
                         },
                         new
                         {
-                            Id = "9932428b-d02d-4923-9a1a-6ac3b281bba5",
+                            Id = "6966a2da-a516-41f1-8d8b-d1361f30d3ea",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "water.jpg",
-                            MealCategoryId = "11877112-4c4c-4b42-9704-aff72a34539f",
+                            MealCategoryId = "8e287e30-7a66-4abf-98cb-d23f666a7da7",
                             MealName = "Water",
                             Price = 3m
                         });
@@ -390,28 +401,28 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "87c5b917-352b-4b1e-9044-86e9f25bd5ea",
+                            Id = "d93bb0d7-a7d4-414e-a879-6694caab07c6",
                             CategoryName = "Soups",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "soup.jpg"
                         },
                         new
                         {
-                            Id = "69693534-36aa-4159-a1f6-16f0acd6bb5b",
+                            Id = "ce4a0fec-bd02-4a7a-9851-bb7663909762",
                             CategoryName = "Meals",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "meal.jpg"
                         },
                         new
                         {
-                            Id = "db6d7657-e7f9-435f-a49a-ed6bd93fb644",
+                            Id = "3ab32f6b-96a3-457a-83e5-7ea6560cefac",
                             CategoryName = "Desserts",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "desserts.jpg"
                         },
                         new
                         {
-                            Id = "11877112-4c4c-4b42-9704-aff72a34539f",
+                            Id = "8e287e30-7a66-4abf-98cb-d23f666a7da7",
                             CategoryName = "Drinks",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "drinks.jpg"
@@ -474,7 +485,7 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a5400440-43ac-4cad-bf1f-6f33fd65a49e",
+                            Id = "e68b5be2-9393-4459-b9e2-3574e0e14acd",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "book_left_image.jpg",
                             MenuName = "Standard"
@@ -513,24 +524,24 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4f1e7cd2-cbab-45a3-a41d-a7116c742ec5",
+                            Id = "d09d13fa-8fa2-4baa-95ce-1d319198ee8a",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "87c5b917-352b-4b1e-9044-86e9f25bd5ea",
-                            MenuId = "a5400440-43ac-4cad-bf1f-6f33fd65a49e"
+                            MealCategoryId = "d93bb0d7-a7d4-414e-a879-6694caab07c6",
+                            MenuId = "e68b5be2-9393-4459-b9e2-3574e0e14acd"
                         },
                         new
                         {
-                            Id = "f76a1f69-0285-4a31-96fb-f3b5e7594915",
+                            Id = "97d34576-0aff-4a75-9534-c7fced5390a2",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "69693534-36aa-4159-a1f6-16f0acd6bb5b",
-                            MenuId = "a5400440-43ac-4cad-bf1f-6f33fd65a49e"
+                            MealCategoryId = "ce4a0fec-bd02-4a7a-9851-bb7663909762",
+                            MenuId = "e68b5be2-9393-4459-b9e2-3574e0e14acd"
                         },
                         new
                         {
-                            Id = "48230712-e9f7-42f7-a555-f87a508f532e",
+                            Id = "35b45778-f171-4ae8-a6c3-51c6047bdb9f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "db6d7657-e7f9-435f-a49a-ed6bd93fb644",
-                            MenuId = "a5400440-43ac-4cad-bf1f-6f33fd65a49e"
+                            MealCategoryId = "3ab32f6b-96a3-457a-83e5-7ea6560cefac",
+                            MenuId = "e68b5be2-9393-4459-b9e2-3574e0e14acd"
                         });
                 });
 
@@ -564,6 +575,15 @@ namespace Data.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CustomerId = "fb116e9e-ce4e-47e8-84b7-755cc78a47c8",
+                            HasPaid = false
+                        });
                 });
 
             modelBuilder.Entity("Models.Models.OrderMeals", b =>
@@ -603,6 +623,88 @@ namespace Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderMeals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "851dc7ed-f307-4da1-b6e4-dbc3945c7c8b",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "b7db5f47-4a53-4729-bae3-52d7b98cbf3c",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "513b5fb5-30da-466d-ac26-fa350bb152f7",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "eb3ddfc0-0442-4dd5-89c3-eaef28928d92",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "f4fed63d-5efa-44d3-8de4-84e1b2295b62",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "c4a304d5-7d74-4dc9-b7a6-521ea0dcf0fc",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "dcecceef-b8a0-4e1e-aa76-cab172837bf6",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "063e398a-b82c-4277-ade6-8d796450b7d1",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "a7d7e64a-1d32-45cf-8d17-88fd9f184362",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "0a3ef0d0-e0da-4efe-9363-a0212bd268a1",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "c47a37c4-80ba-43ab-a061-382a81a9b97e",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "8ead8bd0-0379-4c97-b40f-34efa8d96c7b",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "1c1dcfe4-6bfa-475b-9bf8-c721c9b0bf07",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "5cc908da-f6b9-414c-b9f2-dd8b35b63161",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        },
+                        new
+                        {
+                            Id = "4fc0ba45-d3e6-47dd-89a1-07e1d689f447",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MealId = "6966a2da-a516-41f1-8d8b-d1361f30d3ea",
+                            OrderId = "efc819bc-520e-418e-a6a0-93d87572a86d",
+                            Quantity = 1,
+                            Statuses = 0,
+                            SubTotal = 0m
+                        });
                 });
 
             modelBuilder.Entity("Models.Models.ShoppingCard", b =>
@@ -651,6 +753,28 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "acee5192-9b10-4cf8-8512-f19dc980953f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "602b2fcf-9379-485b-8f21-390a577fd21a",
+                            Email = "fall_out@abv.bg",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FALL_OUT@ABV.BG",
+                            NormalizedUserName = "AIRFAN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDmoaoQ+RDSuJIloQRY5bn/WhSV/g1TWc+pAiMjhA+fopqxubmxeR6r8P+EbrRjk8A==",
+                            PhoneNumber = "+111111111111",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "431c93ef-7556-4c7e-9613-46fc146c5da5",
+                            TwoFactorEnabled = false,
+                            UserName = "airfan",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "airfan",
+                            LastName = "airfan"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

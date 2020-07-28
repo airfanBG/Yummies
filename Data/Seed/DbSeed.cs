@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Models.Models;
+using Models.Models.IdentityModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Data.Seed
 {
@@ -13,21 +17,87 @@ namespace Data.Seed
         private ModelBuilder ModelBuilder { get; }
         private List<MealCategory> mealCategories;
         private List<Meal> meals;
-
+        private string customerId;
+       
         public DbSeed(ModelBuilder builder)
         {
             ModelBuilder = builder;
+           
         }
         public void Generate()
         {
+            SeedUser();
             SeedMenu();
+            SeedOrders(customerId, meals);
+        }
+        private void SeedUser()
+        {
+           
+            var user = new User
+            {
+                Id=Guid.NewGuid().ToString(),
+                FirstName = "airfan",
+                LastName = "airfan",
+                Email = "fall_out@abv.bg",
+                NormalizedEmail = "FALL_OUT@ABV.BG",
+                UserName = "airfan",
+                NormalizedUserName = "AIRFAN",
+                PhoneNumber = "+111111111111",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+             
+            };
+            var password = new PasswordHasher<User>();
+            var hashed = password.HashPassword(user, "12345!@");
+            user.PasswordHash = hashed;
 
+            //Debugger.Launch();
+         
+
+            var customer = new Customer()
+            {
+                Id=Guid.NewGuid().ToString(),
+               // User = user,
+                UserId=user.Id,
+                
+            };
+            customerId = customer.Id;
+            ModelBuilder.Entity<User>().HasData(user);
+            ModelBuilder.Entity<Customer>().HasData(customer);
+
+        }
+        private void SeedOrders(string customerId, List<Meal> meals)
+        {
+            var orderMeals = new List<OrderMeals>();
+            var order = new Order()
+            {
+                Id=Guid.NewGuid().ToString(),
+                CustomerId = customerId,
+                HasPaid = false,
+               // OrderedMeals = orderMeals
+            };
+            foreach (var item in meals)
+            {
+                orderMeals.Add(new OrderMeals()
+                {
+                    Id=Guid.NewGuid().ToString(),
+                    MealId = item.Id,
+                    OrderId = order.Id,
+                    Quantity = 1,
+                    //Order=order
+                });
+            }
+
+            ModelBuilder.Entity<Order>().HasData(order);
+            ModelBuilder.Entity<OrderMeals>().HasData(orderMeals);
+            
         }
         private void SeedMenu()
         {
             SeedCategories();
             SeedMeals();
-
+            
             var menuId = Guid.NewGuid().ToString();
 
            // Debugger.Launch();
