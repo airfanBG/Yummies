@@ -17,11 +17,11 @@
     @foreach (MenuViewModel menu in Model.Menus)
     {
 
-        <div class="col-md-3" style="display:inline-block; max-width:100%;">
+        <div class="col-md-4">
             <a asp-page="Categories" asp-route-id="@menu.Id">
                 
                     <img src="~/images/@menu.Image" />
-                    <p>@menu.MenuName</p>
+                    <p style="text-align:center;">@menu.MenuName</p>
                 
 
             </a>

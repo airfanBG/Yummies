@@ -19,11 +19,11 @@
         {
 
 
-            <div class="col-md-3" style="display:inline-block; max-width:100%;">
+            <div class="col-md-3">
                 <a asp-page="Meals" asp-route-categoryId="@category.MealCategoryId">
                    
                         <img src="~/images/@category.Image" />
-                        <p>@category.CategoryName</p>
+                        <p style="text-align:center;">@category.CategoryName</p>
                    
                 </a>
             </div>
