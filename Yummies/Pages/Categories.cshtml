@@ -17,13 +17,12 @@
     @foreach (var category in Model.MealCategoryViewModels)
     {
 
-        <div class="col-md-3" style="display:inline-block;">
+        <div class="col-md-3" style="display:inline-block; max-width:100%;">
             <a asp-page="Meals" asp-route-categoryId="@category.MealCategoryId">
-                <div class="col-md-5">
+                
                     <img src="~/images/@category.Image" />
                     <p>@category.CategoryName</p>
-                </div>
-
+               
             </a>
         </div>
 
