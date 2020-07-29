@@ -110,7 +110,7 @@
                             </td>
                             <td class="text-center">
                                 <a id="editMeal" asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id" class="btn btn-outline-success"> + Edit</a>
-                                <a id="removeMeal" href="" data-id="@meal.MealId" class="btn btn-outline-danger"> × Remove</a>
+                                <a id="removeMeal" href="" data-id="@meal.MealId" class="btn btn-outline-danger" onclick="Remove()"> × Remove</a>
                             </td>
                             <td style="float:right;">@meal.SubTotal</td>
                         </tr>
@@ -133,11 +133,12 @@
 
 <a asp-page="index">Continue Shopping</a>
 
+
+
 @section Scripts{
     <script>
-
-        $("#removeMeal").click(function (e) {
-            e.preventDefault();
+        function Remove() {
+           
             var mealId = $("#removeMeal").data("id");
             var orderId = $("#order").data("id");
             $.ajax({
@@ -145,11 +146,16 @@
                 url: "/ShoppingCart?handler=DeleteMealOrder",
                 data: { mealId: mealId, orderId: orderId },
                 success: function (data) {
-                    if (data == 1) {
-                        window.location.reload();
+                    console.log("ok");
+                    if (data == "1") {
+
+                         window.location.reload();
                     }
                 }
             });
-        });
+        }
+        //$("#removeMeal").click(function (e) {
+           
+        //});
     </script>
 }

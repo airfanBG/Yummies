@@ -70,17 +70,18 @@ namespace Yummies.Pages
                 return null;
             }
             userId = _userManager.GetUserId(User);
-            var customer =await OrderService.ServiceConnector.Context.Set<Customer>().Include(x=>x.ShoppingCard).FirstOrDefaultAsync();
+            var customer =await OrderService.ServiceConnector.Context.Set<Customer>().Include(x=>x.ShoppingCard).FirstOrDefaultAsync(x=>x.UserId==userId);
             var totalOrders = 0;
             if (customer!=null)
             {
 
                 var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).Result.Where(x => x.HasPaid == false);
-                totalOrders = orders.Count();
+               
                 var meal =await OrderService.ServiceConnector.Meals.GetAll(x => x.Id == model.MealId);
 
                 if (orders.Count() > 0)
                 {
+                    totalOrders = orders.Count();
                     var lastOrder = orders.OrderByDescending(x => x.CreatedAt).First();
                     lastOrder.OrderedMeals.Add(new OrderMeals()
                     {
