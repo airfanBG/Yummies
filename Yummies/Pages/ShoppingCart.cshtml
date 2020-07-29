@@ -110,7 +110,7 @@
                             </td>
                             <td class="text-center">
                                 <a id="editMeal" asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id" class="btn btn-outline-success"> + Edit</a>
-                                <a id="removeMeal" href="" data-id="@meal.MealId" class="btn btn-outline-danger"> × Remove</a>
+                                <a  href="" data-id="@meal.MealId" class="btn btn-outline-danger"> × Remove</a>
                             </td>
                             <td style="float:right;">@meal.SubTotal</td>
                         </tr>
@@ -140,7 +140,7 @@
 
         $("#removeMeal").click(function (e) {
             e.preventDefault();
-            var mealId = $("#removeMeal").data("id");
+            var mealId = e.target.id;
             var orderId = $("#order").data("id");
             $.ajax({
                 method: "get",
