@@ -110,7 +110,7 @@
                             </td>
                             <td class="text-center">
                                 <a id="editMeal" asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id" class="btn btn-outline-success"> + Edit</a>
-                                <a  href="" data-id="@meal.MealId" class="btn btn-outline-danger"> × Remove</a>
+                                <a data-id="@meal.MealId" class="btn btn-outline-danger">x Remove</a>
                             </td>
                             <td style="float:right;">@meal.SubTotal</td>
                         </tr>
@@ -137,22 +137,25 @@
 
 @section Scripts{
     <script>
+        $(document).ready(function () {
+            $("tbody").on("click","a",function (e) {
+                e.preventDefault();
+                var mealId = $(this).data("id");
+                var orderId = $("#order").data("id");
+                $.ajax({
+                    method: "get",
+                    url: "/ShoppingCart?handler=DeleteMealOrder",
+                    data: { mealId: mealId, orderId: orderId },
+                    success: function (data) {
+                        if (data == 1) {
 
-        $("#removeMeal").click(function (e) {
-            e.preventDefault();
-            var mealId = e.target.id;
-            var orderId = $("#order").data("id");
-            $.ajax({
-                method: "get",
-                url: "/ShoppingCart?handler=DeleteMealOrder",
-                data: { mealId: mealId, orderId: orderId },
-                success: function (data) {
-                    if (data == 1) {
-                       
-                         window.location.reload();
+                            window.location.reload();
+                        }
                     }
-                }
+                });
             });
+
         });
+       
     </script>
 }

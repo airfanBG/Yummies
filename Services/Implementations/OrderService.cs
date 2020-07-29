@@ -35,7 +35,7 @@ namespace Services.Implementations
         public async Task<decimal> TotalSum(string userId)
         {
             var clientId = ServiceConnector.Context.Set<Customer>().FirstOrDefault(x => x.UserId == userId).Id;
-            var res = await Task.Run(() => ServiceConnector.Orders.GetAll(x => x.CustomerId == clientId && x.HasPaid == false).Result.Select(x=>x.OrderedMeals.Sum(p=>p.Meal.Price)/(1+((decimal)x.Customer.ShoppingCard.CardStatus/(decimal)100))).FirstOrDefault());
+            var res = await Task.Run(() => ServiceConnector.Orders.GetAll(x => x.CustomerId == clientId && x.HasPaid == false).Result.Select(x=>x.OrderedMeals.Sum(p=>p.Meal.Price*p.Quantity)/(1+((decimal)x.Customer.ShoppingCard.CardStatus/(decimal)100))).FirstOrDefault());
                
             return res;
         }
