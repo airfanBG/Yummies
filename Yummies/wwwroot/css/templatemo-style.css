@@ -433,7 +433,7 @@ section.featured-food {
 }
 
 .food-item img {
-	width: 70%;
+	width: 100%;
 	overflow: hidden;
 	position: relative;
 }

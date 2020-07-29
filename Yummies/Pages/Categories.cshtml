@@ -13,19 +13,23 @@
         height: 150px;
     }
 </style>
-<form class="col-md-12" >
-    @foreach (var category in Model.MealCategoryViewModels)
-    {
+<form class="col-md-12">
+    <div class="row">
+        @foreach (var category in Model.MealCategoryViewModels)
+        {
 
-        <div class="col-md-3" style="display:inline-block; max-width:100%;">
-            <a asp-page="Meals" asp-route-categoryId="@category.MealCategoryId">
-                
-                    <img src="~/images/@category.Image" />
-                    <p>@category.CategoryName</p>
-               
-            </a>
-        </div>
 
-    }
+            <div class="col-md-3" style="display:inline-block; max-width:100%;">
+                <a asp-page="Meals" asp-route-categoryId="@category.MealCategoryId">
+                   
+                        <img src="~/images/@category.Image" />
+                        <p>@category.CategoryName</p>
+                   
+                </a>
+            </div>
+
+
+        }
+    </div>
 </form>
 

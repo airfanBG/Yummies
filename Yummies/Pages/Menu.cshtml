@@ -9,8 +9,8 @@
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 5px;
-            width: 265px;
-            height: 150px;
+           /* width: 265px;
+            height: 150px;*/
         }
     </style>
 <form>
@@ -19,10 +19,11 @@
 
         <div class="col-md-3" style="display:inline-block; max-width:100%;">
             <a asp-page="Categories" asp-route-id="@menu.Id">
-               
+                
                     <img src="~/images/@menu.Image" />
                     <p>@menu.MenuName</p>
-               
+                
+
             </a>
         </div>
 
