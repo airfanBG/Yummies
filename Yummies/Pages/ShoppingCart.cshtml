@@ -133,6 +133,8 @@
 
 <a asp-page="index">Continue Shopping</a>
 
+
+
 @section Scripts{
     <script>
 
@@ -146,7 +148,8 @@
                 data: { mealId: mealId, orderId: orderId },
                 success: function (data) {
                     if (data == 1) {
-                        window.location.reload();
+                       
+                         window.location.reload();
                     }
                 }
             });

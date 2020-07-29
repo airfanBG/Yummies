@@ -27,6 +27,7 @@ namespace Yummies.Pages
         public async Task OnGet()
         {
             TopOrdered =await _indexService.MostOrderedMealsAsync();
+            
         }
     }
 }
