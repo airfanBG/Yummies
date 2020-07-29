@@ -34,9 +34,9 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <input id="quantity" type="number" min="1" name="Quantity" value="" />
-                        @*<input type="text" name="MealId" value="@meal.Id" hidden />*@
+                        <input type="text" name="MealId" value="@meal.Id" hidden />
                         <div>
-                            <input id="submit" style="margin-top:5px;" type="button" onclick="Submit(@meal.Id)" class="btn btn-success" value="Order">
+                            <input id="submit" style="margin-top:5px;" type="button" class="btn btn-success" value="Order">
                         </div>
                     }
                 </div>
@@ -49,40 +49,35 @@
 @section Scripts{
     <script>
 
-        $(document).ready(
 
-            function Submit(mealId) {
-          
-                var model = {
-                    MealId: mealId,
-                    Quantity: $("input[name=Quantity]").val()
-                };
+        $("#submit").click(function (e) {
+            e.preventDefault();
 
-                $.ajax({
-                    url: "/ShoppingCart",
-                    type: "POST",
+            var model = {
+                MealId : $("input[name=MealId]").val(),
+                Quantity : $("input[name=Quantity]").val()
+            };
+
+            $.ajax({
+                url: "/ShoppingCart",
+                type: "POST",
                     headers:
                     {
                         "RequestVerificationToken": '@GetAntiXsrfRequestToken()'
                     },
-
-                    data: model,
-                    success: function (data) {
-                        $('#cart').remove();
-                        $('#partialCart').html(data);
-                        $("#orderedMeal").empty();
-                        $("#orderedMeal").text($("#mealName").text());
-                        $('#modal').modal('toggle');
-                        $('#modal').modal('show');
-                        $('#modal').modal('hide');
-                    }
-                });
+                
+                data: model,
+                success: function (data) {
+                    $('#cart').remove();
+                    $('#partialCart').html(data);
+                    $("#orderedMeal").empty();
+                    $("#orderedMeal").text($("#mealName").text());
+                    $('#modal').modal('toggle');
+                    $('#modal').modal('show');
+                    $('#modal').modal('hide');
+                }
             });
-        //$("#submit").click(function (e) {
-        //    e.preventDefault();
-
-
-        //});
+        });
     </script>
 
 }
