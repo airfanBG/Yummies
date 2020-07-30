@@ -25,6 +25,7 @@ namespace Yummies.Pages
             var res = await MealService.ServiceConnector.Meals.GetAll(x => x.MealCategoryId == categoryId);
             MealViewModels = MapperConfigurator.Mapper.Map<List<MealViewModel>>(res);
         }
+       
         public async Task<IActionResult> OnGetMealAsync(string mealId)
         {
             if (!User.Identity.IsAuthenticated)

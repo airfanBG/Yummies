@@ -10,7 +10,7 @@ namespace Services.ViewModels
     {
         public string Id { get; set; }
         public string OrderId { get; set; }
-        public OrderViewModel Order { get; set; }
+       
         public string MealId { get; set; }
         public MealViewModel Meal { get; set; }
         public int Quantity { get; set; }

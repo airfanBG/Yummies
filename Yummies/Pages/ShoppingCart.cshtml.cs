@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Models.Interfaces;
 using Models.Models;
 using Models.Models.IdentityModels;
+using Newtonsoft.Json;
 using Services.Implementations;
 using Services.Mapping;
 using Services.ViewModels;
@@ -45,7 +46,7 @@ namespace Yummies.Pages
         {
            await OrderService.ServiceConnector.Orders.Remove(id);
         }
-        public async Task<IActionResult> OnGetDeleteMealOrderAsync(string mealId, string orderId)
+        public async Task<IActionResult> OnPostDeleteMealOrderAsync(string mealId, string orderId)
         {
             if (mealId==null||orderId==null)
             {
@@ -118,11 +119,17 @@ namespace Yummies.Pages
            
         }
 
-        public async Task<IActionResult> OnGetShowEditOrderAsync(string mealId, string orderId)
+        public async Task<IActionResult> OnPostShowEditOrderAsync(string mealId, string orderId)
         {
+            userId = _userManager.GetUserId(User);
+            Orders = await OrderService.GetNotFinishedOrders(userId);
+            Total = await OrderService.TotalSum(userId);
+
             var orderMeals =await OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId==orderId);
-            var res = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(orderMeals);
-            return RedirectToPage("EditOrder" ,res);
+           // var orderMeals = await OrderService.ServiceConnector.Context.Set<OrderMeals>().Include(x => x.Meal).FirstOrDefaultAsync(x => x.MealId == mealId && x.OrderId == orderId);
+            var res = MapperConfigurator.Mapper.Map<OrderMealsViewModel>(orderMeals.FirstOrDefault());
+            var json = JsonConvert.SerializeObject(res);
+            return RedirectToPage("EditOrder",new { model = json } );
         }
     }
 }

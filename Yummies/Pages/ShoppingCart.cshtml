@@ -1,4 +1,4 @@
-﻿@page "/ShoppingCart"
+﻿@page
 @model Yummies.Pages.ShoppingCartModel
 @{
     ViewData["Title"] = "ShoppingCart";
@@ -104,12 +104,17 @@
 
                             <td>
                                 <div class="price-wrap">
-                                    <var class="price">@meal.Order.Customer.ShoppingCard.CardStatus</var>
+                                    <var class="price">@order.Customer.ShoppingCard.CardStatus</var>
                                     <small class="text-muted">(Discount)</small>
                                 </div> <!-- price-wrap .// -->
                             </td>
                             <td class="text-center">
-                                <a id="editMeal" asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id" class="btn btn-outline-success"> + Edit</a>
+                                <form asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" method="post">
+                                    <input type="text" name="mealId" value="@meal.MealId" hidden />
+                                    <input type="text" name="orderId" value="@meal.OrderId" hidden />
+                                    <input type="submit" class="btn btn-outline-success" name="submit" value="+ Edit" />
+                                </form>
+
                                 <a data-id="@meal.MealId" class="btn btn-outline-danger">x Remove</a>
                             </td>
                             <td style="float:right;">@meal.SubTotal</td>
@@ -126,19 +131,34 @@
     </div> <!-- card.// -->
     <div style="float:right;font-size:18px; "><span>Total:</span> @Model.Total.ToString("#.##")</div>
 </div>
-<!--container end.//--> 
-
+<!--container end.//-->
 
 <br>
-
+@*asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id"*@
 <a asp-page="index">Continue Shopping</a>
 
 
 
 @section Scripts{
     <script>
+        //edit meal
+        $("input").submit(function (e) {
+            e.preventDefault();
+            alert(" ok");
+        });
+        function Edit(mealId, orderId) {
+            $(document).ready(function () {
+                $.ajax({
+
+                });
+                alert(mealId);
+            });
+        }
+
+
+        //remove meal
         $(document).ready(function () {
-            $("tbody").on("click","a",function (e) {
+            $("tbody").on("click", "a", function (e) {
                 e.preventDefault();
                 var mealId = $(this).data("id");
                 var orderId = $("#order").data("id");
@@ -156,6 +176,6 @@
             });
 
         });
-       
+
     </script>
 }
