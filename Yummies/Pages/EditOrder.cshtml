@@ -9,18 +9,20 @@
 <div class="row">
        
             <div class="col-md-5">
-                <form id="meal">
+                <form asp-page-handler="Edit" method="post">
                     <div style="display:inline-block; text-align:center;">
                         <img src="~/images/@Model.OrderedMeal.Meal.Image" />
                         <p>@Model.OrderedMeal.Meal.MealName</p>
                         <p>Time for prepare: @Model.OrderedMeal.Meal.TimeForPrepare</p>
-                        <p>Model.OrderedMeal.Meal.Price <span>$</span></p>
-
-                            <input id="quantity" type="number" min="1" name="Quantity" value="@Model.OrderedMeal.Quantity" />
-                            <input type="text" name="MealId" value="@Model.OrderedMeal.MealId" hidden />
-                            <div>
-                                <input id="submit" type="button" class="btn btn-success" value="Order">
-                            </div>
+                        <p>@Model.OrderedMeal.Meal.Price <span>$</span></p>
+                        <input type="text" name="Id" value="@Model.OrderedMeal.Id" hidden />
+                        <input type="text" name="Statuses" value="@Model.OrderedMeal.Statuses" hidden />
+                        <input type="text" name="Subtotal" value="@Model.OrderedMeal.SubTotal" hidden />
+                        <input id="quantity" type="number" min="1" name="Quantity" value="@Model.OrderedMeal.Quantity" />
+                        <input type="text" name="MealId" value="@Model.OrderedMeal.MealId" hidden />
+                        <div>
+                            <input type="submit" class="btn btn-success" value="Update">
+                        </div>
 
                     </div>
 

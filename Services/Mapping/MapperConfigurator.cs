@@ -33,7 +33,7 @@ namespace Services.Mapping
             CreateMap<MealCategory, MealCategoryViewModel>().ReverseMap();
             CreateMap<Meal, MealViewModel>().ReverseMap();
             CreateMap<Order, OrderViewModel>().ReverseMap();
-            CreateMap<OrderMeals, OrderMealsViewModel>().ReverseMap();
+            CreateMap<OrderMeals, OrderMealsViewModel>().ForMember(x=>x.Meal,z=>z.MapFrom(a=>a.Meal)).ReverseMap();
             CreateMap<Customer, CustomerViewModel>().ReverseMap();
             CreateMap<User, UserViewModel>().ReverseMap();
            

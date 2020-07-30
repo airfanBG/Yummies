@@ -125,9 +125,9 @@ namespace Yummies.Pages
             Orders = await OrderService.GetNotFinishedOrders(userId);
             Total = await OrderService.TotalSum(userId);
 
-            var orderMeals =await OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId==orderId);
-           // var orderMeals = await OrderService.ServiceConnector.Context.Set<OrderMeals>().Include(x => x.Meal).FirstOrDefaultAsync(x => x.MealId == mealId && x.OrderId == orderId);
-            var res = MapperConfigurator.Mapper.Map<OrderMealsViewModel>(orderMeals.FirstOrDefault());
+            var orderMeal =await OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId==orderId);
+          
+            var res = MapperConfigurator.Mapper.Map<OrderMealsViewModel>(orderMeal.FirstOrDefault());
             var json = JsonConvert.SerializeObject(res);
             return RedirectToPage("EditOrder",new { model = json } );
         }
