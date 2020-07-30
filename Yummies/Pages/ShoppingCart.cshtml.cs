@@ -52,7 +52,7 @@ namespace Yummies.Pages
             {
                 return null;
             }
-            var res = OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId == orderId).Result.FirstOrDefault();
+            var res = OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId == orderId).GetAwaiter().GetResult().FirstOrDefault();
          
             var status=await OrderService.ServiceConnector.OrderMeals.Remove(res.Id);
 
@@ -76,7 +76,7 @@ namespace Yummies.Pages
             if (customer!=null)
             {
 
-                var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).Result.Where(x => x.HasPaid == false);
+                var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).GetAwaiter().GetResult().Where(x => x.HasPaid == false);
                
                 var meal =await OrderService.ServiceConnector.Meals.GetAll(x => x.Id == model.MealId);
 
