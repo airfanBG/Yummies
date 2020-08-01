@@ -9,6 +9,8 @@ namespace Models.Models
         NotStarted,
         Started,
         Preparing,
-        Ready
+        Ready,
+        Shipping
+        
     }
 }

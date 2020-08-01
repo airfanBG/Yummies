@@ -18,6 +18,7 @@ namespace Models.Models
         public bool HasPaid { get; set; } = false;
         [MaxLength(200)]
         public string OrderComment { get; set; }
+        public bool isFinished { get; set; } = false;
     }
 
 }

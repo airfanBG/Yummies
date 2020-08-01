@@ -6,6 +6,7 @@
 }
 @{
     int counter = 1;
+    string orderId = "";
 }
 <h1>Ordered: @Model.Orders.Count</h1>
 <style>
@@ -80,6 +81,7 @@
             <tbody>
                 @foreach (OrderViewModel order in Model.Orders)
                 {
+                    orderId= order.Id;
 
                     @foreach (OrderMealsViewModel meal in order.OrderedMeals)
                     {
@@ -130,12 +132,20 @@
 
     </div> <!-- card.// -->
     <div style="float:right;font-size:18px; "><span>Total:</span> @Model.Total.ToString("#.##")</div>
+
 </div>
-<!--container end.//-->
+<!--container end.//--> 
 
 <br>
-@*asp-page-handler="ShowEditOrder" asp-route-mealId="@meal.MealId" asp-route-orderId="@order.Id"*@
-<a asp-page="index">Continue Shopping</a>
+<div class="row" style="float:right;margin-top:10px;">
+    <a class="btn btn-default" asp-page="index" style="margin-right:10px;">Continue Shopping</a>
+    <form asp-page="ShoppingCart" asp-page-handler="SubmitOrder" method="post">
+        <input type="text" name="OrderId" value="@orderId" hidden />
+        <input class="btn btn-success" type="submit" value="Submit Order">
+    </form>
+
+</div>
+
 
 
 

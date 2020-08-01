@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +31,8 @@ namespace Yummies.Pages
         public ICollection<OrderViewModel> Orders { get; set; }
         [BindProperty]
         public decimal Total { get; set; } = 0;
+        [BindProperty(SupportsGet =true)]
+        public string OrderId { get; set; }
         public ShoppingCartModel(OrderService service, UserManager<User> userManager)
         {
             OrderService = service;
@@ -130,6 +133,15 @@ namespace Yummies.Pages
             var res = MapperConfigurator.Mapper.Map<OrderMealsViewModel>(orderMeal.FirstOrDefault());
             var json = JsonConvert.SerializeObject(res);
             return RedirectToPage("EditOrder",new { model = json } );
+        }
+        public async Task<IActionResult> OnPostSubmitOrderAsync()
+        {
+            var res = await OrderService.FinishOrder(OrderId);
+            if (res==1)
+            {
+                return Page();
+            }
+            return Page();
         }
     }
 }

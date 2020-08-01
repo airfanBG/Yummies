@@ -22,6 +22,7 @@ using Services.Implementations;
 using Services.Interfaces;
 using Services.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace Yummies
 {
@@ -118,7 +119,11 @@ namespace Yummies
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.Use(async (context,next) =>
+            {
+                AddHeaderInfoAsync(context);
+                await next();
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -131,6 +136,11 @@ namespace Yummies
             {
                 endpoints.MapRazorPages();
             });
+        }
+        public void AddHeaderInfoAsync(HttpContext context)
+        {
+            context.Request.Headers.Add("X-Name", "Yummies");
+            
         }
     }
 }

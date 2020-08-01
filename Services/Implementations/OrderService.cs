@@ -48,5 +48,14 @@ namespace Services.Implementations
             int res = await ServiceConnector.SaveChangesAsync();
             return res;
         }
+        public async Task<OrderViewModel> GetOrderStatus(string userId)
+        {
+            var customer = this.ServiceConnector.Customers.GetAll(x => x.UserId==userId).Result.FirstOrDefault();
+
+            var order =await this.ServiceConnector.Context.Set<Order>().Include(x=>x.OrderedMeals).ThenInclude(x=>x.Meal).FirstOrDefaultAsync(x => x.HasPaid == true && x.CustomerId == customer.Id && x.isFinished == false);
+
+            
+            return MapperConfigurator.Mapper.Map<OrderViewModel>(order);
+        }
     }
 }
