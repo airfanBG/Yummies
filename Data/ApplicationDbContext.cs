@@ -31,20 +31,27 @@ namespace Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderMeals> OrderMeals { get; set; }
         public DbSet<ShoppingCard> ShoppingCards { get; set; }
         public DbSet<MenuMealCategory> MenuMealCategories { get; set; }
 
         public DbSet<MealCategory> MealCategories { get; set; }
         public DbSet<Meal> Meals { get; set; }
+        public DbSet<Ingradient> Ingradients { get; set; }
+        public DbSet<MealRate> MealRates { get; set; }
+        public DbSet<Recepee> Recepees { get; set; }
+        public DbSet<RecepeeIngradients> RecepeeIngradients { get; set; }
+        public DbSet<IngradientMetric> IngradientMetrics { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableSensitiveDataLogging();
             configuration = new ConfigurationBuilder().SetBasePath(Path.GetDirectoryName(@"C:\Users\airfan\AppData\Roaming\Microsoft\UserSecrets\aspnet-Yummies-E2CE51DC-08AA-4BA0-96E9-49E9F3FF58C5\"/*Assembly.GetExecutingAssembly().Location*/)).AddJsonFile("secrets.json").Build();
             optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection"));
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            DbSeed seed = new DbSeed(builder);
-            seed.Generate();
+            //DbSeed seed = new DbSeed(builder);
+            //seed.Generate();
 
             base.OnModelCreating(builder);
         }

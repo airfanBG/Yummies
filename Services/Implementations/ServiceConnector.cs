@@ -91,6 +91,34 @@ namespace Services.Implementations
                 return GetRepository<MenuMealCategory>();
             }
         }
+        public IBaseService<Recepee> Recepees
+        {
+            get
+            {
+                return GetRepository<Recepee>();
+            }
+        }
+        public IBaseService<RecepeeIngradients> RecepeeIngradients
+        {
+            get
+            {
+                return GetRepository<RecepeeIngradients>();
+            }
+        }
+        public IBaseService<Ingradient> Ingradients
+        {
+            get
+            {
+                return GetRepository<Ingradient>();
+            }
+        }
+        public IBaseService<IngradientMetric> IngradientMetrics
+        {
+            get
+            {
+                return GetRepository<IngradientMetric>();
+            }
+        }
 
         public void Dispose()
         {

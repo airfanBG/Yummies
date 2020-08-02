@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Models.Models;
 using Models.Models.IdentityModels;
 using System;
@@ -52,8 +53,16 @@ namespace Data.Seed
             var hashed = password.HashPassword(user, "12345!@");
             user.PasswordHash = hashed;
 
+            var roleAdmin = new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Admin", };
+            var roleCustomer = new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Customer", };
+            var roleCheff = new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Cheff", };
+
+            var ur = new IdentityUserRole<string>();
+            ur.RoleId = roleAdmin.Id;
+            ur.UserId = user.Id;
+            
             //Debugger.Launch();
-         
+
 
             var customer = new Customer()
             {
@@ -64,6 +73,8 @@ namespace Data.Seed
             };
             customerId = customer.Id;
             ModelBuilder.Entity<User>().HasData(user);
+            ModelBuilder.Entity<IdentityRole>().HasData(roleAdmin, roleCheff, roleCustomer);
+            ModelBuilder.Entity<IdentityUserRole<string>>().HasData(ur);
             ModelBuilder.Entity<Customer>().HasData(customer);
 
         }
@@ -181,6 +192,88 @@ namespace Data.Seed
         }
         private void SeedMeals()
         {
+            var ingradientMetricNumber = new IngradientMetric()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MetricValue = "Number"
+            };
+            var ingradientMetricGrams = new IngradientMetric()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MetricValue = "Grams"
+            };
+            var ingradientMetricLiters = new IngradientMetric()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MetricValue = "Liters"
+            };
+
+            var ingradientEgg = new Ingradient()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IngradientName = "Egg",
+                IngradientMetricId=ingradientMetricNumber.Id
+            };
+            var ingradientMeet = new Ingradient()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IngradientName = "Meet",
+                IngradientMetricId=ingradientMetricGrams.Id
+            };
+
+            var ingradientSalt = new Ingradient()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IngradientName = "Salt",
+                IngradientMetricId=ingradientMetricGrams.Id
+            };
+            var ingradientShugar = new Ingradient()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IngradientName = "Sugar",
+                IngradientMetricId=ingradientMetricGrams.Id
+            };
+            var ingradientMilk = new Ingradient()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IngradientName = "Milk",
+                IngradientMetricId=ingradientMetricLiters.Id
+            };
+            var recepeeCake = new Recepee()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt=DateTime.Now,
+                //RecepeeIngradients=new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(),IngradientId=ingradientEgg.Id,IngradientQuantity=3 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientShugar.Id, IngradientQuantity = 300 } },
+                MealName="Cake",TimeForPrepare="30min",
+                Description = "First add ..."
+            };
+            var recepeeSoup = new Recepee()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.Now,
+                //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }},
+                MealName = "Chiken soup",
+                TimeForPrepare = "20min",
+                Description="First add ..."
+            };
+            var recepeePancakes = new Recepee()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.Now,
+                //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 5 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 } },
+                MealName = "Pancakes",
+                TimeForPrepare = "20min",
+                Description = "First add ..."
+            };
+
+            ModelBuilder.Entity<IngradientMetric>().HasData(ingradientMetricGrams, ingradientMetricLiters, ingradientMetricNumber);
+
+            ModelBuilder.Entity<Ingradient>().HasData(ingradientEgg, ingradientMeet, ingradientMilk, ingradientShugar);
+            ModelBuilder.Entity<Recepee>().HasData(recepeeCake,recepeeSoup,recepeePancakes);
+
+
+           
+
             meals = new List<Meal>()
             {
                 new Meal()
@@ -206,7 +299,9 @@ namespace Data.Seed
                     MealName= "Cake",
                     Image="cake.jpg",
                      Price=5,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id,
+                    RecepeeId=recepeeCake.Id
+                    
                 },new Meal()
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -243,10 +338,48 @@ namespace Data.Seed
                     MealName= "Water",
                     Image="water.jpg",
                      Price=3,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Drinks").Id
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Drinks").Id,
+                    
                 }
             };
 
+            var rateCake = new MealRate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealId = meals[2].Id,
+                Rate = 8
+            }; 
+            var rateCake1 = new MealRate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealId = meals[2].Id,
+                Rate = 9
+            };
+            var ratePizza = new MealRate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealId = meals[0].Id,
+                Rate = 10
+            };
+            var ratePizza1 = new MealRate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealId = meals[0].Id,
+                Rate = 9
+            };
+            var rateChicken = new MealRate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealId = meals[1].Id,
+                Rate = 9
+            };
+            var rateChicken1 = new MealRate()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealId = meals[1].Id,
+                Rate = 7
+            };
+            ModelBuilder.Entity<MealRate>().HasData(rateCake, rateCake1, rateChicken, rateChicken1, ratePizza, ratePizza1);
         }
     }
 }

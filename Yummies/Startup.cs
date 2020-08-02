@@ -65,6 +65,7 @@ namespace Yummies
             services.AddScoped<MenuService>();
             services.AddScoped<MealService>();
             services.AddScoped<CategoryService>();
+            services.AddScoped<KitchenService>();
             services.AddScoped<IServiceConnector, ServiceConnector>();
             services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();

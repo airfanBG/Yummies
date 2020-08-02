@@ -22,6 +22,12 @@ namespace Services.Interfaces
         public IBaseService<OrderMeals> OrderMeals { get; }
         public IBaseService<User> Users { get; }
         public IBaseService<MealRate> MealRates { get; }
+        public IBaseService<Recepee> Recepees { get; }
+        public IBaseService<RecepeeIngradients> RecepeeIngradients { get; }
+        public IBaseService<Ingradient> Ingradients { get; }
+        public IBaseService<IngradientMetric> IngradientMetrics { get; }
+
+
         void Dispose();
 
         Task<int> SaveChangesAsync();

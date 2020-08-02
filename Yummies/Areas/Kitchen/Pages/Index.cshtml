@@ -1,0 +1,57 @@
+﻿@page
+@model Yummies.Areas.Kitchen.Pages.IndexModel
+@{
+    ViewData["Title"] = "Kitchen";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+    <div class="container" style="color: black;">
+        <div class="row" style="font-size:14px; font-weight:bold;">
+            <div class="col-md-3">
+                <p>Order ID</p>
+            </div>
+            <div class="col-md-2">
+                <p>Meal Name</p>
+            </div>
+            <div class="col-md-1">
+                <p>Quantity</p>
+            </div>
+            <div class="col-md-3">
+                <p>Comment</p>
+            </div>
+            <div class="col-md-3">>
+                <p>Actions</p>
+               
+            </div>
+        </div>
+        @foreach (Services.ViewModels.OrderViewModel order in Model.Orders)
+        {
+            @foreach (Services.ViewModels.OrderMealsViewModel meal in order.OrderedMeals)
+            {
+                <div class="row">
+                    <div class="col-md-3">
+                        <p>@order.Id</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p>@meal.Meal.MealName</p>
+                    </div>
+                    <div class="col-md-1">
+                        <p>@meal.Quantity</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p>@order.OrderComment</p>
+                    </div>
+                    <div class="col-md-3">
+                        <form method="post" asp-page-handler="Start">
+                            <input type="text" name="OrderId" value="" hidden />
+                            <input type="submit" class="btn btn-success" name="name" value="Start" />
+                        </form>
+                        <form method="post" asp-page-handler="Reject">
+                            <input type="text" name="OrderId" value="" hidden />
+                            <input type="submit" class="btn btn-danger" name="name" value="Reject" />
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    </div>
