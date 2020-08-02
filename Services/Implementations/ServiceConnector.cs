@@ -119,6 +119,13 @@ namespace Services.Implementations
                 return GetRepository<IngradientMetric>();
             }
         }
+        public IBaseService<Drink> Drinks
+        {
+            get
+            {
+                return GetRepository<Drink>();
+            }
+        }
 
         public void Dispose()
         {

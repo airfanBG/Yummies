@@ -42,6 +42,7 @@ namespace Data
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeIngradients> RecepeeIngradients { get; set; }
         public DbSet<IngradientMetric> IngradientMetrics { get; set; }
+        public DbSet<Drink> Drinks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
@@ -50,8 +51,8 @@ namespace Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //DbSeed seed = new DbSeed(builder);
-            //seed.Generate();
+            DbSeed seed = new DbSeed(builder);
+            seed.Generate();
 
             base.OnModelCreating(builder);
         }

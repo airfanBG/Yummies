@@ -52,7 +52,9 @@ namespace Yummies
 
            })
                
-                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             //services
             services.AddRazorPages().AddRazorRuntimeCompilation();

@@ -41,6 +41,7 @@ namespace Services.Mapping
             CreateMap<RecipeIngradients, RecepeeIngradientsViewModel>().ForMember(x => x.Recepee, o => o.MapFrom(z => z.Recipe)).ReverseMap();
             CreateMap<Ingradient, IngradientViewModel>().ForMember(x => x.RecepeeIngradients, z => z.MapFrom(o => o.RecepeeIngradients)).ReverseMap();
             CreateMap<IngradientMetric, IngradientMetricViewModel>().ReverseMap();
+            CreateMap<Drink, DrinkViewModel>().ReverseMap();
         }
     }
 }

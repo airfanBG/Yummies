@@ -256,6 +256,15 @@ namespace Data.Seed
                 TimeForPrepare = "20min",
                 Description="First add ..."
             };
+            var recepeeFishsSoup = new Recipe()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.Now,
+                //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }},
+                MealName = "Fish soup",
+                TimeForPrepare = "20min",
+                Description = "First add ..."
+            };
             var recepeePancakes = new Recipe()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -265,11 +274,30 @@ namespace Data.Seed
                 TimeForPrepare = "20min",
                 Description = "First add ..."
             };
+            var recepeePizza = new Recipe()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.Now,
+                //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 5 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 } },
+                MealName = "Pizza",
+                TimeForPrepare = "20min",
+                Description = "First add ..."
+            };
+
+            var recepeeFish = new Recipe()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.Now,
+                //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 5 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 } },
+                MealName = "Fish",
+                TimeForPrepare = "20min",
+                Description = "First add ..."
+            };
 
             ModelBuilder.Entity<IngradientMetric>().HasData(ingradientMetricGrams, ingradientMetricLiters, ingradientMetricNumber);
 
             ModelBuilder.Entity<Ingradient>().HasData(ingradientEgg, ingradientMeet, ingradientMilk, ingradientShugar);
-            ModelBuilder.Entity<Recipe>().HasData(recepeeCake,recepeeSoup,recepeePancakes);
+            ModelBuilder.Entity<Recipe>().HasData(recepeeCake,recepeeSoup,recepeePancakes,recepeeFishsSoup,recepeePizza,recepeeFish);
 
 
            
@@ -282,7 +310,8 @@ namespace Data.Seed
                     MealName= "Pizza",
                     Image="pizza.jpg",
                     Price=10,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id,
+                    RecipeId=recepeePizza.Id
                 },
                 new Meal()
                 {
@@ -290,7 +319,8 @@ namespace Data.Seed
                     MealName= "Chicken soup",
                     Image="chicken.jpg",
                      Price=20,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id, 
+                    RecipeId=recepeeSoup.Id
                 },
                 new Meal()
                 {
@@ -300,14 +330,8 @@ namespace Data.Seed
                     Image="cake.jpg",
                      Price=5,
                     MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id,
-                    RecepeeId=recepeeCake.Id
+                    RecipeId=recepeeCake.Id
                     
-                },new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Wine",
-                    Image="wine.jpg",
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Drinks").Id
                 },
                 new Meal()
                 {
@@ -315,7 +339,9 @@ namespace Data.Seed
                     MealName= "Fish",
                     Image="fish.jpg",
                      Price=15,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id,
+
+                  
                 },
                 new Meal()
                 {
@@ -323,7 +349,8 @@ namespace Data.Seed
                     MealName= "Fish soup",
                     Image="fish-soup.jpg",
                      Price=10,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id,
+                      RecipeId=recepeeFishsSoup.Id
                 },
                 new Meal()
                 {
@@ -331,16 +358,25 @@ namespace Data.Seed
                     MealName= "Pancakes",
                     Image="pancakes.jpg",
                      Price=7,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id
-                },new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Water",
-                    Image="water.jpg",
-                     Price=3,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Drinks").Id,
-                    
-                }
+                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id,
+                    RecipeId=recepeePancakes.Id
+                },
+            };
+            var drink = new Drink()
+            {
+                Id = Guid.NewGuid().ToString(),
+                DrinkName = "Wine",
+                Image = "wine.jpg",
+               Price=20
+            };
+            var water = new Drink()
+            {
+                Id = Guid.NewGuid().ToString(),
+                DrinkName = "Water",
+                Image = "water.jpg",
+                Price = 3,
+                
+
             };
 
             var rateCake = new MealRate()
@@ -380,6 +416,7 @@ namespace Data.Seed
                 Rate = 7
             };
             ModelBuilder.Entity<MealRate>().HasData(rateCake, rateCake1, rateChicken, rateChicken1, ratePizza, ratePizza1);
+            ModelBuilder.Entity<Drink>().HasData(drink,water);
         }
     }
 }

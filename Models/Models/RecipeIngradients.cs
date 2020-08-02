@@ -7,7 +7,7 @@ namespace Models.Models
 {
     public class RecipeIngradients:BaseEntity
     {
-        public string RecepeeId { get; set; }
+        public string RecipeId { get; set; }
         public Recipe Recipe { get; set; }
         public string IngradientId { get; set; }
         public Ingradient Ingradient { get; set; }
