@@ -13,7 +13,7 @@ using Services.ViewModels;
 
 namespace Yummies.Areas.Kitchen.Pages
 {
-    //[Authorize(Roles ="Admin,Seller,Cheff")]
+    [Authorize(Roles ="Admin,Seller,Cheff")]
     public class IndexModel : PageModel
     {
         public ILogger<IndexModel> Logger { get; set; }
@@ -21,6 +21,8 @@ namespace Yummies.Areas.Kitchen.Pages
         public List<OrderViewModel> Orders { get; set; }
         [BindProperty]
         public string OrderId { get; set; }
+        [BindProperty]
+        public string MealId { get; set; }
         public IndexModel(ILogger<IndexModel> logger, KitchenService service)
         {
             Logger = logger;
@@ -30,6 +32,12 @@ namespace Yummies.Areas.Kitchen.Pages
         {
             Orders = await Service.GetAllOrdersAsync();
 
+        }
+        public async Task<IActionResult> OnPostStartAsync()
+        {
+            var res = await Service.StartMealPreparing(OrderId, MealId);
+
+            return Partial("MealPreparing", res);
         }
     }
 }

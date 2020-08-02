@@ -7,7 +7,7 @@ namespace Models.Models
     public class Ingradient:BaseEntity
     {
         public string IngradientName { get; set; }
-        public ICollection<RecepeeIngradients> RecepeeIngradients { get; set; }
+        public ICollection<RecipeIngradients> RecepeeIngradients { get; set; }
         public string IngradientMetricId { get; set; }
         public IngradientMetric IngradientMetric { get; set; }
     }

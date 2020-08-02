@@ -41,20 +41,20 @@ namespace Yummies
         public void ConfigureServices(IServiceCollection services)
         {
             _appApiKey = Configuration["Yummies:ServiceApiKey"];
-            
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<User>(options =>
+            services.AddIdentity<User, IdentityRole>(options =>
            {
                options.SignIn.RequireConfirmedAccount = true;
                options.SignIn.RequireConfirmedEmail = true;
-            
-           }
-            
 
-            )
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+           })
+               
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultUI();
+
+            //services
             services.AddRazorPages().AddRazorRuntimeCompilation();
             //store services
             services.AddScoped<UserManager<User>>();
@@ -68,7 +68,7 @@ namespace Yummies
             services.AddScoped<KitchenService>();
             services.AddScoped<IServiceConnector, ServiceConnector>();
             services.AddScoped<ServiceConnector>();
-            services.AddScoped<ILogger<RegisterModel>,Logger<RegisterModel>>();
+            services.AddScoped<ILogger<RegisterModel>, Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             //email services
             services.AddTransient<IEmailSender, EmailSender>();
@@ -87,7 +87,8 @@ namespace Yummies
                 session.IdleTimeout = TimeSpan.FromSeconds(60 * 5);
 
             });
-            services.ConfigureApplicationCookie(o => {
+            services.ConfigureApplicationCookie(o =>
+            {
                 o.ExpireTimeSpan = TimeSpan.FromDays(5);
                 o.SlidingExpiration = true;
             });
@@ -103,7 +104,7 @@ namespace Yummies
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,7 +121,7 @@ namespace Yummies
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.Use(async (context,next) =>
+            app.Use(async (context, next) =>
             {
                 AddHeaderInfoAsync(context);
                 await next();
@@ -141,7 +142,7 @@ namespace Yummies
         public void AddHeaderInfoAsync(HttpContext context)
         {
             context.Request.Headers.Add("X-Name", "Yummies");
-            
+
         }
     }
 }

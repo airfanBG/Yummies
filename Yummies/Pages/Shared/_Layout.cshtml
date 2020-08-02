@@ -46,11 +46,15 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Menu">Menu</a>
                     </li>
                     <li id="partialCart">
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.IsInRole("Customer"))
                         {
 
                             <partial name="_Cart" model="TotalAdded" />
                             <a asp-page="/OrderTracker" class="nav-link text-dark">Order Tracking</a>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("Cheff"))
+                        {
+                            <a class="nav-link text-dark" asp-page="Index" asp-area="Kitchen" >Orders</a>
                         }
                     </li>
 
@@ -87,7 +91,7 @@
 
     <script src="~/js/plugins.js"></script>
     <script src="~/js/main.js"></script>
-    
+
     <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 

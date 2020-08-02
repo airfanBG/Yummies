@@ -17,7 +17,7 @@ namespace Models.Models
         public string MealDescription { get; set; }
         public ICollection<MealRate> MealRates { get; set; }
         public string RecepeeId { get; set; }
-        public Recepee Recepee { get; set; }
+        public Recipe Recipe { get; set; }
 
     }
 }

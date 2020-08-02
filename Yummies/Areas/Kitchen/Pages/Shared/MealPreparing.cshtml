@@ -1,0 +1,42 @@
+﻿@model OrderMealsViewModel
+
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="card" style="width: 38rem;">
+    <img class="card-img-top" src="~/images/@Model.Meal.Image" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Meal.MealName</h5>
+        <p>Meal Description</p>
+        <p class="card-text">@Model.Meal.Recepee.Description</p>
+        <div class="row">
+
+            <div class="col-md-4">
+                <h2>Ingradients</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>Quantity</h2>
+            </div>
+        </div>
+
+        @foreach (var ingradients in Model.Meal.Recepee.RecepeeIngradients)
+        {
+
+            <div class="row">
+
+
+                <div class="col-md-4" style="color:green;">
+                    @ingradients.Ingradient.IngradientName
+                </div>
+                <div class="col-md-4" style="color:green;">
+                    @ingradients.IngradientQuantity <span style="font-style:italic;">@ingradients.Ingradient.IngradientMetric.MetricValue</span>
+                </div>
+                <div class="col-md-4" style="color:green;">
+
+                </div>
+            </div>
+        }
+
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>

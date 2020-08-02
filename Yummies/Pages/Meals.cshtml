@@ -33,8 +33,10 @@
                     <p class="mealPrice">@meal.Price <span>$</span></p>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <input type="number" min="1" name="Quantity" value="1" />    
+                        <input class="form-control" style="text-align:right; width:100px;margin-left:155px;" type="number" min="1" name="Quantity" value="1" />    
                         <input type="text" name="MealId" value="@meal.Id" hidden />
+                        <p class="col-form-label">Comment:</p>
+                        <input class="form-control" type="text" name="Comment" value=""/>
                         <div>
                             <input style="margin-top:5px;" type="submit" class="btn btn-success" value="Order">
                         </div>

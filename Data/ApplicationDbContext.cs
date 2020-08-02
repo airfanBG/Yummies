@@ -39,8 +39,8 @@ namespace Data
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Ingradient> Ingradients { get; set; }
         public DbSet<MealRate> MealRates { get; set; }
-        public DbSet<Recepee> Recepees { get; set; }
-        public DbSet<RecepeeIngradients> RecepeeIngradients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeIngradients> RecepeeIngradients { get; set; }
         public DbSet<IngradientMetric> IngradientMetrics { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

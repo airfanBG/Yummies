@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class RecepeeIngradients:BaseEntity
+    public class RecipeIngradients:BaseEntity
     {
         public string RecepeeId { get; set; }
-        public Recepee Recepee { get; set; }
+        public Recipe Recipe { get; set; }
         public string IngradientId { get; set; }
         public Ingradient Ingradient { get; set; }
         public int IngradientQuantity { get; set; }

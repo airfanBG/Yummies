@@ -91,18 +91,18 @@ namespace Services.Implementations
                 return GetRepository<MenuMealCategory>();
             }
         }
-        public IBaseService<Recepee> Recepees
+        public IBaseService<Recipe> Recipes
         {
             get
             {
-                return GetRepository<Recepee>();
+                return GetRepository<Recipe>();
             }
         }
-        public IBaseService<RecepeeIngradients> RecepeeIngradients
+        public IBaseService<RecipeIngradients> RecipeIngradients
         {
             get
             {
-                return GetRepository<RecepeeIngradients>();
+                return GetRepository<RecipeIngradients>();
             }
         }
         public IBaseService<Ingradient> Ingradients

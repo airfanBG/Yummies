@@ -14,5 +14,6 @@ namespace Services.ViewModels
         public string Image { get; set; }
         public string MealDescription { get; set; }
         public string MealCategoryId { get; set; }
+        public RecepeeViewModel Recepee { get; set; }
     }
 }

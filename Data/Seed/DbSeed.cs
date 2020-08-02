@@ -239,7 +239,7 @@ namespace Data.Seed
                 IngradientName = "Milk",
                 IngradientMetricId=ingradientMetricLiters.Id
             };
-            var recepeeCake = new Recepee()
+            var recepeeCake = new Recipe()
             {
                 Id = Guid.NewGuid().ToString(),
                 CreatedAt=DateTime.Now,
@@ -247,7 +247,7 @@ namespace Data.Seed
                 MealName="Cake",TimeForPrepare="30min",
                 Description = "First add ..."
             };
-            var recepeeSoup = new Recepee()
+            var recepeeSoup = new Recipe()
             {
                 Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
@@ -256,7 +256,7 @@ namespace Data.Seed
                 TimeForPrepare = "20min",
                 Description="First add ..."
             };
-            var recepeePancakes = new Recepee()
+            var recepeePancakes = new Recipe()
             {
                 Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
@@ -269,7 +269,7 @@ namespace Data.Seed
             ModelBuilder.Entity<IngradientMetric>().HasData(ingradientMetricGrams, ingradientMetricLiters, ingradientMetricNumber);
 
             ModelBuilder.Entity<Ingradient>().HasData(ingradientEgg, ingradientMeet, ingradientMilk, ingradientShugar);
-            ModelBuilder.Entity<Recepee>().HasData(recepeeCake,recepeeSoup,recepeePancakes);
+            ModelBuilder.Entity<Recipe>().HasData(recepeeCake,recepeeSoup,recepeePancakes);
 
 
            

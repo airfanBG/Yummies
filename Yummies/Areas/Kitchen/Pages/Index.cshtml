@@ -5,6 +5,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@if (Model.Orders != null)
+{
+
+
     <div class="container" style="color: black;">
         <div class="row" style="font-size:14px; font-weight:bold;">
             <div class="col-md-3">
@@ -19,9 +23,9 @@
             <div class="col-md-3">
                 <p>Comment</p>
             </div>
-            <div class="col-md-3">>
+            <div class="col-md-2" style="text-align:center;">
                 <p>Actions</p>
-               
+
             </div>
         </div>
         @foreach (Services.ViewModels.OrderViewModel order in Model.Orders)
@@ -41,17 +45,30 @@
                     <div class="col-md-3">
                         <p>@order.OrderComment</p>
                     </div>
-                    <div class="col-md-3">
-                        <form method="post" asp-page-handler="Start">
-                            <input type="text" name="OrderId" value="" hidden />
-                            <input type="submit" class="btn btn-success" name="name" value="Start" />
-                        </form>
-                        <form method="post" asp-page-handler="Reject">
-                            <input type="text" name="OrderId" value="" hidden />
-                            <input type="submit" class="btn btn-danger" name="name" value="Reject" />
-                        </form>
+                    <div class="col-md-2" >
+                        <div class="row">
+                            <div class="col-sm-6" >
+                                <form method="post" asp-page="Index" asp-page-handler="Start">
+                                    <input type="text" name="OrderId" value="@order.Id" hidden />
+                                    <input type="text" name="MealId" value="@meal.MealId" hidden />
+                                    <input type="submit" class="btn btn-success"  value="Start" />
+                                </form>
+                            </div>
+                            <div class="col-sm-6">
+                                <form method="post" asp-page-handler="Reject">
+                                    <input type="text" name="OrderId" value="" hidden />
+                                    <input type="submit" class="btn btn-danger" name="name" value="Reject" />
+                                </form>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             }
         }
     </div>
+}
+else
+	{
+	  <div>No Orders for now.</div>
+	}

@@ -44,26 +44,6 @@ namespace Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1f1e293a-b0c0-42b1-8499-3f682eed6334",
-                            ConcurrencyStamp = "1a9256d4-9a01-42db-8dd7-b4e418bbd9b4",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = "0e28d22e-1f9a-409f-9175-be716d85d2c2",
-                            ConcurrencyStamp = "ee9b9a1a-2084-4815-9121-6ef714987a7c",
-                            Name = "Cheff"
-                        },
-                        new
-                        {
-                            Id = "554f828e-af9f-4eaf-bf68-c0a26b9ba423",
-                            ConcurrencyStamp = "8fac9022-4a36-41ed-bad0-626bda918686",
-                            Name = "Customer"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -220,13 +200,6 @@ namespace Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "5897e9ce-5ceb-4fcb-84ab-f806e5c3a1dd",
-                            RoleId = "1f1e293a-b0c0-42b1-8499-3f682eed6334"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -276,14 +249,6 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a6903c85-610c-4ef3-b500-a398668eea5e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserId = "5897e9ce-5ceb-4fcb-84ab-f806e5c3a1dd"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Ingradient", b =>
@@ -312,36 +277,6 @@ namespace Data.Migrations
                     b.HasIndex("IngradientMetricId");
 
                     b.ToTable("Ingradients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "aaf0cad9-c84e-438a-aa50-a8af98d38ede",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "7111ba31-76d5-445e-b4b3-5472fb097d1e",
-                            IngradientName = "Egg"
-                        },
-                        new
-                        {
-                            Id = "438ca5ef-4e54-4599-943d-c8b4c81a036d",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "8b299f8f-a4bd-4eb7-86bf-808328dbff9e",
-                            IngradientName = "Meet"
-                        },
-                        new
-                        {
-                            Id = "564a0af0-3b88-491e-813a-1e7cc8576557",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "225633e2-dd63-40de-a08f-2381f0d92681",
-                            IngradientName = "Milk"
-                        },
-                        new
-                        {
-                            Id = "dd78d4ab-f836-48ed-aeb3-4cddf6a4fa82",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "8b299f8f-a4bd-4eb7-86bf-808328dbff9e",
-                            IngradientName = "Sugar"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.IngradientMetric", b =>
@@ -365,26 +300,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("IngradientMetrics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8b299f8f-a4bd-4eb7-86bf-808328dbff9e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MetricValue = "Grams"
-                        },
-                        new
-                        {
-                            Id = "225633e2-dd63-40de-a08f-2381f0d92681",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MetricValue = "Liters"
-                        },
-                        new
-                        {
-                            Id = "7111ba31-76d5-445e-b4b3-5472fb097d1e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MetricValue = "Number"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Meal", b =>
@@ -418,6 +333,9 @@ namespace Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("RecepeeId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TimeForPrepare")
@@ -427,84 +345,9 @@ namespace Data.Migrations
 
                     b.HasIndex("MealCategoryId");
 
-                    b.HasIndex("RecepeeId");
+                    b.HasIndex("RecipeId");
 
                     b.ToTable("Meals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ad3d4b52-5c37-4286-80a3-b0f0f5f1f14b",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "pizza.jpg",
-                            MealCategoryId = "c6ce54ee-628d-43a3-a55a-1532a7833bb5",
-                            MealName = "Pizza",
-                            Price = 10m
-                        },
-                        new
-                        {
-                            Id = "a1860a08-8583-415d-b25a-6070dd77663a",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "chicken.jpg",
-                            MealCategoryId = "4f6d3647-5d8e-4a2d-a6a4-17ffcc3ff7de",
-                            MealName = "Chicken soup",
-                            Price = 20m
-                        },
-                        new
-                        {
-                            Id = "bb9f0ead-dc5c-439b-a720-c1bd60ba8ddb",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "cake.jpg",
-                            MealCategoryId = "344b5ea1-6d3b-4894-b0a9-7253cdb99219",
-                            MealName = "Cake",
-                            Price = 5m,
-                            RecepeeId = "a051bbb1-095a-46d3-945b-b5e0b3df0ea9"
-                        },
-                        new
-                        {
-                            Id = "1a3b7afb-b2ac-4069-ae71-562c7fd86a07",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "wine.jpg",
-                            MealCategoryId = "c59b2ddd-be8a-457f-8f13-133a17c65012",
-                            MealName = "Wine",
-                            Price = 0m
-                        },
-                        new
-                        {
-                            Id = "67b947b5-2d97-49a4-9dec-1f21ecdf641a",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "fish.jpg",
-                            MealCategoryId = "c6ce54ee-628d-43a3-a55a-1532a7833bb5",
-                            MealName = "Fish",
-                            Price = 15m
-                        },
-                        new
-                        {
-                            Id = "4c624f8d-3561-45e4-b3c5-1a6b4578a8af",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "fish-soup.jpg",
-                            MealCategoryId = "4f6d3647-5d8e-4a2d-a6a4-17ffcc3ff7de",
-                            MealName = "Fish soup",
-                            Price = 10m
-                        },
-                        new
-                        {
-                            Id = "9af9cd0f-f1b8-43bc-bb46-7a86666a8f4e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "pancakes.jpg",
-                            MealCategoryId = "344b5ea1-6d3b-4894-b0a9-7253cdb99219",
-                            MealName = "Pancakes",
-                            Price = 7m
-                        },
-                        new
-                        {
-                            Id = "100cc34c-9916-4df7-aacc-7273c68fc545",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "water.jpg",
-                            MealCategoryId = "c59b2ddd-be8a-457f-8f13-133a17c65012",
-                            MealName = "Water",
-                            Price = 3m
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.MealCategory", b =>
@@ -531,36 +374,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MealCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "4f6d3647-5d8e-4a2d-a6a4-17ffcc3ff7de",
-                            CategoryName = "Soups",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "soup.jpg"
-                        },
-                        new
-                        {
-                            Id = "c6ce54ee-628d-43a3-a55a-1532a7833bb5",
-                            CategoryName = "Meals",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "meal.jpg"
-                        },
-                        new
-                        {
-                            Id = "344b5ea1-6d3b-4894-b0a9-7253cdb99219",
-                            CategoryName = "Desserts",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "desserts.jpg"
-                        },
-                        new
-                        {
-                            Id = "c59b2ddd-be8a-457f-8f13-133a17c65012",
-                            CategoryName = "Drinks",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "drinks.jpg"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.MealRate", b =>
@@ -589,50 +402,6 @@ namespace Data.Migrations
                     b.HasIndex("MealId");
 
                     b.ToTable("MealRates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "2c2272d7-eb58-4b1e-ab92-2da11011babb",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "bb9f0ead-dc5c-439b-a720-c1bd60ba8ddb",
-                            Rate = 8
-                        },
-                        new
-                        {
-                            Id = "d04a2fe2-b5d0-46e9-b4b7-de472cd61daa",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "bb9f0ead-dc5c-439b-a720-c1bd60ba8ddb",
-                            Rate = 9
-                        },
-                        new
-                        {
-                            Id = "12a840d5-8b04-4546-b272-f1dcae3d1c37",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "a1860a08-8583-415d-b25a-6070dd77663a",
-                            Rate = 9
-                        },
-                        new
-                        {
-                            Id = "679b8622-2f93-4e7a-bf4e-f42f0d3f9a5a",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "a1860a08-8583-415d-b25a-6070dd77663a",
-                            Rate = 7
-                        },
-                        new
-                        {
-                            Id = "7e8c2e93-5486-4b9d-b437-5c81df3df1ef",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "ad3d4b52-5c37-4286-80a3-b0f0f5f1f14b",
-                            Rate = 10
-                        },
-                        new
-                        {
-                            Id = "49b3e8fa-ea75-4d90-9787-c44dcec4e807",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "ad3d4b52-5c37-4286-80a3-b0f0f5f1f14b",
-                            Rate = 9
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Menu", b =>
@@ -659,15 +428,6 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Menus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "00107fd1-93db-4ae1-b38a-129d058f14a4",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "book_left_image.jpg",
-                            MenuName = "Standard"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.MenuMealCategory", b =>
@@ -698,29 +458,6 @@ namespace Data.Migrations
                     b.HasIndex("MenuId");
 
                     b.ToTable("MenuMealCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "b9827613-5be9-46db-b2be-2ff27a0176f4",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "4f6d3647-5d8e-4a2d-a6a4-17ffcc3ff7de",
-                            MenuId = "00107fd1-93db-4ae1-b38a-129d058f14a4"
-                        },
-                        new
-                        {
-                            Id = "25151d98-a4b4-4893-980f-68a06fa51830",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "c6ce54ee-628d-43a3-a55a-1532a7833bb5",
-                            MenuId = "00107fd1-93db-4ae1-b38a-129d058f14a4"
-                        },
-                        new
-                        {
-                            Id = "90a2bad2-2175-45f4-bb91-b3cab60c650f",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "344b5ea1-6d3b-4894-b0a9-7253cdb99219",
-                            MenuId = "00107fd1-93db-4ae1-b38a-129d058f14a4"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Order", b =>
@@ -756,16 +493,6 @@ namespace Data.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = "a6903c85-610c-4ef3-b500-a398668eea5e",
-                            HasPaid = false,
-                            isFinished = false
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.OrderMeals", b =>
@@ -805,91 +532,9 @@ namespace Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderMeals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "4f7bdd63-6eed-4daa-9fc4-5ab2ff16ca59",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "ad3d4b52-5c37-4286-80a3-b0f0f5f1f14b",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "6238ec55-6660-422a-b387-102c4ad1d99f",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "a1860a08-8583-415d-b25a-6070dd77663a",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "48aa60f0-f143-4d92-b747-2eb96cc7a5d4",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "bb9f0ead-dc5c-439b-a720-c1bd60ba8ddb",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "62a4c6f0-0696-4bde-aa74-8d650e445a5e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "1a3b7afb-b2ac-4069-ae71-562c7fd86a07",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "f45aac7a-7e21-4c94-a91a-dfe474077f97",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "67b947b5-2d97-49a4-9dec-1f21ecdf641a",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "fb022d11-e70c-4ac4-8de4-b189e8b36b58",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "4c624f8d-3561-45e4-b3c5-1a6b4578a8af",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "6ef6f38a-6413-452f-9d81-11dd421a2b25",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "9af9cd0f-f1b8-43bc-bb46-7a86666a8f4e",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "d69f9240-6c41-4fe2-8712-4461ae2d82f5",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "100cc34c-9916-4df7-aacc-7273c68fc545",
-                            OrderId = "bad15efb-7196-4948-8ec5-ef757cbc977c",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        });
                 });
 
-            modelBuilder.Entity("Models.Models.Recepee", b =>
+            modelBuilder.Entity("Models.Models.Recipe", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -915,36 +560,10 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Recepees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a051bbb1-095a-46d3-945b-b5e0b3df0ea9",
-                            CreatedAt = new DateTime(2020, 8, 2, 13, 1, 20, 319, DateTimeKind.Local).AddTicks(5784),
-                            Description = "First add ...",
-                            MealName = "Cake",
-                            TimeForPrepare = "30min"
-                        },
-                        new
-                        {
-                            Id = "9ead5bc0-795f-42c4-bafb-8ac5869e361d",
-                            CreatedAt = new DateTime(2020, 8, 2, 13, 1, 20, 324, DateTimeKind.Local).AddTicks(483),
-                            Description = "First add ...",
-                            MealName = "Chiken soup",
-                            TimeForPrepare = "20min"
-                        },
-                        new
-                        {
-                            Id = "a61114ab-f01b-4b4f-89cc-80f8a7515997",
-                            CreatedAt = new DateTime(2020, 8, 2, 13, 1, 20, 324, DateTimeKind.Local).AddTicks(667),
-                            Description = "First add ...",
-                            MealName = "Pancakes",
-                            TimeForPrepare = "20min"
-                        });
+                    b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("Models.Models.RecepeeIngradients", b =>
+            modelBuilder.Entity("Models.Models.RecipeIngradients", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -966,13 +585,16 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RecepeeId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipeId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IngradientId");
 
-                    b.HasIndex("RecepeeId");
+                    b.HasIndex("RecipeId");
 
                     b.ToTable("RecepeeIngradients");
                 });
@@ -1023,28 +645,6 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "5897e9ce-5ceb-4fcb-84ab-f806e5c3a1dd",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa6628ac-701f-4087-b70e-5437feec03c8",
-                            Email = "fall_out@abv.bg",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "FALL_OUT@ABV.BG",
-                            NormalizedUserName = "AIRFAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHJDyL5nhO4DNdYL2zAUQEMhvYWNkBW9vg1DYWZaBNXLDBHnIJZV8cSj9QKXJnvGnw==",
-                            PhoneNumber = "+111111111111",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "34abdeb9-9e77-4823-ab22-6741330d8691",
-                            TwoFactorEnabled = false,
-                            UserName = "airfan",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "airfan",
-                            LastName = "airfan"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1122,9 +722,9 @@ namespace Data.Migrations
                         .WithMany("Meals")
                         .HasForeignKey("MealCategoryId");
 
-                    b.HasOne("Models.Models.Recepee", "Recepee")
+                    b.HasOne("Models.Models.Recipe", "Recipe")
                         .WithMany()
-                        .HasForeignKey("RecepeeId");
+                        .HasForeignKey("RecipeId");
                 });
 
             modelBuilder.Entity("Models.Models.MealRate", b =>
@@ -1163,15 +763,15 @@ namespace Data.Migrations
                         .HasForeignKey("OrderId");
                 });
 
-            modelBuilder.Entity("Models.Models.RecepeeIngradients", b =>
+            modelBuilder.Entity("Models.Models.RecipeIngradients", b =>
                 {
                     b.HasOne("Models.Models.Ingradient", "Ingradient")
                         .WithMany("RecepeeIngradients")
                         .HasForeignKey("IngradientId");
 
-                    b.HasOne("Models.Models.Recepee", "Recepee")
+                    b.HasOne("Models.Models.Recipe", "Recipe")
                         .WithMany("RecepeeIngradients")
-                        .HasForeignKey("RecepeeId");
+                        .HasForeignKey("RecipeId");
                 });
 #pragma warning restore 612, 618
         }
