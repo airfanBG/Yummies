@@ -69,11 +69,11 @@ namespace Services.Implementations
             }
         }
 
-        public IBaseService<MealCategory> MealCategories
+        public IBaseService<Category> MealCategories
         {
             get
             {
-                return GetRepository<MealCategory>();
+                return GetRepository<Category>();
             }
         }
         public IBaseService<User> Users
@@ -124,6 +124,14 @@ namespace Services.Implementations
             get
             {
                 return GetRepository<Drink>();
+            }
+        }
+
+        public IBaseService<DrinkCategory> DrinkCategories
+        {
+            get
+            {
+                return GetRepository<DrinkCategory>();
             }
         }
 

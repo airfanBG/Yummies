@@ -10,6 +10,6 @@ namespace Models.Models
         public string MenuId { get; set; }
         public Menu Menu { get; set; }
         public string MealCategoryId { get; set; }
-        public MealCategory MealCategory { get; set; }
+        public Category MealCategory { get; set; }
     }
 }

@@ -22,7 +22,8 @@ namespace Yummies.Pages
         [BindProperty]
         public ICollection<MenuViewModel> Menus { get; set; }
 
-
+        [BindProperty]
+        public ICollection<DrinkViewModel> Drinks { get; set; }
         public MenuModel(MenuService service)
         {
             MenuService = service;
@@ -30,6 +31,7 @@ namespace Yummies.Pages
         public async Task OnGet()
         {
             Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await MenuService.ServiceConnector.Menus.GetAll());
+            Drinks = MapperConfigurator.Mapper.Map<List<DrinkViewModel>>(await MenuService.ServiceConnector.Drinks.GetAll());
         }
 
     }

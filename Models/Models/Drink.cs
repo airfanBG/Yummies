@@ -10,5 +10,6 @@ namespace Models.Models
         public string DrinkName { get; set; }
         public string Image { get; set; }
         public decimal Price { get; set; }
+        public List<DrinkCategory> DrinkCategories { get; set; }
     }
 }

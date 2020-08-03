@@ -35,7 +35,7 @@ namespace Data
         public DbSet<ShoppingCard> ShoppingCards { get; set; }
         public DbSet<MenuMealCategory> MenuMealCategories { get; set; }
 
-        public DbSet<MealCategory> MealCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<Ingradient> Ingradients { get; set; }
         public DbSet<MealRate> MealRates { get; set; }
@@ -43,6 +43,7 @@ namespace Data
         public DbSet<RecipeIngradients> RecepeeIngradients { get; set; }
         public DbSet<IngradientMetric> IngradientMetrics { get; set; }
         public DbSet<Drink> Drinks { get; set; }
+        public DbSet<DrinkCategory> DrinkCategories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();

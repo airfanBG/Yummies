@@ -4,29 +4,52 @@
     ViewData["Title"] = "Menu";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-    <style>
-        img {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px;
-           /* width: 265px;
+<style>
+    img {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        /* width: 265px;
             height: 150px;*/
-        }
-    </style>
-<form>
+    }
+</style>
+<h2>Meals</h2>
+<div class="row">
+
+
     @foreach (MenuViewModel menu in Model.Menus)
     {
 
         <div class="col-md-4">
             <a asp-page="Categories" asp-route-id="@menu.Id">
-                
-                    <img src="~/images/@menu.Image" />
-                    <p style="text-align:center;">@menu.MenuName</p>
-                
+
+                <img src="~/images/@menu.Image" />
+                <p style="text-align:center;">@menu.MenuName</p>
+
 
             </a>
         </div>
 
     }
-</form>
+
+</div>
+<h2>Drinks</h2>
+<div class="row">
+
+
+    @foreach (DrinkViewModel drink in Model.Drinks)
+    {
+
+        <div class="col-md-4">
+            <a asp-page="Categories" asp-route-id="@drink.Id">
+
+                <img src="~/images/@drink.Image" />
+                <p style="text-align:center;">@drink.DrinkName</p>
+            </a>
+        </div>
+
+    }
+
+</div>
+
 
