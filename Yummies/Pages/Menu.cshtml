@@ -37,14 +37,14 @@
 <div class="row">
 
 
-    @foreach (DrinkViewModel drink in Model.Drinks)
+    @foreach (DrinkCategoryViewModel drink in Model.DrinkCategories)
     {
 
         <div class="col-md-4">
-            <a asp-page="Categories" asp-route-id="@drink.Id">
-
-                <img src="~/images/@drink.Image" />
-                <p style="text-align:center;">@drink.DrinkName</p>
+            <a asp-page="DrinkCategories" asp-route-id="@drink.CategoryId">
+               
+                <img src="~/images/@drink.CategoryViewModel.Image" />
+                <p style="text-align:center;">@drink.CategoryViewModel.CategoryName</p>
             </a>
         </div>
 

@@ -1,5 +1,5 @@
 ﻿@page
-@model Yummies.Pages.MealsModel
+@model Yummies.Pages.DrinkCategoriesModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @functions{
     public string GetAntiXsrfRequestToken()
@@ -8,35 +8,36 @@
     }
 }
 @{
-    ViewData["Title"] = "Meals";
+    ViewData["Title"] = "DrinkCategories";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+
 <style>
     img {
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;
         width: 265px;
-        height: 150px;
+       
     }
 </style>
 
 <div class="row">
-    @foreach (var meal in Model.MealViewModels)
+    @foreach (var drink in Model.DrinkCategoryViewModels)
     {
         <div class="col-md-3">
             <form class="meal">
                 <div style="display:inline-block; text-align:center;">
-                    <img src="~/images/@meal.Image" />
-                    <p class="mealName">@meal.MealName</p>
-                    <p>Time for prepare: @meal.TimeForPrepare</p>
-                    <p class="mealPrice">@meal.Price <span>$</span></p>
+                    <img src="~/images/@drink.DrinkViewModel.Image" />
+                    <p class="mealName">@drink.DrinkViewModel.DrinkName</p>
+
+                    <p class="mealPrice">@drink.DrinkViewModel.Price <span>$</span></p>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <input class="form-control" style="text-align:right; width:100px;margin-left:155px;" type="number" min="1" name="Quantity" value="1" />    
-                        <input type="text" name="MealId" value="@meal.Id" hidden />
+                        <input class="form-control" style="text-align:right; width:100px;margin-left:155px;" type="number" min="1" name="Quantity" value="1" />
+                        <input type="text" name="MealId" value="@drink.DrinkViewModel.Id" hidden />
                         <p class="col-form-label">Comment:</p>
-                        <input class="form-control" type="text" name="Comment" value=""/>
+                        <input class="form-control" type="text" name="Comment" value="" />
                         <div>
                             <input style="margin-top:5px;" type="submit" class="btn btn-success" value="Order">
                         </div>
@@ -94,7 +95,7 @@
             </div>
             <div class="modal-body">
                 <p id="orderedMeal" style="font-size:16px;font-weight:800; color:black;"></p><span>was successfully added!</span>
-                
+
             </div>
             <div class="modal-footer">
                 <button id="modalClose" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -102,3 +103,5 @@
         </div>
     </div>
 </div>
+
+

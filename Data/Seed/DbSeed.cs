@@ -415,13 +415,13 @@ namespace Data.Seed
             var categoyWater = new Category()
             {
                 CategoryName = "Waters",
-                Image = "wine.jpg",
+                Image = "water.jpg",
                 Id = Guid.NewGuid().ToString(),
             };
             var categoyFuzzyDrinks = new Category()
             {
                 CategoryName = "FuzzyDrinks",
-                Image = "wine.jpg",
+                Image = "orange-juice.jpg",
                 Id = Guid.NewGuid().ToString(),
             };
 
@@ -430,7 +430,7 @@ namespace Data.Seed
             var drinkwine = new Drink()
             {
                 Id = Guid.NewGuid().ToString(),
-                DrinkName = "Wine",
+                DrinkName = "Merlot",
                 Image = "wine.jpg",
                 Price = 20,
               
@@ -438,7 +438,7 @@ namespace Data.Seed
             var water = new Drink()
             {
                 Id = Guid.NewGuid().ToString(),
-                DrinkName = "Water",
+                DrinkName = "Spring life",
                 Image = "water.jpg",
                 Price = 3,
                
@@ -446,7 +446,7 @@ namespace Data.Seed
             var fuzzy = new Drink()
             {
                 Id = Guid.NewGuid().ToString(),
-                DrinkName = "Orange",
+                DrinkName = "Orange juice",
                 Image = "orange-juice.jpg",
                 Price = 3,
                 

@@ -21,7 +21,17 @@ namespace Services.Implementations
         {
             ServiceConnector = serviceConnector;
         }
-        
+        public async Task<List<MenuViewModel>> GetMenu()
+        {
+            var res= MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await ServiceConnector.Menus.GetAll());
+            return res;
+        }
+        public async Task<List<DrinkCategoryViewModel>> GetDrinkCategories()
+        {
+            var all = await ServiceConnector.Context.Set<DrinkCategory>().Include(x => x.Category).Include(x => x.Drink).ToListAsync();
+
+            return MapperConfigurator.Mapper.Map<List<DrinkCategoryViewModel>>(all);
+        }
 
     }
 }

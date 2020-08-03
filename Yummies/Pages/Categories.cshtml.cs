@@ -23,7 +23,8 @@ namespace Yummies.Pages
         }
         public async Task<IActionResult> OnGet(string id)
         {
-            var res =await CategoryService.GetCategories(id);
+
+            var res =await CategoryService.GetMenuCategories(id);
 
             MealCategoryViewModels=res.Select(x => new MealCategoryViewModel()
             {

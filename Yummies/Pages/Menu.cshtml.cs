@@ -23,15 +23,15 @@ namespace Yummies.Pages
         public ICollection<MenuViewModel> Menus { get; set; }
 
         [BindProperty]
-        public ICollection<DrinkViewModel> Drinks { get; set; }
+        public ICollection<DrinkCategoryViewModel> DrinkCategories { get; set; }
         public MenuModel(MenuService service)
         {
             MenuService = service;
         }
         public async Task OnGet()
         {
-            Menus = MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await MenuService.ServiceConnector.Menus.GetAll());
-            Drinks = MapperConfigurator.Mapper.Map<List<DrinkViewModel>>(await MenuService.ServiceConnector.Drinks.GetAll());
+            Menus =await MenuService.GetMenu();
+            DrinkCategories = await MenuService.GetDrinkCategories();
         }
 
     }

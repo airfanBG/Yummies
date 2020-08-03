@@ -19,11 +19,17 @@ namespace Services.Implementations
         {
             ServiceConnector = serviceConnector;
         }
-        public async Task<List<MenuMealCategoryViewModel>> GetCategories(string menuId)
+        public async Task<List<MenuMealCategoryViewModel>> GetMenuCategories(string menuId)
         {
             var res =await ServiceConnector.Context.Set<MenuMealCategory>().Include(x => x.MealCategory).Where(x => x.MenuId == menuId).ToListAsync();
             return MapperConfigurator.Mapper.Map<List<MenuMealCategoryViewModel>>(res);
            
+        }
+        public async Task<List<DrinkCategoryViewModel>> GetDrinkCategories(string drinkCategoryId)
+        {
+            var res = await ServiceConnector.Context.Set<DrinkCategory>().Include(x => x.Drink).Where(x => x.CategoryId == drinkCategoryId).ToListAsync();
+            return MapperConfigurator.Mapper.Map<List<DrinkCategoryViewModel>>(res);
+
         }
     }
 }
