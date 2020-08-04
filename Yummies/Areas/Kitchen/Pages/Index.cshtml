@@ -4,7 +4,22 @@
     ViewData["Title"] = "Kitchen";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
+  
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Show by Status
+    </button>
+    
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        
+        <form method="get">
+            @foreach (var status in Model.Statuses)
+            {
+                <input class="dropdown-item" type="submit" name="Status" value="@Enum.GetName(typeof(Statuses),status)">
+            }
+        </form>
+</div>
+</div>
 @if (Model.Orders != null)
 {
 
@@ -22,6 +37,9 @@
             </div>
             <div class="col-md-3">
                 <p>Comment</p>
+            </div>
+            <div class="col-md-1">
+                <p>Status</p>
             </div>
             <div class="col-md-2" style="text-align:center;">
                 <p>Actions</p>
@@ -45,23 +63,28 @@
                     <div class="col-md-3">
                         <p>@order.OrderComment</p>
                     </div>
-                    <div class="col-md-2" >
+                    <div class="col-md-1">
+                        <p>@meal.Statuses</p>
+                    </div>
+                    <div class="col-md-2">
                         <div class="row">
-                            <div class="col-sm-6" >
+                            <div class="col-sm-6">
                                 <form method="post" asp-page="Index" asp-page-handler="Start">
                                     <input type="text" name="OrderId" value="@order.Id" hidden />
                                     <input type="text" name="MealId" value="@meal.MealId" hidden />
-                                    <input type="submit" class="btn btn-success"  value="Start" />
+                                    <input id="submit" type="submit" class="btn btn-success" value="Start" />
                                 </form>
                             </div>
                             <div class="col-sm-6">
-                                <form method="post" asp-page-handler="Reject">
-                                    <input type="text" name="OrderId" value="" hidden />
-                                    <input type="submit" class="btn btn-danger" name="name" value="Reject" />
+                                <form>
+                                    <input type="text" name="OrderId" value="@order.Id" hidden />
+                                    <input type="text" name="MealId" value="@meal.MealId" hidden />
+                                    <input id="reject" class="btn btn-danger" type="button" name="name" value="Reject" />
                                 </form>
+
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             }
@@ -69,6 +92,52 @@
     </div>
 }
 else
-	{
-	  <div>No Orders for now.</div>
-	}
+{
+    <div>No Orders for now.</div>
+}
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reject</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form method="post" asp-area="Kitchen" asp-page="Index" asp-page-handler="Reject">
+                        <input id="orderId" type="text" name="OrderId" value="" hidden />
+                        <input id="mealId" type="text" name="MealId" value="" hidden />
+                        <div class="row">
+                            <p style="padding-right:5px;">Comment:</p>
+                            <input class="form-control" style="width:75%;" type="text" name="comment" value="" />
+                        </div>
+                        <div class="row" style="padding-left:47%;">
+
+                            <input type="submit" class="btn btn-danger" name="name" value="Save" />
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#reject").on("click", function (e) {
+                e.preventDefault();
+                $(".modal").modal("show");
+                var res = $(this).parents('form:first').serializeArray();
+
+                $("#orderId").val(res[0].value);
+                $("#mealId").val(res[1].value);
+            });
+        });
+    </script>
+}

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -31,12 +32,13 @@ namespace Yummies.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly ServiceConnector serviceConnector;
+        private readonly RoleManager<IdentityRole<string>> _roleManager;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger, ServiceConnector customerService, IEmailSender sender
+            ILogger<RegisterModel> logger, ServiceConnector customerService, IEmailSender sender, RoleManager<IdentityRole<string>> roleManager
            )
         {
             _userManager = userManager;
@@ -44,6 +46,7 @@ namespace Yummies.Areas.Identity.Pages.Account
             _logger = logger;
             serviceConnector = customerService;
             _emailSender = sender;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -94,6 +97,14 @@ namespace Yummies.Areas.Identity.Pages.Account
                 {
 
                     await serviceConnector.Customers.Add(new Customer() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular }, User = user });
+
+                    
+                    var role = _roleManager.FindByNameAsync("Customer");
+                    if (role!=null)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Result.Name);
+                    }
+                    
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

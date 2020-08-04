@@ -90,73 +90,88 @@
             font-size: 2.2em;
             bottom: -1.2em;
         }
+
+    ol.progtrckr-cancelled {
+        color: red;
+    }
 </style>
 
 @foreach (OrderMealsViewModel orderMeals in Model.Order.OrderedMeals)
 {
-<div style="margin-top:20px;margin-bottom:5px;">
-    <span>@orderMeals.Meal.MealName</span>
-    <p> <span>Count: @orderMeals.Quantity</span></p>
-    <img style="width:100px;" src="~/images/@orderMeals.Meal.Image" alt="Alternate Text" />
-</div>
-
-<ol id="@orderMeals.Id" class="progtrckr" data-progtrckr-steps="5">
-   
-    @{var pos = Yummies.InnerServices.StatusComparator.GetStatusPosition(Enum.GetName(typeof(Statuses), orderMeals.Statuses));}
-    @if (pos == 0)
+    <div style="margin-top:20px;margin-bottom:5px;">
+        <span>@orderMeals.Meal.MealName</span>
+        <p> <span>Count: @orderMeals.Quantity</span></p>
+        <img style="width:100px;" src="~/images/@orderMeals.Meal.Image" alt="Alternate Text" />
+    </div>
+    @if (orderMeals.Statuses == Statuses.Cancelled)
     {
-        <li id="NotStarted" class="progtrckr-done">Order Processing</li>
-        <li id="Started" class="progtrckr-todo">Pre-Production</li>
-        <li id="Preparing" class="progtrckr-todo">In Production</li>
-        <li id="Ready" class="progtrckr-todo">Ready</li>
-        <li id="Shipping" class="progtrckr-todo">Shipping</li>
-    }
-    else if (pos == 1)
-    {
-        <li id="NotStarted" class="progtrckr-done">Order Processing</li>
-        <li id="Started" class="progtrckr-done">Pre-Production</li>
-        <li id="Preparing" class="progtrckr-todo">In Production</li>
-        <li id="Ready" class="progtrckr-todo">Ready</li>
-        <li id="Shipping" class="progtrckr-todo">Shipping</li>
-    }
-    else if (pos == 2)
-    {
-        <li id="NotStarted" class="progtrckr-done">Order Processing</li>
-        <li id="Started" class="progtrckr-done">Pre-Production</li>
-        <li id="Preparing" class="progtrckr-done">In Production</li>
-        <li id="Ready" class="progtrckr-todo">Ready</li>
-        <li id="Shipping" class="progtrckr-todo">Shipping</li>
-    }
-    else if (pos == 3)
-    {
-        <li id="NotStarted" class="progtrckr-done">Order Processing</li>
-        <li id="Started" class="progtrckr-done">Pre-Production</li>
-        <li id="Preparing" class="progtrckr-done">In Production</li>
-        <li id="Ready" class="progtrckr-done">Ready</li>
-        <li id="Shipping" class="progtrckr-todo">Shipping</li>
+        <p>Cancelled: <span>@orderMeals.Statuses</span></p>
+        <ol>
+            <li id="Cancelled" class="progtrckr-cancelled"></li>
+        </ol>
     }
     else
     {
-        <li id="NotStarted" class="progtrckr-done">Order Processing</li>
-        <li id="Started" class="progtrckr-done">Pre-Production</li>
-        <li id="Preparing" class="progtrckr-done">In Production</li>
-        <li id="Ready" class="progtrckr-done">Ready</li>
-        <li id="Shipping" class="progtrckr-done">Shipping</li>
-    }
+        <ol id="@orderMeals.Id" class="progtrckr" data-progtrckr-steps="5">
 
-</ol>
+            @{var pos = Yummies.InnerServices.StatusComparator.GetStatusPosition(Enum.GetName(typeof(Statuses), orderMeals.Statuses));}
+            @if (pos == 0)
+            {
+                <li id="NotStarted" class="progtrckr-done">Order Processing</li>
+                <li id="Started" class="progtrckr-todo">Pre-Production</li>
+                <li id="Preparing" class="progtrckr-todo">In Production</li>
+                <li id="Ready" class="progtrckr-todo">Ready</li>
+                <li id="Shipping" class="progtrckr-todo">Shipping</li>
+            }
+            else if (pos == 1)
+            {
+                <li id="NotStarted" class="progtrckr-done">Order Processing</li>
+                <li id="Started" class="progtrckr-done">Pre-Production</li>
+                <li id="Preparing" class="progtrckr-todo">In Production</li>
+                <li id="Ready" class="progtrckr-todo">Ready</li>
+                <li id="Shipping" class="progtrckr-todo">Shipping</li>
+            }
+            else if (pos == 2)
+            {
+                <li id="NotStarted" class="progtrckr-done">Order Processing</li>
+                <li id="Started" class="progtrckr-done">Pre-Production</li>
+                <li id="Preparing" class="progtrckr-done">In Production</li>
+                <li id="Ready" class="progtrckr-todo">Ready</li>
+                <li id="Shipping" class="progtrckr-todo">Shipping</li>
+            }
+            else if (pos == 3)
+            {
+                <li id="NotStarted" class="progtrckr-done">Order Processing</li>
+                <li id="Started" class="progtrckr-done">Pre-Production</li>
+                <li id="Preparing" class="progtrckr-done">In Production</li>
+                <li id="Ready" class="progtrckr-done">Ready</li>
+                <li id="Shipping" class="progtrckr-todo">Shipping</li>
+            }
+            else
+            {
+                <li id="NotStarted" class="progtrckr-done">Order Processing</li>
+                <li id="Started" class="progtrckr-done">Pre-Production</li>
+                <li id="Preparing" class="progtrckr-done">In Production</li>
+                <li id="Ready" class="progtrckr-done">Ready</li>
+                <li id="Shipping" class="progtrckr-done">Shipping</li>
+            }
+
+        </ol>
+
+
+    }
 }
 
 @*@section Scripts{
-    <script>
-     $(document).ready(function () {
-         $('ol li').each(function (i) {
-             var id = $(this).attr('id');
+        <script>
+         $(document).ready(function () {
+             $('ol li').each(function (i) {
+                 var id = $(this).attr('id');
 
-             if (@Yummies.InnerServices.StatusComparator.Compare(Model.Order.).ToString().ToLower()==true) {
-                 $(this).attr("class", "progtrckr-done");
-             }
+                 if (@Yummies.InnerServices.StatusComparator.Compare(Model.Order.).ToString().ToLower()==true) {
+                     $(this).attr("class", "progtrckr-done");
+                 }
+             });
          });
-     });
-    </script>
-}*@
+        </script>
+    }*@

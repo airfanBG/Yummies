@@ -141,7 +141,14 @@
     <a class="btn btn-default" asp-page="index" style="margin-right:10px;">Continue Shopping</a>
     <form asp-page="ShoppingCart" asp-page-handler="SubmitOrder" method="post">
         <input type="text" name="OrderId" value="@orderId" hidden />
-        <input class="btn btn-success" type="submit" value="Submit Order">
+        @if (Model.Orders == null)
+        {
+            <input class="btn btn-success" type="submit" value="Submit Order" disabled>
+        }
+        else
+        {
+            <input class="btn btn-success" type="submit" value="Submit Order">
+        }
     </form>
 
 </div>

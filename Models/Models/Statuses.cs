@@ -10,7 +10,7 @@ namespace Models.Models
         Started,
         Preparing,
         Ready,
-        Shipping
-        
+        Shipping,
+        Cancelled        
     }
 }
