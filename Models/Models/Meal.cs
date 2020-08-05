@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Meal : BaseEntity<string>
+    public class Meal : BaseEntity
     {
         public string MealName { get; set; }
         public decimal Price { get; set; }

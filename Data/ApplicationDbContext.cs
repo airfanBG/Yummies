@@ -25,6 +25,10 @@ namespace Data
             //Debugger.Launch();
             Context = context;
         }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+
+        }
         public ApplicationDbContext()
         {
 
@@ -58,6 +62,7 @@ namespace Data
             //seed.Generate();
 
             base.OnModelCreating(builder);
+
         }
 
         private void ApplyEntityChanges()
@@ -71,6 +76,7 @@ namespace Data
 
                 if (entry.State == EntityState.Added)
                 {
+
                     entity.CreatedAt = DateTime.UtcNow;
                 }
                 else if (entry.State == EntityState.Deleted)

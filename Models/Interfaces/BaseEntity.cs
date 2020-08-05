@@ -6,11 +6,12 @@ using System.Text;
 
 namespace Models.Interfaces
 {
-    public abstract class BaseEntity<Tkey>:IAuditInfo
+    public abstract class BaseEntity:Entity<string>,IAuditInfo
     {
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
-        public Tkey Id { get; set; }
+        public BaseEntity()
+        {
+            base.Id = Guid.NewGuid().ToString();
+        }
         public DateTime CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public DateTime? DeletedAt { get; set; }

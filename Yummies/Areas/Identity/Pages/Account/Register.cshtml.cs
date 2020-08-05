@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models.Models;
 using Models.Models.IdentityModels;
@@ -32,13 +35,13 @@ namespace Yummies.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly ServiceConnector serviceConnector;
-        private readonly RoleManager<IdentityRole<string>> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger, ServiceConnector customerService, IEmailSender sender, RoleManager<IdentityRole<string>> roleManager
+            ILogger<RegisterModel> logger, ServiceConnector customerService, IEmailSender sender, RoleManager<IdentityRole> roleManager
            )
         {
             _userManager = userManager;
@@ -98,11 +101,16 @@ namespace Yummies.Areas.Identity.Pages.Account
 
                     await serviceConnector.Customers.Add(new Customer() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular }, User = user });
 
-                    
-                    var role = _roleManager.FindByNameAsync("Customer");
+
+                    var role = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Name == "CUSTOMER");
                     if (role!=null)
                     {
-                        await _userManager.AddToRoleAsync(user, role.Result.Name);
+                        var roleResult = await serviceConnector.Context.Set<IdentityUserRole<string>>().AddAsync(new IdentityUserRole<string>()
+                        {
+                            RoleId = role.Id,
+                            UserId = user.Id
+                        });
+                        await serviceConnector.Context.SaveChangesAsync();
                     }
                     
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

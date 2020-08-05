@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Models.Models
 {
-    public class Ingradient: BaseEntity<string>
+    public class Ingradient: BaseEntity
     {
         public string IngradientName { get; set; }
         public ICollection<RecipeIngradients> RecepeeIngradients { get; set; }

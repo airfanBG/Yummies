@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Models.Models
 {
-    public class Customer:BaseEntity<string>
+    public class Customer:BaseEntity
     {
         public string UserId { get; set; }
         public User User { get; set; }

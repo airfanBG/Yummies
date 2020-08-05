@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class OrderDrinks: BaseEntity<string>
+    public class OrderDrinks: BaseEntity
     {
         public string OrderId { get; set; }
         public Order Order { get; set; }
@@ -13,5 +13,6 @@ namespace Models.Models
         public string DrinkId { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
+        public int MyProperty { get; set; }
     }
 }

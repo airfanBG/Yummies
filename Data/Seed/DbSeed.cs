@@ -27,35 +27,35 @@ namespace Data.Seed
         }
         public void Generate()
         {
-           //SeedUser();
+            SeedUser();
             SeedMenu();
             //SeedOrders(customerId, meals);
         }
         private void SeedUser()
         {
 
-            var user = new User
-            {
-                Id = Guid.NewGuid().ToString(),
-                FirstName = "airfan",
-                LastName = "airfan",
-                Email = "fall_out@abv.bg",
-                NormalizedEmail = "FALL_OUT@ABV.BG",
-                UserName = "airfan",
-                NormalizedUserName = "AIRFAN",
-                PhoneNumber = "+111111111111",
-                EmailConfirmed = true,
-                PhoneNumberConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString("D"),
+            //var user = new User
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    FirstName = "airfan",
+            //    LastName = "airfan",
+            //    Email = "fall_out@abv.bg",
+            //    NormalizedEmail = "FALL_OUT@ABV.BG",
+            //    UserName = "airfan",
+            //    NormalizedUserName = "AIRFAN",
+            //    PhoneNumber = "+111111111111",
+            //    EmailConfirmed = true,
+            //    PhoneNumberConfirmed = true,
+            //    SecurityStamp = Guid.NewGuid().ToString("D"),
 
-            };
-            var password = new PasswordHasher<User>();
-            var hashed = password.HashPassword(user, "12345!@");
-            user.PasswordHash = hashed;
+            //};
+            //var password = new PasswordHasher<User>();
+            //var hashed = password.HashPassword(user, "12345!@");
+            //user.PasswordHash = hashed;
 
-            var roleAdmin = new UserRole() { Name = "Admin", };
-            var roleCustomer = new UserRole() { Name = "Customer", };
-            var roleCheff = new UserRole() { Name = "Cheff", };
+            var roleAdmin = new IdentityRole() { Name = "Admin".ToUpper(), };
+            var roleCustomer = new IdentityRole() { Name = "Customer".ToUpper(), };
+            var roleCheff = new IdentityRole() { Name = "Cheff".ToUpper(), };
 
             //var ur = new RoleStore<UserRole>(Mode)
             //ur.RoleId = roleAdmin.Id;
@@ -64,16 +64,16 @@ namespace Data.Seed
             //Debugger.Launch();
 
 
-            var customer = new Customer()
-            {
-                Id = Guid.NewGuid().ToString(),
-                // User = user,
-                UserId = user.Id,
+            //var customer = new Customer()
+            //{
+            //    Id = Guid.NewGuid().ToString(),
+            //    // User = user,
+            //    UserId = user.Id,
 
-            };
-            customerId = customer.Id;
-            ModelBuilder.Entity<User>().HasData(user);
-            ModelBuilder.Entity<UserRole>().HasData(roleAdmin, roleCheff, roleCustomer);
+            //};
+            //customerId = customer.Id;
+            //ModelBuilder.Entity<User>().HasData(user);
+            ModelBuilder.Entity<IdentityRole>().HasData(roleAdmin, roleCheff, roleCustomer);
           //  ModelBuilder.Entity<IdentityUserRole<string>>().HasData(ur);
            // ModelBuilder.Entity<Customer>().HasData(customer);
 
@@ -106,8 +106,8 @@ namespace Data.Seed
         private void SeedMenu()
         {
             SeedCategories();
-            //SeedMeals();
-            //SeedDrinks();
+            SeedMeals();
+            SeedDrinks();
 
             var menuId = Guid.NewGuid().ToString();
 
@@ -126,7 +126,7 @@ namespace Data.Seed
 
             var menumealcat1 = new MenuMealCategory()
             {
-                Id = Guid.NewGuid().ToString(),
+               // Id = Guid.NewGuid().ToString(),
                 MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Soups").Id,
                 // MealCategory = mealCategories.FirstOrDefault(x => x.CategoryName == "Soups"),
                 MenuId = menuId,
@@ -135,7 +135,7 @@ namespace Data.Seed
             };
             var menumealcat2 = new MenuMealCategory()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Meals").Id,
                 // MealCategory = mealCategories.FirstOrDefault(x => x.CategoryName == "Meals"),
                 MenuId = menuId,
@@ -143,7 +143,7 @@ namespace Data.Seed
             };
             var menumealcat3 = new MenuMealCategory()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Desserts").Id,
                 //MealCategory = mealCategories.FirstOrDefault(x => x.CategoryName == "Desserts"),
                 MenuId = menuId,
@@ -164,27 +164,27 @@ namespace Data.Seed
         {
             var cat1 = new Category()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CategoryName = "Soups",
                 Image = "soup.jpg",
                 
             };
             var cat2 = new Category()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CategoryName = "Meals",
                 Image = "meal.jpg"
             };
               var cat3=  new Category()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    //Id = Guid.NewGuid().ToString(),
                     CategoryName = "Desserts",
                     Image = "desserts.jpg"
                 };
 
             var cat4 = new Category()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CategoryName = "Drinks",
                 Image = "drinks.jpg"
             };
@@ -199,54 +199,54 @@ namespace Data.Seed
         {
             var ingradientMetricNumber = new IngradientMetric()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MetricValue = "Number"
             };
             var ingradientMetricGrams = new IngradientMetric()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MetricValue = "Grams"
             };
             var ingradientMetricLiters = new IngradientMetric()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MetricValue = "Liters"
             };
 
             var ingradientEgg = new Ingradient()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 IngradientName = "Egg",
                 IngradientMetricId = ingradientMetricNumber.Id
             };
             var ingradientMeet = new Ingradient()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 IngradientName = "Meet",
                 IngradientMetricId = ingradientMetricGrams.Id
             };
 
             var ingradientSalt = new Ingradient()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 IngradientName = "Salt",
                 IngradientMetricId = ingradientMetricGrams.Id
             };
             var ingradientShugar = new Ingradient()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 IngradientName = "Sugar",
                 IngradientMetricId = ingradientMetricGrams.Id
             };
             var ingradientMilk = new Ingradient()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 IngradientName = "Milk",
                 IngradientMetricId = ingradientMetricLiters.Id
             };
             var recepeeCake = new Recipe()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
                 //RecepeeIngradients=new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(),IngradientId=ingradientEgg.Id,IngradientQuantity=3 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientShugar.Id, IngradientQuantity = 300 } },
                 MealName = "Cake",
@@ -255,7 +255,7 @@ namespace Data.Seed
             };
             var recepeeSoup = new Recipe()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
                 //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }},
                 MealName = "Chiken soup",
@@ -264,7 +264,7 @@ namespace Data.Seed
             };
             var recepeeFishsSoup = new Recipe()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
                 //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }},
                 MealName = "Fish soup",
@@ -273,7 +273,7 @@ namespace Data.Seed
             };
             var recepeePancakes = new Recipe()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
                 //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 5 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 } },
                 MealName = "Pancakes",
@@ -282,7 +282,7 @@ namespace Data.Seed
             };
             var recepeePizza = new Recipe()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
                 //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 5 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 } },
                 MealName = "Pizza",
@@ -292,7 +292,7 @@ namespace Data.Seed
 
             var recepeeFish = new Recipe()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.Now,
                 //RecepeeIngradients = new List<RecepeeIngradients>() { new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientEgg.Id, IngradientQuantity = 5 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientSalt.Id, IngradientQuantity = 1 }, new RecepeeIngradients() { Id = Guid.NewGuid().ToString(), IngradientId = ingradientMilk.Id, IngradientQuantity = 1 } },
                 MealName = "Fish",
@@ -311,7 +311,7 @@ namespace Data.Seed
 
             var meal1 = new Meal()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealName = "Pizza",
                 Image = "pizza.jpg",
                 Price = 10,
@@ -320,7 +320,7 @@ namespace Data.Seed
             };
             var meal2 = new Meal()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealName = "Chicken soup",
                 Image = "chicken.jpg",
                 Price = 20,
@@ -330,7 +330,7 @@ namespace Data.Seed
             var meal3 = new Meal()
             {
 
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealName = "Cake",
                 Image = "cake.jpg",
                 Price = 5,
@@ -340,7 +340,7 @@ namespace Data.Seed
             };
             var meal4 = new Meal()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealName = "Fish",
                 Image = "fish.jpg",
                 Price = 15,
@@ -350,7 +350,7 @@ namespace Data.Seed
             };
             var meal5 = new Meal()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealName = "Fish soup",
                 Image = "fish-soup.jpg",
                 Price = 10,
@@ -359,7 +359,7 @@ namespace Data.Seed
             };
              var meal6=   new Meal()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    //Id = Guid.NewGuid().ToString(),
                     MealName = "Pancakes",
                     Image = "pancakes.jpg",
                     Price = 7,
@@ -378,37 +378,37 @@ namespace Data.Seed
 
             var rateCake = new MealRate()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealId = meals[2].Id,
                 Rate = 8
             };
             var rateCake1 = new MealRate()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealId = meals[2].Id,
                 Rate = 9
             };
             var ratePizza = new MealRate()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealId = meals[0].Id,
                 Rate = 10
             };
             var ratePizza1 = new MealRate()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealId = meals[0].Id,
                 Rate = 9
             };
             var rateChicken = new MealRate()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealId = meals[1].Id,
                 Rate = 9
             };
             var rateChicken1 = new MealRate()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 MealId = meals[1].Id,
                 Rate = 7
             };
@@ -420,26 +420,26 @@ namespace Data.Seed
             {
                 CategoryName="Vines",
                 Image= "wine.jpg",
-                Id = Guid.NewGuid().ToString()
+                //Id = Guid.NewGuid().ToString()
             };
             var categoyWater = new Category()
             {
                 CategoryName = "Waters",
                 Image = "water.jpg",
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
             };
             var categoyFuzzyDrinks = new Category()
             {
                 CategoryName = "FuzzyDrinks",
                 Image = "orange-juice.jpg",
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
             };
 
             
 
             var drinkwine = new Drink()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 DrinkName = "Merlot",
                 Image = "wine.jpg",
                 Price = 20,
@@ -447,7 +447,7 @@ namespace Data.Seed
             };
             var water = new Drink()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 DrinkName = "Spring life",
                 Image = "water.jpg",
                 Price = 3,
@@ -455,7 +455,7 @@ namespace Data.Seed
             };
             var fuzzy = new Drink()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 DrinkName = "Orange juice",
                 Image = "orange-juice.jpg",
                 Price = 3,
@@ -463,20 +463,20 @@ namespace Data.Seed
             };
             var drinkCategories1 = new DrinkCategory()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CategoryId = categoyVine.Id,
                 DrinkId = drinkwine.Id
             };
             var drinkCategories2 = new DrinkCategory()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CategoryId = categoyWater.Id,
                 DrinkId = water.Id
             };
 
             var drinkCategories3 = new DrinkCategory()
             {
-                Id = Guid.NewGuid().ToString(),
+                //Id = Guid.NewGuid().ToString(),
                 CategoryId = categoyFuzzyDrinks.Id,
                 DrinkId = fuzzy.Id
             };

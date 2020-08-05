@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class RecipeIngradients: BaseEntity<string>
+    public class RecipeIngradients: BaseEntity
     {
         public string RecipeId { get; set; }
         public Recipe Recipe { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Drink: BaseEntity<string>
+    public class Drink: BaseEntity
     {
         public string DrinkName { get; set; }
         public string Image { get; set; }

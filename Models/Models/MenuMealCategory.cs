@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class MenuMealCategory: BaseEntity<string>
+    public class MenuMealCategory: BaseEntity
     {
         public string MenuId { get; set; }
         public Menu Menu { get; set; }

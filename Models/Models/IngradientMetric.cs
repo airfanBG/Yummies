@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class IngradientMetric: BaseEntity<string>
+    public class IngradientMetric: BaseEntity
     {
         public string MetricValue { get; set; }
         public ICollection<Ingradient> Ingradients { get; set; }

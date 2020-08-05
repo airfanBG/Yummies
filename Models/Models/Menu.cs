@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Menu: BaseEntity<string>
+    public class Menu: BaseEntity
     {
         public string MenuName { get; set; }
         public string Image { get; set; }

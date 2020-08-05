@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class ShoppingCard : BaseEntity<string>
+    public class ShoppingCard : BaseEntity
     {
         private CardStatus _cardStatus=CardStatus.Regular;
        

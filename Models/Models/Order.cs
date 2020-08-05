@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Order : BaseEntity<string>
+    public class Order : BaseEntity
     {
         public Order()
         {
