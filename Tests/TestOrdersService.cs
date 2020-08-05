@@ -73,7 +73,7 @@ namespace Tests
                 OrderComment = "Test",
                 OrderedMeals = new List<OrderMeals>() { new OrderMeals() { MealId = "e5ea694e-cd4e-43a3-bde1-58d13e01f468" } }
             });
-            var res= await OrderService.TotalSum(clientId);
+            var res= await OrderService.TotalSumAsync(clientId);
             Assert.Equal((decimal)9.708737, res);
         }
         [Fact]
@@ -82,7 +82,7 @@ namespace Tests
             OrderService = new OrderService(new ServiceConnector(new ApplicationDbContext()));
 
             var orderId = "e95779c4-f474-4363-814a-5cb30bb5a138";
-            var res= await OrderService.FinishOrder(orderId);
+            var res= await OrderService.FinishOrderAsync(orderId);
             Assert.Equal(1, res);
         }
         [Fact]
@@ -92,7 +92,7 @@ namespace Tests
         
             var userId = "57b577f9-8fa6-49c4-b07c-fccb29f1cf54";
            
-           var res= await OrderService.GetNotFinishedOrders(userId);
+           var res= await OrderService.GetNotFinishedOrdersAsync(userId);
             Assert.NotEmpty(res);
         }
     }

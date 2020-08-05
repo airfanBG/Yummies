@@ -28,6 +28,10 @@ namespace Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -45,25 +49,7 @@ namespace Data.Migrations
 
                     b.ToTable("AspNetRoles");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "1bed824d-6f66-4d0f-936f-c7b49fd42f93",
-                            ConcurrencyStamp = "9379cc95-8190-41c6-b557-6d396f4b2d6c",
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = "a7c88330-e370-4543-be01-2e95675b43f8",
-                            ConcurrencyStamp = "8b440d35-276a-4b12-b7b6-6833554f113e",
-                            Name = "Cheff"
-                        },
-                        new
-                        {
-                            Id = "1f029df1-95b4-4fe3-b687-199a0aefb765",
-                            ConcurrencyStamp = "bfcb3791-e404-43d5-ad32-725af40df0b6",
-                            Name = "Customer"
-                        });
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -220,13 +206,6 @@ namespace Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "bc776b77-3ba4-4e34-a91e-6e6d8cc6b633",
-                            RoleId = "1bed824d-6f66-4d0f-936f-c7b49fd42f93"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -251,7 +230,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Models.Models.Category", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryName")
@@ -276,49 +254,28 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "41baf16e-a5b4-42aa-8c8b-0b498606558d",
-                            CategoryName = "Vines",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "wine.jpg"
-                        },
-                        new
-                        {
-                            Id = "554b7af0-dab0-48b9-bfc4-d00d0b60e07f",
-                            CategoryName = "Waters",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "wine.jpg"
-                        },
-                        new
-                        {
-                            Id = "3f7f0ca1-a318-4466-95e0-ee3286ecfb2e",
-                            CategoryName = "FuzzyDrinks",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "wine.jpg"
-                        },
-                        new
-                        {
-                            Id = "611e1436-e879-4938-a72e-4088616a7303",
+                            Id = "bac20e23-0fe8-4b4e-9c32-1277cb30bbd2",
                             CategoryName = "Soups",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "soup.jpg"
                         },
                         new
                         {
-                            Id = "46003848-3750-474e-8503-bff8fea1d88d",
+                            Id = "0f8d33d0-5f6c-486d-9279-144bce400869",
                             CategoryName = "Meals",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "meal.jpg"
                         },
                         new
                         {
-                            Id = "8196de5e-32fd-4f38-ab9d-70180318448c",
+                            Id = "8cc309f3-5a4e-42cb-9a83-121505185f46",
                             CategoryName = "Desserts",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "desserts.jpg"
                         },
                         new
                         {
-                            Id = "a07ba81c-c0a4-462d-854f-4a9e497ec4b6",
+                            Id = "5d93ae7b-4d16-4bc6-90df-dfbaeab4b521",
                             CategoryName = "Drinks",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "drinks.jpg"
@@ -328,7 +285,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Models.Models.Customer", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -353,20 +309,11 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "7705b0b9-2479-44b0-8429-363709de00c0",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserId = "bc776b77-3ba4-4e34-a91e-6e6d8cc6b633"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Drink", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -390,38 +337,11 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Drinks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "80447ea0-f08e-4bcf-b117-bb00bf7408af",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DrinkName = "Wine",
-                            Image = "wine.jpg",
-                            Price = 20m
-                        },
-                        new
-                        {
-                            Id = "3aa416bb-c4f8-4773-98a8-573e8c02b1d6",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DrinkName = "Water",
-                            Image = "water.jpg",
-                            Price = 3m
-                        },
-                        new
-                        {
-                            Id = "66bebf57-04c4-46a6-94de-6389c45f1453",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DrinkName = "Orange",
-                            Image = "orange-juice.jpg",
-                            Price = 3m
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.DrinkCategory", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
@@ -446,35 +366,11 @@ namespace Data.Migrations
                     b.HasIndex("DrinkId");
 
                     b.ToTable("DrinkCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "d4e7587f-4244-4b9f-b383-5bd997febfe8",
-                            CategoryId = "41baf16e-a5b4-42aa-8c8b-0b498606558d",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DrinkId = "80447ea0-f08e-4bcf-b117-bb00bf7408af"
-                        },
-                        new
-                        {
-                            Id = "80126793-f69a-4528-b60b-ee9b91d511d3",
-                            CategoryId = "554b7af0-dab0-48b9-bfc4-d00d0b60e07f",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DrinkId = "3aa416bb-c4f8-4773-98a8-573e8c02b1d6"
-                        },
-                        new
-                        {
-                            Id = "5a7ca22f-f47a-499b-8f90-77dbe3164cb3",
-                            CategoryId = "3f7f0ca1-a318-4466-95e0-ee3286ecfb2e",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DrinkId = "66bebf57-04c4-46a6-94de-6389c45f1453"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Ingradient", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -497,42 +393,11 @@ namespace Data.Migrations
                     b.HasIndex("IngradientMetricId");
 
                     b.ToTable("Ingradients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c42e1966-49e2-4a91-9677-138461be18d5",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "67c7f290-4747-45f2-b68d-c9957cbd7f42",
-                            IngradientName = "Egg"
-                        },
-                        new
-                        {
-                            Id = "136e36b6-6bd7-40d0-8b99-ce959c2b3ba7",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "c328244e-ab39-43ef-a7e2-93585a5e06c0",
-                            IngradientName = "Meet"
-                        },
-                        new
-                        {
-                            Id = "e92c6934-3e23-44da-a03d-56833efc24a0",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "b64a0097-dcc5-4972-9f54-437a6a7651b0",
-                            IngradientName = "Milk"
-                        },
-                        new
-                        {
-                            Id = "db9202fb-2d87-4f9d-9f6e-61857adf3135",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IngradientMetricId = "c328244e-ab39-43ef-a7e2-93585a5e06c0",
-                            IngradientName = "Sugar"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.IngradientMetric", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -550,32 +415,11 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("IngradientMetrics");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c328244e-ab39-43ef-a7e2-93585a5e06c0",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MetricValue = "Grams"
-                        },
-                        new
-                        {
-                            Id = "b64a0097-dcc5-4972-9f54-437a6a7651b0",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MetricValue = "Liters"
-                        },
-                        new
-                        {
-                            Id = "67c7f290-4747-45f2-b68d-c9957cbd7f42",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MetricValue = "Number"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Meal", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -615,73 +459,11 @@ namespace Data.Migrations
                     b.HasIndex("RecipeId");
 
                     b.ToTable("Meals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "084e3dd3-df5f-4908-b65c-455bee2969ce",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "pizza.jpg",
-                            MealCategoryId = "46003848-3750-474e-8503-bff8fea1d88d",
-                            MealName = "Pizza",
-                            Price = 10m,
-                            RecipeId = "e36a0668-81d9-4d5b-9e8f-cd1ac9515653"
-                        },
-                        new
-                        {
-                            Id = "d14f2585-d7cf-4555-a1ce-dc291b4c5b7f",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "chicken.jpg",
-                            MealCategoryId = "611e1436-e879-4938-a72e-4088616a7303",
-                            MealName = "Chicken soup",
-                            Price = 20m,
-                            RecipeId = "849946fd-69cb-483b-9f19-de7564e9736a"
-                        },
-                        new
-                        {
-                            Id = "ab1237e1-844f-454c-ac45-8dad72aae0a3",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "cake.jpg",
-                            MealCategoryId = "8196de5e-32fd-4f38-ab9d-70180318448c",
-                            MealName = "Cake",
-                            Price = 5m,
-                            RecipeId = "c700e145-917f-4850-8521-c706d54db211"
-                        },
-                        new
-                        {
-                            Id = "8e201ade-e9f2-435c-b58d-57be0cac3fc8",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "fish.jpg",
-                            MealCategoryId = "46003848-3750-474e-8503-bff8fea1d88d",
-                            MealName = "Fish",
-                            Price = 15m
-                        },
-                        new
-                        {
-                            Id = "1f0c17cd-3df2-48a9-93bc-73a4a8e6ceee",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "fish-soup.jpg",
-                            MealCategoryId = "611e1436-e879-4938-a72e-4088616a7303",
-                            MealName = "Fish soup",
-                            Price = 10m,
-                            RecipeId = "a5f6c8f6-c30c-43b5-b649-e535d451c289"
-                        },
-                        new
-                        {
-                            Id = "762c0761-149e-4c05-9549-169603a55a36",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Image = "pancakes.jpg",
-                            MealCategoryId = "8196de5e-32fd-4f38-ab9d-70180318448c",
-                            MealName = "Pancakes",
-                            Price = 7m,
-                            RecipeId = "b4abe9d5-f5ed-4958-b1fa-a4faebf1a73b"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.MealRate", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -704,56 +486,11 @@ namespace Data.Migrations
                     b.HasIndex("MealId");
 
                     b.ToTable("MealRates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "e1a83f4c-42af-4223-9007-771910b7b8dd",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "ab1237e1-844f-454c-ac45-8dad72aae0a3",
-                            Rate = 8
-                        },
-                        new
-                        {
-                            Id = "2f3a94bc-101b-4e33-9e10-ebba5cdce840",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "ab1237e1-844f-454c-ac45-8dad72aae0a3",
-                            Rate = 9
-                        },
-                        new
-                        {
-                            Id = "5eb25c5f-9efc-4efc-868e-b3b47a087f86",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "d14f2585-d7cf-4555-a1ce-dc291b4c5b7f",
-                            Rate = 9
-                        },
-                        new
-                        {
-                            Id = "e609ed29-3855-4de7-b526-086e3c6a1f33",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "d14f2585-d7cf-4555-a1ce-dc291b4c5b7f",
-                            Rate = 7
-                        },
-                        new
-                        {
-                            Id = "b062b4d8-75f9-42c2-9706-175bf49e9e90",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "084e3dd3-df5f-4908-b65c-455bee2969ce",
-                            Rate = 10
-                        },
-                        new
-                        {
-                            Id = "84b3724b-c92d-4247-817e-b17743ab5d08",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "084e3dd3-df5f-4908-b65c-455bee2969ce",
-                            Rate = 9
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Menu", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -778,7 +515,7 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1b40a0d9-5260-4fc8-b7b3-4b00afef425d",
+                            Id = "2ca93679-6641-4a13-bb2a-dfd3a358e11b",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Image = "book_left_image.jpg",
                             MenuName = "Standard"
@@ -788,7 +525,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Models.Models.MenuMealCategory", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -817,31 +553,30 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9afa6e3c-845f-43a0-9695-c4feba1c4215",
+                            Id = "4dc8fc81-8388-466b-8dec-b1fdc129301c",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "611e1436-e879-4938-a72e-4088616a7303",
-                            MenuId = "1b40a0d9-5260-4fc8-b7b3-4b00afef425d"
+                            MealCategoryId = "bac20e23-0fe8-4b4e-9c32-1277cb30bbd2",
+                            MenuId = "2ca93679-6641-4a13-bb2a-dfd3a358e11b"
                         },
                         new
                         {
-                            Id = "e76cfd2e-fcc8-4ffd-8c64-bbf37e52a0a2",
+                            Id = "7ddeec34-2b19-41b8-bf71-66026707a42f",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "46003848-3750-474e-8503-bff8fea1d88d",
-                            MenuId = "1b40a0d9-5260-4fc8-b7b3-4b00afef425d"
+                            MealCategoryId = "0f8d33d0-5f6c-486d-9279-144bce400869",
+                            MenuId = "2ca93679-6641-4a13-bb2a-dfd3a358e11b"
                         },
                         new
                         {
-                            Id = "7ba9a1a3-e396-4806-a2c4-1a5f636c8ce9",
+                            Id = "68e08591-4783-4f4e-b10a-452a0bca28bf",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealCategoryId = "8196de5e-32fd-4f38-ab9d-70180318448c",
-                            MenuId = "1b40a0d9-5260-4fc8-b7b3-4b00afef425d"
+                            MealCategoryId = "8cc309f3-5a4e-42cb-9a83-121505185f46",
+                            MenuId = "2ca93679-6641-4a13-bb2a-dfd3a358e11b"
                         });
                 });
 
             modelBuilder.Entity("Models.Models.Order", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -871,22 +606,46 @@ namespace Data.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CustomerId = "7705b0b9-2479-44b0-8429-363709de00c0",
-                            HasPaid = false,
-                            isFinished = false
-                        });
+            modelBuilder.Entity("Models.Models.OrderDrinks", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DrinkId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DrinkId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderDrinks");
                 });
 
             modelBuilder.Entity("Models.Models.OrderMeals", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -920,74 +679,11 @@ namespace Data.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderMeals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a4f12fff-5594-48b3-b519-5fe31d8d0692",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "084e3dd3-df5f-4908-b65c-455bee2969ce",
-                            OrderId = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "b3c7b689-ee79-43e8-8c47-bae7717c593c",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "d14f2585-d7cf-4555-a1ce-dc291b4c5b7f",
-                            OrderId = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "ec94a4fc-9248-4fdc-b144-952cbd6aa865",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "ab1237e1-844f-454c-ac45-8dad72aae0a3",
-                            OrderId = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "d04eec01-c3bc-4296-886c-c0c95eeebd36",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "8e201ade-e9f2-435c-b58d-57be0cac3fc8",
-                            OrderId = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "be0c08b3-b9aa-4ee8-81a1-4c1a66045f61",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "1f0c17cd-3df2-48a9-93bc-73a4a8e6ceee",
-                            OrderId = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        },
-                        new
-                        {
-                            Id = "32b5b7f2-eb27-413d-bb9e-3f92a3776ee2",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MealId = "762c0761-149e-4c05-9549-169603a55a36",
-                            OrderId = "436bcb1d-7033-49e8-8604-66e65dfd7786",
-                            Quantity = 1,
-                            Statuses = 0,
-                            SubTotal = 0m
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.Recipe", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -1011,62 +707,11 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Recipes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c700e145-917f-4850-8521-c706d54db211",
-                            CreatedAt = new DateTime(2020, 8, 3, 11, 45, 55, 456, DateTimeKind.Local).AddTicks(4227),
-                            Description = "First add ...",
-                            MealName = "Cake",
-                            TimeForPrepare = "30min"
-                        },
-                        new
-                        {
-                            Id = "849946fd-69cb-483b-9f19-de7564e9736a",
-                            CreatedAt = new DateTime(2020, 8, 3, 11, 45, 55, 469, DateTimeKind.Local).AddTicks(8052),
-                            Description = "First add ...",
-                            MealName = "Chiken soup",
-                            TimeForPrepare = "20min"
-                        },
-                        new
-                        {
-                            Id = "b4abe9d5-f5ed-4958-b1fa-a4faebf1a73b",
-                            CreatedAt = new DateTime(2020, 8, 3, 11, 45, 55, 470, DateTimeKind.Local).AddTicks(4620),
-                            Description = "First add ...",
-                            MealName = "Pancakes",
-                            TimeForPrepare = "20min"
-                        },
-                        new
-                        {
-                            Id = "a5f6c8f6-c30c-43b5-b649-e535d451c289",
-                            CreatedAt = new DateTime(2020, 8, 3, 11, 45, 55, 470, DateTimeKind.Local).AddTicks(4563),
-                            Description = "First add ...",
-                            MealName = "Fish soup",
-                            TimeForPrepare = "20min"
-                        },
-                        new
-                        {
-                            Id = "e36a0668-81d9-4d5b-9e8f-cd1ac9515653",
-                            CreatedAt = new DateTime(2020, 8, 3, 11, 45, 55, 470, DateTimeKind.Local).AddTicks(4643),
-                            Description = "First add ...",
-                            MealName = "Pizza",
-                            TimeForPrepare = "20min"
-                        },
-                        new
-                        {
-                            Id = "7e280340-7019-43ee-a9a3-68135782d11e",
-                            CreatedAt = new DateTime(2020, 8, 3, 11, 45, 55, 470, DateTimeKind.Local).AddTicks(4780),
-                            Description = "First add ...",
-                            MealName = "Fish",
-                            TimeForPrepare = "20min"
-                        });
                 });
 
             modelBuilder.Entity("Models.Models.RecipeIngradients", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -1099,7 +744,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Models.Models.ShoppingCard", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CardStatus")
@@ -1117,6 +761,27 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShoppingCards");
+                });
+
+            modelBuilder.Entity("Models.Models.IdentityModels.UserRole", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("UserId");
+
+                    b.HasDiscriminator().HasValue("UserRole");
                 });
 
             modelBuilder.Entity("Models.Models.IdentityModels.User", b =>
@@ -1142,28 +807,6 @@ namespace Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bc776b77-3ba4-4e34-a91e-6e6d8cc6b633",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ffa332f6-0c43-4e6a-ad6a-369fb2bea622",
-                            Email = "fall_out@abv.bg",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "FALL_OUT@ABV.BG",
-                            NormalizedUserName = "AIRFAN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG1eSQ5kJzHb9Dc0f0jWV9p+CZfc49EiFz7btjryt640qrp3L+KiPSt9vOnABTOrjQ==",
-                            PhoneNumber = "+111111111111",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "b8b04cfd-f905-4638-8488-9f965178f879",
-                            TwoFactorEnabled = false,
-                            UserName = "airfan",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "airfan",
-                            LastName = "airfan"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1282,6 +925,17 @@ namespace Data.Migrations
                         .HasForeignKey("CustomerId");
                 });
 
+            modelBuilder.Entity("Models.Models.OrderDrinks", b =>
+                {
+                    b.HasOne("Models.Models.Drink", "Drink")
+                        .WithMany("OrderDrinks")
+                        .HasForeignKey("DrinkId");
+
+                    b.HasOne("Models.Models.Order", "Order")
+                        .WithMany("OrderDrinks")
+                        .HasForeignKey("OrderId");
+                });
+
             modelBuilder.Entity("Models.Models.OrderMeals", b =>
                 {
                     b.HasOne("Models.Models.Meal", "Meal")
@@ -1302,6 +956,13 @@ namespace Data.Migrations
                     b.HasOne("Models.Models.Recipe", "Recipe")
                         .WithMany("RecepeeIngradients")
                         .HasForeignKey("RecipeId");
+                });
+
+            modelBuilder.Entity("Models.Models.IdentityModels.UserRole", b =>
+                {
+                    b.HasOne("Models.Models.IdentityModels.User", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

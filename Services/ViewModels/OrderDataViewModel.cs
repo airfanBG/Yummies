@@ -8,6 +8,8 @@ namespace Services.ViewModels
     {
         public int Quantity { get; set; }
         public string MealId { get; set; }
+        public string DrinkId { get; set; }
         public string Comment { get; set; }
+        public bool isMeal { get; set; }
     }
 }

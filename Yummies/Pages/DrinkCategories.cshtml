@@ -26,16 +26,17 @@
     @foreach (var drink in Model.DrinkCategoryViewModels)
     {
         <div class="col-md-3">
-            <form class="meal">
+            <form class="drink">
                 <div style="display:inline-block; text-align:center;">
                     <img src="~/images/@drink.DrinkViewModel.Image" />
-                    <p class="mealName">@drink.DrinkViewModel.DrinkName</p>
+                    <p class="drinkName">@drink.DrinkViewModel.DrinkName</p>
 
-                    <p class="mealPrice">@drink.DrinkViewModel.Price <span>$</span></p>
+                    <p class="drikPrice">@drink.DrinkViewModel.Price <span>$</span></p>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <input class="form-control" style="text-align:right; width:100px;margin-left:155px;" type="number" min="1" name="Quantity" value="1" />
-                        <input type="text" name="MealId" value="@drink.DrinkViewModel.Id" hidden />
+                        <input type="text" name="DrinkId" value="@drink.DrinkViewModel.Id" hidden />
+                        <input type="text" name="isMeal" value="false" hidden />
                         <p class="col-form-label">Comment:</p>
                         <input class="form-control" type="text" name="Comment" value="" />
                         <div>
@@ -57,7 +58,7 @@
         $(function () {
              $("form").on("submit",function (e) {
                  e.preventDefault();
-                 var meal = $(this).find(".mealName").text();
+                 var meal = $(this).find(".drinkName").text();
             var data = $(this).serialize();
             $.ajax({
                 url: "/ShoppingCart",

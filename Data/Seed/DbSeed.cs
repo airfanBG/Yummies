@@ -16,8 +16,8 @@ namespace Data.Seed
     public class DbSeed
     {
         private ModelBuilder ModelBuilder { get; }
-        private List<Category> mealCategories;
-        private List<Meal> meals;
+        private List<Category> mealCategories=new List<Category>();
+        private List<Meal> meals=new List<Meal>();
         private string customerId;
 
         public DbSeed(ModelBuilder builder)
@@ -27,9 +27,9 @@ namespace Data.Seed
         }
         public void Generate()
         {
-            SeedUser();
+           //SeedUser();
             SeedMenu();
-            SeedOrders(customerId, meals);
+            //SeedOrders(customerId, meals);
         }
         private void SeedUser()
         {
@@ -53,13 +53,13 @@ namespace Data.Seed
             var hashed = password.HashPassword(user, "12345!@");
             user.PasswordHash = hashed;
 
-            var roleAdmin = new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Admin", };
-            var roleCustomer = new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Customer", };
-            var roleCheff = new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "Cheff", };
+            var roleAdmin = new UserRole() { Name = "Admin", };
+            var roleCustomer = new UserRole() { Name = "Customer", };
+            var roleCheff = new UserRole() { Name = "Cheff", };
 
-            var ur = new IdentityUserRole<string>();
-            ur.RoleId = roleAdmin.Id;
-            ur.UserId = user.Id;
+            //var ur = new RoleStore<UserRole>(Mode)
+            //ur.RoleId = roleAdmin.Id;
+            //ur.UserId = user.Id;
 
             //Debugger.Launch();
 
@@ -73,9 +73,9 @@ namespace Data.Seed
             };
             customerId = customer.Id;
             ModelBuilder.Entity<User>().HasData(user);
-            ModelBuilder.Entity<IdentityRole>().HasData(roleAdmin, roleCheff, roleCustomer);
-            ModelBuilder.Entity<IdentityUserRole<string>>().HasData(ur);
-            ModelBuilder.Entity<Customer>().HasData(customer);
+            ModelBuilder.Entity<UserRole>().HasData(roleAdmin, roleCheff, roleCustomer);
+          //  ModelBuilder.Entity<IdentityUserRole<string>>().HasData(ur);
+           // ModelBuilder.Entity<Customer>().HasData(customer);
 
         }
         private void SeedOrders(string customerId, List<Meal> meals)
@@ -86,7 +86,7 @@ namespace Data.Seed
                 Id = Guid.NewGuid().ToString(),
                 CustomerId = customerId,
                 HasPaid = false,
-                // OrderedMeals = orderMeals
+                
             };
             foreach (var item in meals)
             {
@@ -96,7 +96,6 @@ namespace Data.Seed
                     MealId = item.Id,
                     OrderId = order.Id,
                     Quantity = 1,
-                    //Order=order
                 });
             }
 
@@ -107,8 +106,8 @@ namespace Data.Seed
         private void SeedMenu()
         {
             SeedCategories();
-            SeedMeals();
-            SeedDrinks();
+            //SeedMeals();
+            //SeedDrinks();
 
             var menuId = Guid.NewGuid().ToString();
 
@@ -121,8 +120,8 @@ namespace Data.Seed
             };
 
             ModelBuilder.Entity<Menu>().HasData(menu);
-            ModelBuilder.Entity<Category>().HasData(mealCategories);
-            ModelBuilder.Entity<Meal>().HasData(meals);
+           
+           
 
 
             var menumealcat1 = new MenuMealCategory()
@@ -163,33 +162,38 @@ namespace Data.Seed
         }
         private void SeedCategories()
         {
-            mealCategories = new List<Category>()
+            var cat1 = new Category()
             {
-                new Category()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CategoryName="Soups",
-                    Image="soup.jpg"
-                },
-                new Category()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CategoryName="Meals",
-                    Image="meal.jpg"
-                },
-                new Category()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CategoryName="Desserts",
-                    Image="desserts.jpg"
-                },
-                new Category()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    CategoryName="Drinks",
-                    Image="drinks.jpg"
-                }
+                Id = Guid.NewGuid().ToString(),
+                CategoryName = "Soups",
+                Image = "soup.jpg",
+                
             };
+            var cat2 = new Category()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CategoryName = "Meals",
+                Image = "meal.jpg"
+            };
+              var cat3=  new Category()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CategoryName = "Desserts",
+                    Image = "desserts.jpg"
+                };
+
+            var cat4 = new Category()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CategoryName = "Drinks",
+                Image = "drinks.jpg"
+            };
+            mealCategories.Add(cat1);
+            mealCategories.Add(cat2);
+            mealCategories.Add(cat3);
+            mealCategories.Add(cat4);
+
+            ModelBuilder.Entity<Category>().HasData(cat1,cat2,cat3,cat4);
         }
         private void SeedMeals()
         {
@@ -304,67 +308,73 @@ namespace Data.Seed
 
 
 
-            meals = new List<Meal>()
+
+            var meal1 = new Meal()
             {
-                new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Pizza",
-                    Image="pizza.jpg",
-                    Price=10,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id,
-                    RecipeId=recepeePizza.Id
-                },
-                new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Chicken soup",
-                    Image="chicken.jpg",
-                     Price=20,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id,
-                    RecipeId=recepeeSoup.Id
-                },
-                new Meal()
-                {
-
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Cake",
-                    Image="cake.jpg",
-                     Price=5,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id,
-                    RecipeId=recepeeCake.Id
-
-                },
-                new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Fish",
-                    Image="fish.jpg",
-                     Price=15,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Meals").Id,
-
-
-                },
-                new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Fish soup",
-                    Image="fish-soup.jpg",
-                     Price=10,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Soups").Id,
-                      RecipeId=recepeeFishsSoup.Id
-                },
-                new Meal()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    MealName= "Pancakes",
-                    Image="pancakes.jpg",
-                     Price=7,
-                    MealCategoryId= mealCategories.FirstOrDefault(x=>x.CategoryName=="Desserts").Id,
-                    RecipeId=recepeePancakes.Id
-                },
+                Id = Guid.NewGuid().ToString(),
+                MealName = "Pizza",
+                Image = "pizza.jpg",
+                Price = 10,
+                MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Meals").Id,
+                RecipeId = recepeePizza.Id
             };
+            var meal2 = new Meal()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealName = "Chicken soup",
+                Image = "chicken.jpg",
+                Price = 20,
+                MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Soups").Id,
+                RecipeId = recepeeSoup.Id
+            };
+            var meal3 = new Meal()
+            {
 
+                Id = Guid.NewGuid().ToString(),
+                MealName = "Cake",
+                Image = "cake.jpg",
+                Price = 5,
+                MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Desserts").Id,
+                RecipeId = recepeeCake.Id
+
+            };
+            var meal4 = new Meal()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealName = "Fish",
+                Image = "fish.jpg",
+                Price = 15,
+                MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Meals").Id,
+
+
+            };
+            var meal5 = new Meal()
+            {
+                Id = Guid.NewGuid().ToString(),
+                MealName = "Fish soup",
+                Image = "fish-soup.jpg",
+                Price = 10,
+                MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Soups").Id,
+                RecipeId = recepeeFishsSoup.Id
+            };
+             var meal6=   new Meal()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    MealName = "Pancakes",
+                    Image = "pancakes.jpg",
+                    Price = 7,
+                    MealCategoryId = mealCategories.FirstOrDefault(x => x.CategoryName == "Desserts").Id,
+                    RecipeId = recepeePancakes.Id
+                };
+            meals.Add(meal1);
+            meals.Add(meal2);
+            meals.Add(meal3);
+            meals.Add(meal4);
+            meals.Add(meal5);
+            meals.Add(meal6);
+
+
+            ModelBuilder.Entity<Meal>().HasData(meal1,meal2,meal3,meal4,meal5,meal6);
 
             var rateCake = new MealRate()
             {
@@ -410,7 +420,7 @@ namespace Data.Seed
             {
                 CategoryName="Vines",
                 Image= "wine.jpg",
-                Id = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid().ToString()
             };
             var categoyWater = new Category()
             {

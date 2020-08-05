@@ -22,10 +22,13 @@ namespace Yummies.Pages
         }
         public async Task<IActionResult> OnGet(string id)
         {
+            if (!string.IsNullOrEmpty(id))
+            {
+                var res = await CategoryService.GetDrinkCategories(id);
 
-            var res = await CategoryService.GetDrinkCategories(id);
+                DrinkCategoryViewModels = MapperConfigurator.Mapper.Map<List<DrinkCategoryViewModel>>(res);
 
-            DrinkCategoryViewModels = MapperConfigurator.Mapper.Map<List<DrinkCategoryViewModel>>(res);
+            }
 
             return Page();
         }

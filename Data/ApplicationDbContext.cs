@@ -1,4 +1,5 @@
 ﻿using Data.Seed;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,7 @@ namespace Data
         public DbSet<RecipeIngradients> RecepeeIngradients { get; set; }
         public DbSet<IngradientMetric> IngradientMetrics { get; set; }
         public DbSet<Drink> Drinks { get; set; }
+        public DbSet<OrderDrinks> OrderDrinks { get; set; }
         public DbSet<DrinkCategory> DrinkCategories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -52,58 +54,37 @@ namespace Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            DbSeed seed = new DbSeed(builder);
-            seed.Generate();
+            //DbSeed seed = new DbSeed(builder);
+            //seed.Generate();
 
             base.OnModelCreating(builder);
         }
 
         private void ApplyEntityChanges()
         {
-            var entries = this.ChangeTracker.Entries().Where(x => (x.Entity is BaseEntity || x.Entity is User) && x.State == EntityState.Added || x.State == EntityState.Deleted || x.State == EntityState.Modified).ToList();
+            var entries = this.ChangeTracker.Entries().Where(x => (x.Entity is IAuditInfo) && x.State == EntityState.Added || x.State == EntityState.Deleted || x.State == EntityState.Modified).ToList();
 
             foreach (var entry in entries)
             {
-                if (entry.Entity is User)
+
+                var entity = (IAuditInfo)entry.Entity;
+
+                if (entry.State == EntityState.Added)
                 {
-                    var entity = (User)entry.Entity;
+                    entity.CreatedAt = DateTime.UtcNow;
+                }
+                else if (entry.State == EntityState.Deleted)
+                {
+                    entity.DeletedAt = DateTime.UtcNow;
 
-                    if (entry.State == EntityState.Added)
-                    {
-                        entity.Id = Guid.NewGuid().ToString();
-                        entity.CreatedAt = DateTime.Now;
-                    }
-                    else if (entry.State == EntityState.Deleted)
-                    {
-                        entity.DeletedAt = DateTime.Now;
-
-                    }
-                    else
-                    {
-                        entity.ModifiedAt = DateTime.Now;
-                    }
                 }
                 else
                 {
-                    var entity = (BaseEntity)entry.Entity;
-
-                    if (entry.State == EntityState.Added)
-                    {
-                        entity.Id = Guid.NewGuid().ToString();
-                        entity.CreatedAt = DateTime.Now;
-                    }
-                    else if (entry.State == EntityState.Deleted)
-                    {
-                        entity.DeletedAt = DateTime.Now;
-
-                    }
-                    else
-                    {
-                        entity.ModifiedAt = DateTime.Now;
-                    }
+                    entity.ModifiedAt = DateTime.UtcNow;
                 }
-               
             }
+
+
         }
         public override int SaveChanges()
         {

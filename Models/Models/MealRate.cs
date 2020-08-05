@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class MealRate:BaseEntity
+    public class MealRate: BaseEntity<string>
     {
         public string MealId { get; set; }
         public Meal Meal { get; set; }

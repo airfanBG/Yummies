@@ -57,6 +57,9 @@ namespace Services.Implementations
                .Where(x => x.OrderId == orderId && x.MealId == mealId).FirstOrDefaultAsync();
 
             var data = MapperConfigurator.Mapper.Map<OrderMealsViewModel>(res);
+            res.Statuses = Statuses.Started;
+
+            var updateStatus =await ServiceConnector.OrderMeals.Update(res);
             return data;
         }
         public async Task<int> RejectMealPreparing(string orderId, string mealId, string comment)

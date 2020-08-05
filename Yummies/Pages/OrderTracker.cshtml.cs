@@ -24,7 +24,7 @@ namespace Yummies.Pages
         }
         public async Task OnGet()
         {
-            Order =await OrderService.GetOrderStatus(UserManager.FindByNameAsync(User.Identity.Name).Result.Id);
+            Order =await OrderService.GetOrderStatusAsync(UserManager.FindByNameAsync(User.Identity.Name).Result.Id);
         }
     }
 }

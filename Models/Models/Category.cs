@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Category:BaseEntity
+    public class Category:BaseEntity<string>
     {
         public string CategoryName { get; set; }
         public string Image { get; set; }

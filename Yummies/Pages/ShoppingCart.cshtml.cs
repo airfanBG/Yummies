@@ -41,13 +41,16 @@ namespace Yummies.Pages
         public async Task OnGetAsync()
         {
             userId = _userManager.GetUserId(User);
-             Orders = await OrderService.GetNotFinishedOrders(userId);
-             Total = await OrderService.TotalSum(userId);
+             Orders = await OrderService.GetNotFinishedOrdersAsync(userId);
+             Total = await OrderService.TotalSumAsync(userId);
            
         }
         public async Task OnGetDeleteOrder(string id)
         {
-           await OrderService.ServiceConnector.Orders.Remove(id);
+            if (!string.IsNullOrEmpty(id))
+            {
+                await OrderService.ServiceConnector.Orders.Remove(id);
+            }
         }
         public async Task<IActionResult> OnPostDeleteMealOrderAsync(string mealId, string orderId)
         {
@@ -69,54 +72,13 @@ namespace Yummies.Pages
 
         public async Task<IActionResult> OnPost(OrderDataViewModel model)
         {
-            if (model.MealId==null)
+            if (model==null)
             {
                 return null;
             }
             userId = _userManager.GetUserId(User);
-            var customer =await OrderService.ServiceConnector.Context.Set<Customer>().Include(x=>x.ShoppingCard).FirstOrDefaultAsync(x=>x.UserId==userId);
-            var totalOrders = 0;
-            if (customer!=null)
-            {
+            var totalOrders =await OrderService.AddItemToCartAsync(model, userId);
 
-                var orders = OrderService.ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).GetAwaiter().GetResult().Where(x => x.HasPaid == false);
-               
-                var meal =await OrderService.ServiceConnector.Meals.GetAll(x => x.Id == model.MealId);
-
-                if (orders.Count() > 0)
-                {
-                    totalOrders = orders.Count();
-                    var lastOrder = orders.OrderByDescending(x => x.CreatedAt).First();
-                    lastOrder.OrderedMeals.Add(new OrderMeals()
-                    {
-                        MealId = model.MealId,
-                        Quantity = model.Quantity,
-                       SubTotal=(model.Quantity*meal.FirstOrDefault().Price)/(1+((decimal)customer.ShoppingCard.CardStatus/100))
-                    });
-                    await OrderService.ServiceConnector.Orders.Update(lastOrder);
-                    await OrderService.ServiceConnector.Orders.SaveChangesAsync();
-                }
-                else
-                {
-                    await OrderService.ServiceConnector.Orders.Add(new Order()
-                    {
-                        CustomerId = customer.Id,
-                        HasPaid = false,
-                        OrderComment = model.Comment,
-                        OrderedMeals = new List<OrderMeals>()
-                       {
-                           new OrderMeals()
-                           {
-                               MealId=model.MealId,
-                               Quantity=model.Quantity,
-                               SubTotal=(model.Quantity*meal.FirstOrDefault().Price)/(1+((decimal)customer.ShoppingCard.CardStatus/100))
-                           }
-                       }
-                    });
-                   
-                }
-               
-            }
 
             return Partial("_Cart", totalOrders);
            
@@ -125,8 +87,8 @@ namespace Yummies.Pages
         public async Task<IActionResult> OnPostShowEditOrderAsync(string mealId, string orderId)
         {
             userId = _userManager.GetUserId(User);
-            Orders = await OrderService.GetNotFinishedOrders(userId);
-            Total = await OrderService.TotalSum(userId);
+            Orders = await OrderService.GetNotFinishedOrdersAsync(userId);
+            Total = await OrderService.TotalSumAsync(userId);
 
             var orderMeal =await OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId==orderId);
           
@@ -136,7 +98,7 @@ namespace Yummies.Pages
         }
         public async Task<IActionResult> OnPostSubmitOrderAsync()
         {
-            var res = await OrderService.FinishOrder(OrderId);
+            var res = await OrderService.FinishOrderAsync(OrderId);
             if (res==1)
             {
                 return Page();
