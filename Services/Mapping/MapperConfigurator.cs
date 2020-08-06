@@ -44,6 +44,7 @@ namespace Services.Mapping
             CreateMap<Drink, DrinkViewModel>().ForMember(x=>x.DrinkCategoryViewModels,o=>o.MapFrom(z=>z.DrinkCategories)).ReverseMap();
             CreateMap<Category, CategoryViewModel>().ForMember(x=>x.DrinkCategories,o=>o.MapFrom(z=>z.DrinkCategories)).ReverseMap();
             CreateMap<DrinkCategory, DrinkCategoryViewModel>().ForMember(x => x.CategoryViewModel, o => o.MapFrom(z => z.Category)).ForMember(z => z.DrinkViewModel, o => o.MapFrom(x => x.Drink)).ReverseMap();
+            CreateMap<OrderDrinks, OrderDrinksViewModel>().ForMember(x=>x.Drink,o=>o.MapFrom(z=>z.Drink)).ReverseMap();
         }
     }
 }

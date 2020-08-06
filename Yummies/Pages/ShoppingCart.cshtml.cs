@@ -40,9 +40,9 @@ namespace Yummies.Pages
         }
         public async Task OnGetAsync()
         {
-            userId = _userManager.GetUserId(User);
+             userId = _userManager.GetUserId(User);
              Orders = await OrderService.GetNotFinishedOrdersAsync(userId);
-             Total = await OrderService.TotalSumAsync(userId);
+             Total = await OrderService.TotalSumAsync();
            
         }
         public async Task OnGetDeleteOrder(string id)
@@ -88,7 +88,7 @@ namespace Yummies.Pages
         {
             userId = _userManager.GetUserId(User);
             Orders = await OrderService.GetNotFinishedOrdersAsync(userId);
-            Total = await OrderService.TotalSumAsync(userId);
+            Total = await OrderService.TotalSumAsync();
 
             var orderMeal =await OrderService.ServiceConnector.OrderMeals.GetAll(x => x.MealId == mealId && x.OrderId==orderId);
           

@@ -7,8 +7,10 @@
 @{
     int counter = 1;
     string orderId = "";
+   
+    var all = Model.Orders.Select(x => new { DrinksCount = x.OrderDrinks.Count(), MealsCount = x.OrderedMeals.Count() }).Sum((z)=>z.DrinksCount+z.MealsCount);
 }
-<h1>Ordered: @Model.Orders.Count</h1>
+<h1>Ordered: @all</h1>
 <style>
     .param {
         margin-bottom: 7px;
@@ -81,7 +83,7 @@
             <tbody>
                 @foreach (OrderViewModel order in Model.Orders)
                 {
-                    orderId= order.Id;
+                    orderId = order.Id;
 
                     @foreach (OrderMealsViewModel meal in order.OrderedMeals)
                     {
@@ -120,6 +122,46 @@
                                 <a data-id="@meal.MealId" class="btn btn-outline-danger">x Remove</a>
                             </td>
                             <td style="float:right;">@meal.SubTotal</td>
+                        </tr>
+                        counter++;
+                    }
+                    @foreach (OrderDrinksViewModel drink in order.OrderDrinks)
+                    {
+                        <tr id="order" data-id="@order.Id">
+                            <td>@counter</td>
+                            <td>
+                                <figure class="media">
+                                    <div class="img-wrap"><img src="~/images/@drink.Drink.Image" class="img-thumbnail img-sm"></div>
+                                    <figcaption class="media-body">
+                                        <h6 class="title text-truncate">@drink.Drink.DrinkName </h6>
+                                        <dl class="param param-inline small">
+                                            <dt>Quantity: </dt>
+                                            <dd>@drink.Quantity</dd>
+                                        </dl>
+                                        <dl class="param param-inline small">
+                                            <dt>Price: </dt>
+                                            <dd>USD @drink.Drink.Price</dd>
+                                        </dl>
+                                    </figcaption>
+                                </figure>
+                            </td>
+
+                            <td>
+                                <div class="price-wrap">
+                                    <var class="price">@order.Customer.ShoppingCard.CardStatus</var>
+                                    <small class="text-muted">(Discount)</small>
+                                </div> <!-- price-wrap .// -->
+                            </td>
+                            <td class="text-center">
+                                <form asp-page="ShoppingCart" asp-page-handler="ShowEditOrder" method="post">
+                                    <input type="text" name="mealId" value="@drink.DrinkId" hidden />
+                                    <input type="text" name="orderId" value="@drink.OrderId" hidden />
+                                    <input type="submit" class="btn btn-outline-success" name="submit" value="+ Edit" />
+                                </form>
+
+                                <a data-id="@drink.DrinkId" class="btn btn-outline-danger">x Remove</a>
+                            </td>
+                            <td style="float:right;">@drink.SubTotal</td>
                         </tr>
                         counter++;
                     }

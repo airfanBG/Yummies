@@ -18,6 +18,7 @@ namespace Services.Implementations
     public class OrderService
     {
         public IServiceConnector ServiceConnector { get; protected set; }
+        private List<Order> Orders;
 
         public OrderService(ServiceConnector serviceConnector)
         {
@@ -27,17 +28,36 @@ namespace Services.Implementations
 
         public async Task<ICollection<OrderViewModel>> GetNotFinishedOrdersAsync(string userId)
         {
-            var orders = await ServiceConnector.Context.Set<Order>().Include(x => x.Customer).Include(x => x.Customer.ShoppingCard).Include(x => x.OrderedMeals).ThenInclude(x => x.Meal).Where(x => x.Customer.UserId == userId).Where(x => x.HasPaid == false).ToListAsync();
-            var result = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(orders);
+            Orders = await ServiceConnector.Context.Set<Order>()
+                .Include(x => x.Customer)
+                .Include(x => x.Customer.ShoppingCard)
+                .Include(x => x.OrderedMeals)
+                .ThenInclude(x => x.Meal)
+                .Include(x => x.OrderDrinks)
+                .ThenInclude(x => x.Drink)
+                .Where(x => x.Customer.UserId == userId && x.HasPaid == false).ToListAsync();
+
+            var result = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(Orders);
             return result;
         }
 
-        public async Task<decimal> TotalSumAsync(string userId)
+        public async Task<decimal> TotalSumAsync()
         {
-            var clientId = ServiceConnector.Context.Set<Customer>().FirstOrDefault(x => x.UserId == userId).Id;
-            var res = await Task.Run(() => ServiceConnector.Orders.GetAll(x => x.CustomerId == clientId && x.HasPaid == false).Result.Select(x => x.OrderedMeals.Sum(p => p.Meal.Price * p.Quantity) / (1 + ((decimal)x.Customer.ShoppingCard.CardStatus / (decimal)100))).FirstOrDefault());
 
-            return res;
+            decimal mealsSum = 0;
+            decimal drinksSum = 0;
+
+            if (Orders.Select(x => x.OrderedMeals).Any())
+            {
+                mealsSum = await Task.Run(() => Orders.Select(x => x.OrderedMeals.Sum(p => p.Meal.Price * p.Quantity) / (1 + ((decimal)x.Customer.ShoppingCard.CardStatus / (decimal)100))).FirstOrDefault());
+            }
+            if (Orders.Select(x => x.OrderDrinks).Any())
+            {
+                drinksSum = await Task.Run(() => Orders.Select(x => x.OrderDrinks.Sum(p => p.Drink.Price * p.Quantity) / (1 + ((decimal)x.Customer.ShoppingCard.CardStatus / (decimal)100))).FirstOrDefault());
+            }
+
+
+            return mealsSum + drinksSum;
         }
         public async Task<int> FinishOrderAsync(string orderId)
         {
@@ -57,7 +77,7 @@ namespace Services.Implementations
 
             return MapperConfigurator.Mapper.Map<OrderViewModel>(order);
         }
-        public async Task<int> AddItemToCartAsync(OrderDataViewModel model,string userId)
+        public async Task<int> AddItemToCartAsync(OrderDataViewModel model, string userId)
         {
             var customer = await ServiceConnector.Context.Set<Customer>().Include(x => x.ShoppingCard).FirstOrDefaultAsync(x => x.UserId == userId);
             var totalOrders = 0;
@@ -101,12 +121,15 @@ namespace Services.Implementations
                 }
                 else
                 {
-                    await ServiceConnector.Orders.Add(new Order()
+                    if (model.isMeal)
                     {
-                        CustomerId = customer.Id,
-                        HasPaid = false,
-                        OrderComment = model.Comment,
-                        OrderedMeals = new List<OrderMeals>()
+                        var newMeal = await ServiceConnector.Meals.GetAll(x => x.Id == model.MealId);
+                        await ServiceConnector.Orders.Add(new Order()
+                        {
+                            CustomerId = customer.Id,
+                            HasPaid = false,
+                            OrderComment = model.Comment,
+                            OrderedMeals = new List<OrderMeals>()
                        {
                            new OrderMeals()
                            {
@@ -115,7 +138,29 @@ namespace Services.Implementations
                                SubTotal=(model.Quantity*meal.FirstOrDefault().Price)/(1+((decimal)customer.ShoppingCard.CardStatus/100))
                            }
                        }
-                    });
+                        });
+                        totalOrders = ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).GetAwaiter().GetResult().Where(x => x.HasPaid == false).Count();
+                    }
+                    else
+                    {
+                        var drink = await ServiceConnector.Drinks.GetAll(x => x.Id == model.DrinkId);
+                        await ServiceConnector.Orders.Add(new Order()
+                        {
+                            CustomerId = customer.Id,
+                            HasPaid = false,
+                            OrderComment = model.Comment,
+                            OrderDrinks = new List<OrderDrinks>()
+                       {
+                           new OrderDrinks()
+                           {
+                               DrinkId=model.DrinkId,
+                               Quantity=model.Quantity,
+                               SubTotal=(model.Quantity*drink.FirstOrDefault().Price)/(1+((decimal)customer.ShoppingCard.CardStatus/100))
+                           }
+                       }
+                        });
+                        totalOrders = ServiceConnector.Orders.GetAll(x => x.CustomerId == customer.Id).GetAwaiter().GetResult().Where(x => x.HasPaid == false).Count();
+                    }
 
                 }
                 return totalOrders;

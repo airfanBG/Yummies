@@ -73,7 +73,7 @@ namespace Tests
                 OrderComment = "Test",
                 OrderedMeals = new List<OrderMeals>() { new OrderMeals() { MealId = "e5ea694e-cd4e-43a3-bde1-58d13e01f468" } }
             });
-            var res= await OrderService.TotalSumAsync(clientId);
+            var res= await OrderService.TotalSumAsync();
             Assert.Equal((decimal)9.708737, res);
         }
         [Fact]

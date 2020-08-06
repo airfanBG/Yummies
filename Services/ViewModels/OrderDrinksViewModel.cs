@@ -1,18 +1,16 @@
-﻿using Models.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Models
+namespace Services.ViewModels
 {
-    public class OrderDrinks: BaseEntity
+    public class OrderDrinksViewModel
     {
         public string OrderId { get; set; }
-        public Order Order { get; set; }
-        public Drink Drink { get; set; }
+        public OrderViewModel Order { get; set; }
+        public DrinkViewModel Drink { get; set; }
         public string DrinkId { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
-        
     }
 }
