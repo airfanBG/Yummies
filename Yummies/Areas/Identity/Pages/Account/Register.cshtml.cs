@@ -21,6 +21,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models.Models;
 using Models.Models.IdentityModels;
+using Services.Common;
 using Services.Implementations;
 using Services.Mapping;
 using Services.ViewModels;
@@ -50,6 +51,7 @@ namespace Yummies.Areas.Identity.Pages.Account
             serviceConnector = customerService;
             _emailSender = sender;
             _roleManager = roleManager;
+           
         }
 
         [BindProperty]
@@ -98,7 +100,7 @@ namespace Yummies.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-
+                   
                     await serviceConnector.Customers.Add(new Customer() { ShoppingCard = new ShoppingCard() { CardStatus = CardStatus.Regular }, User = user });
 
 

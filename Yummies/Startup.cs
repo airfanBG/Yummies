@@ -23,6 +23,7 @@ using Services.Interfaces;
 using Services.ViewModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Services.Common;
 
 namespace Yummies
 {
@@ -72,9 +73,13 @@ namespace Yummies
             services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>, Logger<RegisterModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddScoped<AdminService>();
             //email services
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            //common
+            services.AddSingleton<Statistics>();
             //facebook login
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
@@ -107,6 +112,13 @@ namespace Yummies
                 options.SlidingExpiration = true;
             });
 
+            services.AddAuthentication();
+            services.AddAuthorization();
+           
+            //services.AddRazorPages((x) =>
+            //{
+            //    x.Conventions.AuthorizeAreaPage("Admin", "/Index","Roles");
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

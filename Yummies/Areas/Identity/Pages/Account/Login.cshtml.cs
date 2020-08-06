@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Models.Models.IdentityModels;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Yummies.Areas.Identity.Pages.Account
 {
@@ -81,10 +82,24 @@ namespace Yummies.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user =await _userManager.FindByEmailAsync(Input.Email);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                   
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (roles.Contains("CUSTOMER"))
+                    {
+                        return LocalRedirect("/Index");
+                    }
+                    else if(roles.Contains("ADMIN"))
+                    {
+                        return LocalRedirect("/Admin");
+                    }
+                    else
+                    {
+                        return LocalRedirect(returnUrl);
+                    } 
                 }
                 if (result.RequiresTwoFactor)
                 {
