@@ -114,7 +114,10 @@ namespace Yummies
 
             services.AddAuthentication();
             services.AddAuthorization();
-           
+            //services.AddRouting(x =>
+            //{
+            //    x.
+            //});
             //services.AddRazorPages((x) =>
             //{
             //    x.Conventions.AuthorizeAreaPage("Admin", "/Index","Roles");

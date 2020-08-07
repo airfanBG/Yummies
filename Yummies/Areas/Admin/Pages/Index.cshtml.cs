@@ -16,6 +16,10 @@ namespace Yummies.Areas.Admin.Pages
         private AdminService adminService;
         [BindProperty]
         public int TotalNewUsers { get; set; }
+        [BindProperty]
+        public int TotalDailyOrders { get; set; }
+        [BindProperty]
+        public decimal TotalDailyIncome { get; set; }
         public IndexModel(AdminService service)
         {
             adminService = service;
@@ -23,6 +27,8 @@ namespace Yummies.Areas.Admin.Pages
         public async Task<IActionResult> OnGet()
         {
             TotalNewUsers =await adminService.GetNewClients();
+            TotalDailyOrders = await adminService.GetTotalDailyOrders();
+            TotalDailyIncome = await adminService.GetDailyIncomes();
             return Page();
         }
 

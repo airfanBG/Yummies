@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Admin Panel";
     Layout = @"~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+    decimal total = Model.TotalDailyIncome; //string.Format("{0:0.00}", Model.TotalDailyIncome).ToString(new  System.Globalization.CultureInfo("en-US"));
+    var t = 1;
 }
 
         <div id="page-wrapper">
@@ -47,10 +49,10 @@
                             <div class="col-in row">
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                     <i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
-                                    <h5 class="text-muted vb">NEW PROJECTS</h5>
+                                    <h5 class="text-muted vb">Today orders</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-megna">169</h3>
+                                    <h3 class="counter text-right m-t-15 text-megna">@Model.TotalDailyOrders</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
@@ -67,10 +69,10 @@
                             <div class="col-in row">
                                 <div class="col-md-6 col-sm-6 col-xs-6">
                                     <i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
-                                    <h5 class="text-muted vb">NEW INVOICES</h5>
+                                    <h5 class="text-muted vb">Incomes</h5>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6">
-                                    <h3 class="counter text-right m-t-15 text-primary">157</h3>
+                                    <h3 class="text-right m-t-15 text-primary">@total</h3>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="progress">
