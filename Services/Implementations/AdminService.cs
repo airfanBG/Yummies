@@ -7,6 +7,7 @@ using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -17,8 +18,8 @@ namespace Services.Implementations
     public class AdminService
     {
         private IServiceConnector ServiceConnector { get; }
-        private readonly Statistics _statistics;
-        public AdminService(IServiceConnector connector, Statistics statistics)
+        private readonly UserStatistics _statistics;
+        public AdminService(IServiceConnector connector, UserStatistics statistics)
         {
             ServiceConnector = connector;
             _statistics = statistics;
@@ -68,7 +69,11 @@ namespace Services.Implementations
                  {
                     Total= x.Total,
                     Year= x.Year,
-                    Month= x.Month
+                    MonthModel=new MonthModel()
+                    {
+                        MonthId = x.Month,
+                        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Month)
+                    }
                  }).ToListAsync();
             var drinks = await ServiceConnector.Context.Set<OrderDrinks>().Include(x => x.Order)
                  .Where(x => x.Order.HasPaid == true && x.Order.isFinished == true)
@@ -77,9 +82,27 @@ namespace Services.Implementations
                  {
                      Total = x.Total,
                      Year = x.Year,
-                     Month = x.Month
+                     MonthModel = new MonthModel()
+                     {
+                         MonthId = x.Month,
+                         Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Month)
+                     }
                  }).ToListAsync();
-            var combine = meals.Union(drinks).GroupBy(x=>new {x.Month,x.Year },(periods,data)=>new IncomesViewModel{Month=periods.Month,Year=periods.Year,Total=data.Sum(x=>x.Total) }).ToList();
+            var combine = meals.Union(drinks)
+                .GroupBy(x=>new {
+                    x.MonthModel.Month,
+                    x.MonthModel.MonthId,
+                    x.Year
+                },
+                    (periods,data)=>
+                    new IncomesViewModel{
+                        MonthModel=new MonthModel() {
+                            MonthId=periods.MonthId,
+                            Month=periods.Month
+
+                        }
+                        ,Year=periods.Year,Total=data.Sum(x=>x.Total) })
+                .ToList();
 
             return combine;
         }

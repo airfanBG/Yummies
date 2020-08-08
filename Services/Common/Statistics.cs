@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Services.Common
 {
-    public class Statistics
+    public class UserStatistics
     {
         public DateTime LastDateCheckUsers { get; set; }
     }

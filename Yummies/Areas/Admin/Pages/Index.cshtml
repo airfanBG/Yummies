@@ -109,12 +109,8 @@
                             <h3 class="box-title">
                                 Recent sales
                                 <div class="col-md-2 col-sm-4 col-xs-12 pull-right">
-                                    <select class="form-control pull-right row b-none">
-                                        <option>March 2016</option>
-                                        <option>April 2016</option>
-                                        <option>May 2016</option>
-                                        <option>June 2016</option>
-                                        <option>July 2016</option>
+                                    <select class="form-control pull-right row b-none"  asp-items="@Model.SelectList">
+                                     
                                     </select>
                                 </div>
                             </h3>

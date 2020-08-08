@@ -79,7 +79,7 @@ namespace Yummies
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             //common
-            services.AddSingleton<Statistics>();
+            services.AddSingleton<UserStatistics>();
             //facebook login
             services.AddAuthentication().AddFacebook(facebookOptions =>
             {
