@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Services.Implementations;
+using Services.ViewModels;
 
 namespace Yummies.Areas.Admin.Pages
 {
@@ -19,7 +20,9 @@ namespace Yummies.Areas.Admin.Pages
         [BindProperty]
         public int TotalDailyOrders { get; set; }
         [BindProperty]
-        public decimal TotalDailyIncome { get; set; }
+        public decimal TotalDayIncomes { get; set; }
+        [BindProperty]
+        public List<IncomesViewModel> TotalMonthIncomes { get; set; }
         public IndexModel(AdminService service)
         {
             adminService = service;
@@ -28,7 +31,8 @@ namespace Yummies.Areas.Admin.Pages
         {
             TotalNewUsers =await adminService.GetNewClients();
             TotalDailyOrders = await adminService.GetTotalDailyOrders();
-            TotalDailyIncome = await adminService.GetDailyIncomes();
+            TotalDayIncomes = await adminService.GetDailyIncomes();
+            TotalMonthIncomes = await adminService.GetMonthIncomes();
             return Page();
         }
 
