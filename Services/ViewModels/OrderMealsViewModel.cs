@@ -17,5 +17,6 @@ namespace Services.ViewModels
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
         public Statuses Statuses { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

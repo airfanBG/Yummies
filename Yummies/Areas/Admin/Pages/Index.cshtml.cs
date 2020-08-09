@@ -35,10 +35,20 @@ namespace Yummies.Areas.Admin.Pages
             TotalNewUsers =await adminService.GetNewClients();
             TotalDailyOrders = await adminService.GetTotalDailyOrders();
             TotalDayIncomes = await adminService.GetDailyIncomes();
-            TotalMonthIncomes = await adminService.GetMonthIncomes();
+            TotalMonthIncomes = await adminService.GetByMonthIncomes();
 
             SelectList = new SelectList(TotalMonthIncomes.Select(x => new {Id=x.MonthModel.MonthId,Name=x.MonthModel.Month }),"Id","Name");
+            
             return Page();
+        }
+        public async Task<IActionResult> OnGetDailySales(string date)
+        {
+            if (date==null)
+            {
+                return Page();
+            }
+            var res=await adminService.GetByDateIncomes(date);
+            return Partial("_SalesByDate",res);
         }
 
     }

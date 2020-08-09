@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Models.Models;
 using Services.Common;
 using Services.Interfaces;
+using Services.Mapping;
 using Services.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -40,14 +41,14 @@ namespace Services.Implementations
         }
         public async Task<decimal> GetDailyIncomes()
         {
-            decimal meals =await Task.Run(()=> ServiceConnector.Context.Set<OrderMeals>().Include(x => x.Order)
-                .Where(x => x.CreatedAt.Date == DateTime.Today && x.Order.HasPaid == true)
-                .GroupBy(x => x.OrderId,(a,b)=>new {a,Total=b.Sum(z=>z.SubTotal) })
-                .Select(x => new
-                {
-                   x.Total,
-                   x.a
-                }).Sum(x=>x.Total));
+            decimal meals = await Task.Run(() => ServiceConnector.Context.Set<OrderMeals>().Include(x => x.Order)
+                 .Where(x => x.CreatedAt.Date == DateTime.Today && x.Order.HasPaid == true)
+                 .GroupBy(x => x.OrderId, (a, b) => new { a, Total = b.Sum(z => z.SubTotal) })
+                 .Select(x => new
+                 {
+                     x.Total,
+                     x.a
+                 }).Sum(x => x.Total));
             decimal drinks = await Task.Run(() => ServiceConnector.Context.Set<OrderDrinks>().Include(x => x.Order)
                  .Where(x => x.CreatedAt.Date == DateTime.Today && x.Order.HasPaid == true)
                  .GroupBy(x => x.OrderId, (a, b) => new { a, Total = b.Sum(z => z.SubTotal) })
@@ -57,23 +58,23 @@ namespace Services.Implementations
                      x.a
                  }).Sum(x => x.Total));
 
-            return meals+drinks;
+            return meals + drinks;
         }
-        public async Task<List<IncomesViewModel>> GetMonthIncomes()
+        public async Task<List<IncomesViewModel>> GetByMonthIncomes()
         {
-            
+
             var meals = await ServiceConnector.Context.Set<OrderMeals>().Include(x => x.Order)
-                 .Where(x => x.Order.HasPaid == true && x.Order.isFinished==true)
-                 .GroupBy(z=>new {month= z.CreatedAt.Month,year= z.CreatedAt.Year }, (period, OrderedMeals) => new { Month=period.month,Year=period.year, Total = OrderedMeals.Sum(z => z.SubTotal)})
+                 .Where(x => x.Order.HasPaid == true && x.Order.isFinished == true)
+                 .GroupBy(z => new { month = z.CreatedAt.Month, year = z.CreatedAt.Year }, (period, OrderedMeals) => new { Month = period.month, Year = period.year, Total = OrderedMeals.Sum(z => z.SubTotal) })
                  .Select(x => new IncomesViewModel()
                  {
-                    Total= x.Total,
-                    Year= x.Year,
-                    MonthModel=new MonthModel()
-                    {
-                        MonthId = x.Month,
-                        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Month)
-                    }
+                     Total = x.Total,
+                     Year = x.Year,
+                     MonthModel = new MonthModel()
+                     {
+                         MonthId = x.Month,
+                         Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Month)
+                     }
                  }).ToListAsync();
             var drinks = await ServiceConnector.Context.Set<OrderDrinks>().Include(x => x.Order)
                  .Where(x => x.Order.HasPaid == true && x.Order.isFinished == true)
@@ -89,23 +90,46 @@ namespace Services.Implementations
                      }
                  }).ToListAsync();
             var combine = meals.Union(drinks)
-                .GroupBy(x=>new {
+                .GroupBy(x => new
+                {
                     x.MonthModel.Month,
                     x.MonthModel.MonthId,
                     x.Year
                 },
-                    (periods,data)=>
-                    new IncomesViewModel{
-                        MonthModel=new MonthModel() {
-                            MonthId=periods.MonthId,
-                            Month=periods.Month
+                    (periods, data) =>
+                    new IncomesViewModel
+                    {
+                        MonthModel = new MonthModel()
+                        {
+                            MonthId = periods.MonthId,
+                            Month = periods.Month
 
                         }
-                        ,Year=periods.Year,Total=data.Sum(x=>x.Total) })
+                        ,
+                        Year = periods.Year,
+                        Total = data.Sum(x => x.Total)
+                    })
                 .ToList();
 
             return combine;
         }
+        public async Task<List<SaledProductsViewModel>> GetByDateIncomes(string date)
+        {
+            var res =await ServiceConnector.Context.Set<Order>()
+                .Include(x => x.OrderDrinks)
+                .ThenInclude(x => x.Drink)
+                .Include(x => x.OrderedMeals)
+                .ThenInclude(x => x.Meal)
+                .Where(x => x.CreatedAt.Date == DateTime.Parse(date) && x.HasPaid == true)
+                .Select(x => new SaledProductsViewModel()
+                {
+                    //Meals=MapperConfigurator.Mapper.Map<List<MealViewModel>>(x.OrderedMeals.Select(z=>z.Meal)),
+                    //Drinks= MapperConfigurator.Mapper.Map<List<DrinkViewModel>>(x.OrderDrinks.Select(z => z.Drink)),
+                    OrderDrinksViewModels=MapperConfigurator.Mapper.Map<List<OrderDrinksViewModel>>(x.OrderDrinks),
+                    OrderMealsViews= MapperConfigurator.Mapper.Map<List<OrderMealsViewModel>>(x.OrderedMeals),
+                }).ToListAsync();
+            return res;
+        }
     }
-   
+
 }
