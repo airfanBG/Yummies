@@ -8,6 +8,7 @@ namespace Services.ViewModels
 {
     public class CustomerViewModel:IBaseViewModel
     {
+        public string Id { get; set; }
         public string UserId { get; set; }
         public UserViewModel User { get; set; }
         public ICollection<OrderViewModel> Orders { get; set; }

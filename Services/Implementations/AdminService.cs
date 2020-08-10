@@ -20,6 +20,7 @@ namespace Services.Implementations
     {
         private IServiceConnector ServiceConnector { get; }
         private readonly UserStatistics _statistics;
+       
         public AdminService(IServiceConnector connector, UserStatistics statistics)
         {
             ServiceConnector = connector;
@@ -113,7 +114,7 @@ namespace Services.Implementations
 
             return combine;
         }
-        public async Task<List<SaledProductsViewModel>> GetByDateIncomes(string date)
+        public async Task<List<SoldProductsViewModel>> GetByDateIncomes(string date)
         {
             var res =await ServiceConnector.Context.Set<Order>()
                 .Include(x => x.OrderDrinks)
@@ -121,13 +122,14 @@ namespace Services.Implementations
                 .Include(x => x.OrderedMeals)
                 .ThenInclude(x => x.Meal)
                 .Where(x => x.CreatedAt.Date == DateTime.Parse(date) && x.HasPaid == true)
-                .Select(x => new SaledProductsViewModel()
+                .Select(x => new SoldProductsViewModel()
                 {
                     //Meals=MapperConfigurator.Mapper.Map<List<MealViewModel>>(x.OrderedMeals.Select(z=>z.Meal)),
                     //Drinks= MapperConfigurator.Mapper.Map<List<DrinkViewModel>>(x.OrderDrinks.Select(z => z.Drink)),
                     OrderDrinksViewModels=MapperConfigurator.Mapper.Map<List<OrderDrinksViewModel>>(x.OrderDrinks),
                     OrderMealsViews= MapperConfigurator.Mapper.Map<List<OrderMealsViewModel>>(x.OrderedMeals),
                 }).ToListAsync();
+           
             return res;
         }
     }

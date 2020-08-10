@@ -16,6 +16,8 @@ namespace Yummies.Areas.Admin.Pages
     public class IndexModel : PageModel
     {
         private AdminService adminService;
+        private PaginationService<SoldProductsViewModel> PaginationService;
+
         [BindProperty]
         public int TotalNewUsers { get; set; }
         [BindProperty]
@@ -26,9 +28,20 @@ namespace Yummies.Areas.Admin.Pages
         public List<IncomesViewModel> TotalMonthIncomes { get; set; }
         [BindProperty]
         public SelectList SelectList { get; set; }
-        public IndexModel(AdminService service)
+
+        public int TotalPages => (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+        public int CurrentPage { get; set; } = 1;
+        public int Count { get; set; }
+        public int PageSize { get; set; } = 10;
+        List<SoldProductsViewModel> SoldProducts;
+
+
+
+
+        public IndexModel(AdminService service, PaginationService<SoldProductsViewModel> paginationService)
         {
             adminService = service;
+            PaginationService = paginationService;
         }
         public async Task<IActionResult> OnGet()
         {
@@ -41,14 +54,19 @@ namespace Yummies.Areas.Admin.Pages
             
             return Page();
         }
-        public async Task<IActionResult> OnGetDailySales(string date)
+        public async Task<IActionResult> OnGetDailySales(string date, int page)
         {
             if (date==null)
             {
                 return Page();
             }
-            var res=await adminService.GetByDateIncomes(date);
-            return Partial("_SalesByDate",res);
+            if (SoldProducts==null)
+            {
+                SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), CurrentPage, PageSize);
+               
+            }           
+
+            return Partial("_SalesByDate",SoldProducts);
         }
 
     }

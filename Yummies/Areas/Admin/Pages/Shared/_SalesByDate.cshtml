@@ -1,39 +1,54 @@
-﻿@model List<SaledProductsViewModel>
+﻿@model List<SoldProductsViewModel>
+@{ 
+     int Count=Model.Sum(x=>x.OrderDrinksViewModels.Count)+Model.Sum(x=>x.OrderMealsViews.Count);
+     int PageSize = 10;
+     int TotalPages = (int)Math.Ceiling(decimal.Divide(Count, PageSize));
+}
 
-    
-                <table class="table ">
-                    <thead>
-                        <tr>
-                            <th>NAME</th>
-                            <th>Quantity</th>
-                            <th>DATE</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+<table class="table ">
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>Quantity</th>
+            <th>DATE</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
 
-                        @foreach (SaledProductsViewModel sales in Model)
-                        {
-                            @foreach (var orderMeals in sales.OrderMealsViews)
-                            {
-                                <tr>
-                                    <td class="txt-oflo">@orderMeals.Meal.MealName</td>
-                                    <td>@orderMeals.Quantity</td>
-                                    <td class="txt-oflo">@orderMeals.CreatedAt</td>
-                                    <td><span class="text-success">@orderMeals.SubTotal</span></td>
-                                </tr>
-                            }
-                            @foreach (var orderDrinks in sales.OrderDrinksViewModels)
-                            {
-                                <tr>
-                                    <td class="txt-oflo">@orderDrinks.Drink.DrinkName</td>
-                                    <td>@orderDrinks.Quantity</td>
-                                    <td class="txt-oflo">@orderDrinks.CreatedAt</td>
-                                    <td><span class="text-success">@orderDrinks.SubTotal</span></td>
-                                </tr>
-                            }
-                        }
+        @foreach (SoldProductsViewModel sales in Model)
+        {
+            @foreach (var orderMeals in sales.OrderMealsViews)
+            {
+                <tr>
+                    <td class="txt-oflo">@orderMeals.Meal.MealName</td>
+                    <td>@orderMeals.Quantity</td>
+                    <td class="txt-oflo">@orderMeals.CreatedAt</td>
+                    <td><span class="text-success">@orderMeals.SubTotal</span></td>
+                </tr>
+            }
+            @foreach (var orderDrinks in sales.OrderDrinksViewModels)
+            {
+                <tr>
+                    <td class="txt-oflo">@orderDrinks.Drink.DrinkName</td>
+                    <td>@orderDrinks.Quantity</td>
+                    <td class="txt-oflo">@orderDrinks.CreatedAt</td>
+                    <td><span class="text-success">@orderDrinks.SubTotal</span></td>
+                </tr>
+            }
+        }
 
-                    </tbody>
-                </table> <a href="#">Check all the sales</a>
-         
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+
+        @for (var i = 1; i <=TotalPages; i++)
+        {
+            <li class="page-item">
+                <a href="#" id="pageNumber" class="page-link" data-id="@i">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+

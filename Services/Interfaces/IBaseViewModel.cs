@@ -6,5 +6,6 @@ namespace Services.Interfaces
 {
     public interface IBaseViewModel
     {
+        public string Id { get; set; }
     }
 }

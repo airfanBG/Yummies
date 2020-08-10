@@ -116,9 +116,12 @@
                     <p>Date: <input type="text" id="datepicker"></p>
                     <div id="dateSales" class="table-responsive">
                     </div>
+
                 </div>
             </div>
+
         </div>
+
         <!-- /.row -->
         <!-- row -->
         <div class="row">
@@ -213,7 +216,27 @@
             });
         });
     </script>
+  
+        <script>
+           
+                $(document).on("click","#pageNumber", function (e) {
+                    e.preventDefault();
+                    var date = $("#datepicker").val();
+                    var pageNumber = $(this).attr("id");
 
+                    $.ajax({
+                        method: "GET",
+                        url: "/Admin/Index?handler=DailySales",
+                        data: { date: date, page: pageNumber },
+                        success: function (data) {
+                            $("#dateSales").html(data);
+                        }
+                    });
+                });
+
+          
+        </script>
+   
     @*<script>
              $("statistics").on('change', function () {
          alert($(this).find('option:selected').attr('id'));
