@@ -4,8 +4,11 @@
     ViewData["Title"] = "Admin Panel";
     Layout = @"~/Areas/Admin/Pages/Shared/_Layout.cshtml";
     decimal total = Model.TotalDayIncomes; //string.Format("{0:0.00}", Model.TotalDailyIncome).ToString(new  System.Globalization.CultureInfo("en-US"));
-
+    int Count = Model.SoldProducts.Sum(x => x.OrderDrinksViewModels.Count) + Model.SoldProducts.Sum(x => x.OrderMealsViews.Count);
+    int PageSize = 10;
+    int TotalPages = (int)Math.Ceiling(decimal.Divide(Count, PageSize));
 }
+
 <link href="~/admin-area/jqueryui/jquery-ui.css" rel="stylesheet" />
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -121,7 +124,17 @@
             </div>
 
         </div>
+        <div>
+            <ul class="pagination">
 
+                @for (var i = 1; i <= TotalPages; i++)
+                {
+                    <li class="page-item">
+                        <a href="#" id="pageNumber" class="page-link" data-id="@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </div>
         <!-- /.row -->
         <!-- row -->
         <div class="row">
@@ -216,27 +229,27 @@
             });
         });
     </script>
-  
-        <script>
-           
-                $(document).on("click","#pageNumber", function (e) {
-                    e.preventDefault();
-                    var date = $("#datepicker").val();
-                    var pageNumber = $(this).attr("id");
 
-                    $.ajax({
-                        method: "GET",
-                        url: "/Admin/Index?handler=DailySales",
-                        data: { date: date, page: pageNumber },
-                        success: function (data) {
-                            $("#dateSales").html(data);
-                        }
-                    });
-                });
+    <script>
 
-          
-        </script>
-   
+        $(document).on("click", "#pageNumber", function (e) {
+            e.preventDefault();
+            var date = $("#datepicker").val();
+            var pageNumber = $(this).attr("id");
+
+            $.ajax({
+                method: "GET",
+                url: "/Admin/Index?handler=DailySales",
+                data: { date: date, page: pageNumber },
+                success: function (data) {
+                    $("#dateSales").html(data);
+                }
+            });
+        });
+
+
+    </script>
+
     @*<script>
              $("statistics").on('change', function () {
          alert($(this).find('option:selected').attr('id'));

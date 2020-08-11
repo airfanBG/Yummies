@@ -1,16 +1,13 @@
-﻿using Services.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.ViewModels
+namespace Services.Interfaces
 {
-    public class SoldProductsViewModel:IInfrastructureViewModels
+    public interface IInfrastructureViewModels
     {
         public string Id { get; set; }
         public List<IOrderItemViewModel> OrderMealsViews { get; set; }
         public List<IOrderItemViewModel> OrderDrinksViewModels { get; set; }
-        
     }
-    
 }

@@ -126,8 +126,8 @@ namespace Services.Implementations
                 {
                     //Meals=MapperConfigurator.Mapper.Map<List<MealViewModel>>(x.OrderedMeals.Select(z=>z.Meal)),
                     //Drinks= MapperConfigurator.Mapper.Map<List<DrinkViewModel>>(x.OrderDrinks.Select(z => z.Drink)),
-                    OrderDrinksViewModels=MapperConfigurator.Mapper.Map<List<OrderDrinksViewModel>>(x.OrderDrinks),
-                    OrderMealsViews= MapperConfigurator.Mapper.Map<List<OrderMealsViewModel>>(x.OrderedMeals),
+                    //OrderDrinksViewModels=MapperConfigurator.Mapper.Map<List<OrderDrinksViewModel>>(x.OrderDrinks),
+                    OrderMealsViews= MapperConfigurator.Mapper.Map<List<IOrderItemViewModel>>(x.OrderedMeals),
                 }).ToListAsync();
            
             return res;

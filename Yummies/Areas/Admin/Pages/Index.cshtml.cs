@@ -16,7 +16,7 @@ namespace Yummies.Areas.Admin.Pages
     public class IndexModel : PageModel
     {
         private AdminService adminService;
-        private PaginationService<SoldProductsViewModel> PaginationService;
+        private PaginationService<SoldProductsViewModel,PaginateViewModel> PaginationService;
 
         [BindProperty]
         public int TotalNewUsers { get; set; }
@@ -33,15 +33,17 @@ namespace Yummies.Areas.Admin.Pages
         public int CurrentPage { get; set; } = 1;
         public int Count { get; set; }
         public int PageSize { get; set; } = 10;
-        List<SoldProductsViewModel> SoldProducts;
+        [BindProperty]
+        public List<SoldProductsViewModel> SoldProducts { get; set; }
 
 
 
 
-        public IndexModel(AdminService service, PaginationService<SoldProductsViewModel> paginationService)
+        public IndexModel(AdminService service, PaginationService<SoldProductsViewModel,PaginateViewModel> paginationService)
         {
             adminService = service;
             PaginationService = paginationService;
+         
         }
         public async Task<IActionResult> OnGet()
         {
@@ -51,19 +53,18 @@ namespace Yummies.Areas.Admin.Pages
             TotalMonthIncomes = await adminService.GetByMonthIncomes();
 
             SelectList = new SelectList(TotalMonthIncomes.Select(x => new {Id=x.MonthModel.MonthId,Name=x.MonthModel.Month }),"Id","Name");
-            
+            //SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(DateTime.UtcNow.Date.ToString()), 1, PageSize);
             return Page();
         }
-        public async Task<IActionResult> OnGetDailySales(string date, int page)
+        public async Task<IActionResult> OnGetDailySales(string date, int page=1)
         {
             if (date==null)
             {
                 return Page();
             }
-            if (SoldProducts==null)
+            if (date!=null)
             {
-                SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), CurrentPage, PageSize);
-               
+               // SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), page, PageSize);
             }           
 
             return Partial("_SalesByDate",SoldProducts);

@@ -28,7 +28,7 @@
             <form class="meal">
                 <div style="display:inline-block; text-align:center;">
                     <img src="~/images/@meal.Image" />
-                    <p class="mealName">@meal.MealName</p>
+                    <p class="mealName">@meal.Name</p>
                     <p>Time for prepare: @meal.TimeForPrepare</p>
                     <p class="mealPrice">@meal.Price <span>$</span></p>
                     @if (User.Identity.IsAuthenticated)

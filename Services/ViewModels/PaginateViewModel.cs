@@ -5,13 +5,12 @@ using System.Text;
 
 namespace Services.ViewModels
 {
-    public class OrderDataViewModel:IBaseViewModel
+    public class PaginateViewModel : ICombinedRestaurantStatistics
     {
         public string Id { get; set; }
+        public string Name { get; set; }
         public int Quantity { get; set; }
-        public string MealId { get; set; }
-        public string DrinkId { get; set; }
-        public string Comment { get; set; }
-        public bool isMeal { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public decimal SubTotal { get; set; }
     }
 }

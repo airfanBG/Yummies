@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Services.ViewModels
 {
-    public class RecepeeViewModel
+    public class RecepeeViewModel:IBaseViewModel
     {
         public string Id { get; set; }
         public string MealName { get; set; }

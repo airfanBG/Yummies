@@ -164,22 +164,22 @@
             </div>
             <div class="container">
                 <div class="row">
-                    @foreach (var item in Model.TopOrdered)
+                    @foreach (MealViewModel item in Model.TopOrdered)
                     {
 
                         <div class="col-md-4" style="margin-bottom:10px;">
                             <a title="Order this" asp-page="Meals" asp-page-handler="Meal" asp-route-mealId="@item.Id">
                                 <div class="food-item">
-                                    <h2>@item.MealName</h2>
+                                    <h2>@item.Name</h2>
                                     <img src="~/images/@item.Image" alt="">
                                     <div class="price">$@item.Price</div>
                                     <div class="text-content">
                                         <h4>Description</h4>
                                         @{
                                             string res = "";
-                                            if (item.MealDescription != null)
+                                            if (item.Description != null)
                                             {
-                                                res = item.MealDescription.Length > 30 ? string.Format("{0}...", item.MealDescription.Take(30)) : item.MealDescription;
+                                                res = item.Description.Length > 30 ? string.Format("{0}...", item.Description.Take(30)) : item.Description;
                                             }
                                         }
 

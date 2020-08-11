@@ -12,7 +12,7 @@
                 <form asp-page-handler="Edit" method="post">
                     <div style="display:inline-block; text-align:center;">
                         <img src="~/images/@Model.OrderedMeal.Meal.Image" />
-                        <p>@Model.OrderedMeal.Meal.MealName</p>
+                        <p>@Model.OrderedMeal.Meal.Name</p>
                         <p>Time for prepare: @Model.OrderedMeal.Meal.TimeForPrepare</p>
                         <p>@Model.OrderedMeal.Meal.Price <span>$</span></p>
                         <input type="text" name="Id" value="@Model.OrderedMeal.Id" hidden />

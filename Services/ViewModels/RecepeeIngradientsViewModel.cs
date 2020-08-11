@@ -1,7 +1,10 @@
-﻿namespace Services.ViewModels
+﻿using Services.Interfaces;
+
+namespace Services.ViewModels
 {
-    public class RecepeeIngradientsViewModel
+    public class RecepeeIngradientsViewModel:IBaseViewModel
     {
+        public string Id { get; set; }
         public string RecepeeId { get; set; }
         public RecepeeViewModel Recepee { get; set; }
         public string IngradientId { get; set; }

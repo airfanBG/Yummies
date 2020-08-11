@@ -31,7 +31,7 @@ namespace Services.Mapping
             CreateMap<Menu, MenuViewModel>().ForMember(x=>x.MenuMealCategoryViewModels,o=>o.MapFrom(z=>z.MenuMealCategories)).ReverseMap();
             CreateMap<MenuMealCategoryViewModel, MenuMealCategory>().ForMember(x => x.MealCategory, c => c.MapFrom(m => m.MealCategoryViewModel)).ForMember(z=>z.Menu,m=>m.MapFrom(x=>x.MenuViewModel)).ReverseMap();
             CreateMap<Category, MealCategoryViewModel>().ReverseMap();
-            CreateMap<Meal, MealViewModel>().ForMember(x=>x.Recepee,z=>z.MapFrom(o=>o.Recipe)).ReverseMap();
+            CreateMap<Meal, MealViewModel>().ForMember(x=>x.Description,z=>z.MapFrom(a=>a.MealDescription)).ForMember(x=>x.Name,z=>z.MapFrom(a=>a.MealName)).ForMember(x=>x.Recepee,z=>z.MapFrom(o=>o.Recipe)).ReverseMap();
             CreateMap<Order, OrderViewModel>().ReverseMap();
             CreateMap<OrderMeals, OrderMealsViewModel>().ForMember(x=>x.Meal,z=>z.MapFrom(a=>a.Meal)).ReverseMap();
             CreateMap<Customer, CustomerViewModel>().ReverseMap();
@@ -41,7 +41,7 @@ namespace Services.Mapping
             CreateMap<RecipeIngradients, RecepeeIngradientsViewModel>().ForMember(x => x.Recepee, o => o.MapFrom(z => z.Recipe)).ReverseMap();
             CreateMap<Ingradient, IngradientViewModel>().ForMember(x => x.RecepeeIngradients, z => z.MapFrom(o => o.RecepeeIngradients)).ReverseMap();
             CreateMap<IngradientMetric, IngradientMetricViewModel>().ReverseMap();
-            CreateMap<Drink, DrinkViewModel>().ForMember(x=>x.DrinkCategoryViewModels,o=>o.MapFrom(z=>z.DrinkCategories)).ReverseMap();
+            CreateMap<Drink, DrinkViewModel>().ForMember(x=>x.Name,z=>z.MapFrom(a=>a.DrinkName)).ForMember(x=>x.DrinkCategoryViewModels,o=>o.MapFrom(z=>z.DrinkCategories)).ReverseMap();
             CreateMap<Category, CategoryViewModel>().ForMember(x=>x.DrinkCategories,o=>o.MapFrom(z=>z.DrinkCategories)).ReverseMap();
             CreateMap<DrinkCategory, DrinkCategoryViewModel>().ForMember(x => x.CategoryViewModel, o => o.MapFrom(z => z.Category)).ForMember(z => z.DrinkViewModel, o => o.MapFrom(x => x.Drink)).ReverseMap();
             CreateMap<OrderDrinks, OrderDrinksViewModel>().ForMember(x=>x.Drink,o=>o.MapFrom(z=>z.Drink)).ReverseMap();

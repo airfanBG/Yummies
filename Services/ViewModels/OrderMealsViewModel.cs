@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Services.ViewModels
 {
-    public class OrderMealsViewModel:IBaseViewModel
+    public class OrderMealsViewModel:IOrderMeal
     {
         public string Id { get; set; }
         public string OrderId { get; set; }
        
         public string MealId { get; set; }
-        public MealViewModel Meal { get; set; }
-        public List<MealViewModel> Meals { get; set; }
+        public IMealViewModel Meal { get; set; }
+        public List<IMealViewModel> Meals { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
         public Statuses Statuses { get; set; }

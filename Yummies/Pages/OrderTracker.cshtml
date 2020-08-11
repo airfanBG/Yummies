@@ -99,7 +99,7 @@
 @foreach (OrderMealsViewModel orderMeals in Model.Order.OrderedMeals)
 {
     <div style="margin-top:20px;margin-bottom:5px;">
-        <span>@orderMeals.Meal.MealName</span>
+        <span>@orderMeals.Meal.Name</span>
         <p> <span>Count: @orderMeals.Quantity</span></p>
         <img style="width:100px;" src="~/images/@orderMeals.Meal.Image" alt="Alternate Text" />
     </div>

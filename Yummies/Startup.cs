@@ -72,7 +72,7 @@ namespace Yummies
             services.AddScoped<IServiceConnector, ServiceConnector>();
             services.AddScoped<ServiceConnector>();
             services.AddScoped<ILogger<RegisterModel>, Logger<RegisterModel>>();
-            services.AddScoped<PaginationService<SoldProductsViewModel>>();
+            services.AddScoped<PaginationService<SoldProductsViewModel,PaginateViewModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddScoped<AdminService>();
             //email services
