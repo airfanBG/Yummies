@@ -14,18 +14,31 @@ namespace Services.Implementations
         {
             var rr = data.SelectMany(x => x.OrderMealsViews, (a, b) => new
             {
-                SoldMeals = a.OrderMealsViews.Select(z => new PaginateViewModel()
+                SoldProducts = a.OrderMealsViews.Select(z => new PaginateViewModel()
                 {
                     CreatedAt = z.CreatedAt,
                     Id = z.Id,
                     Quantity = z.Quantity,
                     SubTotal = z.SubTotal
-                })
-            }).ToList();
+                }).Union(a.OrderDrinksViewModels.Select(z => new PaginateViewModel()
+                {
+                    CreatedAt = z.CreatedAt,
+                    Id = z.Id,
+                    Quantity = z.Quantity,
+                    SubTotal = z.SubTotal
+                })),
+                //SoldDrinks = a.OrderDrinksViewModels.Select(z => new PaginateViewModel()
+                //{
+                //    CreatedAt = z.CreatedAt,
+                //    Id = z.Id,
+                //    Quantity = z.Quantity,
+                //    SubTotal = z.SubTotal
+                //})
+            }).FirstOrDefault();
             var t = data.Select(x => x.OrderDrinksViewModels.Select(z => new PaginateViewModel() { })).FirstOrDefault();
             var res = data.SelectMany(x => x.OrderDrinksViewModels, (a, b) => new PaginateViewModel()
             {
-                
+         
                 //  CreatedAt=a.OrderDrinksViewModels.
             });
             return null;

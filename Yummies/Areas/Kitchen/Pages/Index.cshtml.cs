@@ -15,7 +15,7 @@ using Services.ViewModels;
 
 namespace Yummies.Areas.Kitchen.Pages
 {
-    [Authorize(Roles ="Admin,Seller,Cheff")]
+    [Authorize(Roles ="ADMIN,SELLER,CHEFF")]
     public class IndexModel : PageModel
     {
         public ILogger<IndexModel> Logger { get; set; }

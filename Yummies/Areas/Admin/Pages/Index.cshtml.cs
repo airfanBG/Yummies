@@ -34,7 +34,7 @@ namespace Yummies.Areas.Admin.Pages
         public int Count { get; set; }
         public int PageSize { get; set; } = 10;
         [BindProperty]
-        public List<SoldProductsViewModel> SoldProducts { get; set; }
+        public List<PaginateViewModel> SoldProducts { get; set; }
 
 
 
@@ -64,7 +64,7 @@ namespace Yummies.Areas.Admin.Pages
             }
             if (date!=null)
             {
-               // SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), page, PageSize);
+                SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), page, PageSize);
             }           
 
             return Partial("_SalesByDate",SoldProducts);

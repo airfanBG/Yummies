@@ -26,7 +26,7 @@ namespace Services.Implementations
         }
 
 
-        public async Task<ICollection<OrderViewModel>> GetNotFinishedOrdersAsync(string userId)
+        public async Task<ICollection<IOrderViewModel>> GetNotFinishedOrdersAsync(string userId)
         {
             Orders = await ServiceConnector.Context.Set<Order>()
                 .Include(x => x.Customer)
@@ -37,7 +37,7 @@ namespace Services.Implementations
                 .ThenInclude(x => x.Drink)
                 .Where(x => x.Customer.UserId == userId && x.HasPaid == false).ToListAsync();
 
-            var result = MapperConfigurator.Mapper.Map<List<OrderViewModel>>(Orders);
+            var result = MapperConfigurator.Mapper.Map<ICollection<IOrderViewModel>>(Orders);
             return result;
         }
 
@@ -68,14 +68,14 @@ namespace Services.Implementations
             int res = await ServiceConnector.SaveChangesAsync();
             return res;
         }
-        public async Task<OrderViewModel> GetOrderStatusAsync(string userId)
+        public async Task<IOrderViewModel> GetOrderStatusAsync(string userId)
         {
             var customer = this.ServiceConnector.Customers.GetAll(x => x.UserId == userId).Result.FirstOrDefault();
 
             var order = await this.ServiceConnector.Context.Set<Order>().Include(x => x.OrderedMeals).ThenInclude(x => x.Meal).FirstOrDefaultAsync(x => x.HasPaid == true && x.CustomerId == customer.Id && x.isFinished == false);
 
 
-            return MapperConfigurator.Mapper.Map<OrderViewModel>(order);
+            return MapperConfigurator.Mapper.Map<IOrderViewModel>(order);
         }
         public async Task<int> AddItemToCartAsync(OrderDataViewModel model, string userId)
         {

@@ -15,6 +15,7 @@ using Models.Models;
 using Models.Models.IdentityModels;
 using Newtonsoft.Json;
 using Services.Implementations;
+using Services.Interfaces;
 using Services.Mapping;
 using Services.ViewModels;
 
@@ -28,7 +29,7 @@ namespace Yummies.Pages
         private string userId;
 
         [BindProperty]
-        public ICollection<OrderViewModel> Orders { get; set; }
+        public ICollection<IOrderViewModel> Orders { get; set; }
         [BindProperty]
         public decimal Total { get; set; } = 0;
         [BindProperty(SupportsGet =true)]

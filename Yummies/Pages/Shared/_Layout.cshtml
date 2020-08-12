@@ -46,13 +46,13 @@
                         <a class="nav-link text-dark" asp-area="" asp-page="/Menu">Menu</a>
                     </li>
                     <li id="partialCart">
-                        @if (User.IsInRole("Customer"))
+                        @if (User.IsInRole("CUSTOMER"))
                         {
 
                             <partial name="_Cart" model="TotalAdded" />
                             <a asp-page="/OrderTracker" class="nav-link text-dark">Order Tracking</a>
                         }
-                        @if (User.IsInRole("Admin") || User.IsInRole("Cheff"))
+                        @if (User.IsInRole("ADMIN") || User.IsInRole("CHEFF"))
                         {
                             <a class="nav-link text-dark" asp-page="Index" asp-area="Kitchen" >Orders</a>
                         }

@@ -11,7 +11,7 @@ namespace Services.ViewModels
         public string Name { get; set; }
         public string Image { get; set; }
         public decimal Price { get; set; }
-        public List<DrinkCategoryViewModel> DrinkCategoryViewModels { get; set; }
+        public ICollection<ICategoryViewModel> DrinkCategoryViewModels { get; set; }
         public string Description { get; set; }
     }
 }

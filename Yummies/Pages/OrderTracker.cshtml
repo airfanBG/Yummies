@@ -96,7 +96,7 @@
     }
 </style>
 
-@foreach (OrderMealsViewModel orderMeals in Model.Order.OrderedMeals)
+@foreach (IOrderMeal orderMeals in Model.Order.OrderedMeals)
 {
     <div style="margin-top:20px;margin-bottom:5px;">
         <span>@orderMeals.Meal.Name</span>

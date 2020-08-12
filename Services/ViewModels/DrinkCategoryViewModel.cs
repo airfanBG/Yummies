@@ -5,12 +5,14 @@ using System.Text;
 
 namespace Services.ViewModels
 {
-    public class DrinkCategoryViewModel:IBaseViewModel
+    public class DrinkCategoryViewModel:ICategoryViewModel
     {
         public string Id { get; set; }
+        public string CategoryName { get; set; }
+        public string Image { get; set; }
         public string DrinkId { get; set; }
-        public DrinkViewModel DrinkViewModel { get; set; }
+        public IDrinkViewModel DrinkViewModel { get; set; }
         public string CategoryId { get; set; }
-        public CategoryViewModel CategoryViewModel { get; set; }
+        public ICategoryViewModel CategoryViewModel { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Services.Implementations
         {
             this.ServiceConnector = serviceConnector;
         }
-        public async Task<List<MealViewModel>> MostOrderedMealsAsync()
+        public async Task<List<IMealViewModel>> MostOrderedMealsAsync()
         {
             var top =await ServiceConnector.Context.Set<OrderMeals>()
                 .GroupBy(x => x.MealId)
@@ -32,7 +32,7 @@ namespace Services.Implementations
             var ids = top.Select(x => x.MealId).ToList();
             
             var res =await ServiceConnector.Context.Set<Meal>().Where(x => ids.Contains(x.Id)).ToListAsync();
-            return MapperConfigurator.Mapper.Map<List<MealViewModel>>(res);
+            return MapperConfigurator.Mapper.Map<List<IMealViewModel>>(res);
         }
 
     }
