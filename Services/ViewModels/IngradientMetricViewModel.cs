@@ -8,6 +8,6 @@ namespace Services.ViewModels
     {
         public string Id { get; set; }
         public string MetricValue { get; set; }
-        public ICollection<IngradientViewModel> Ingradients { get; set; }
+        public List<IngradientViewModel> Ingradients { get; set; }
     }
 }

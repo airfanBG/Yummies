@@ -1,15 +1,12 @@
-﻿using Services.Interfaces;
+﻿using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.ViewModels
+namespace Services.Interfaces
 {
-    public class DrinkCategoryViewModel:IDrinkCategoryViewModel
+    public interface IDrinkCategoryViewModel:ICategoryViewModel
     {
-        public string Id { get; set; }
-        public string CategoryName { get; set; }
-        public string Image { get; set; }
         public string DrinkId { get; set; }
         public DrinkViewModel DrinkViewModel { get; set; }
         public string CategoryId { get; set; }

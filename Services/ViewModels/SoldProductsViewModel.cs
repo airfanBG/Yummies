@@ -8,8 +8,8 @@ namespace Services.ViewModels
     public class SoldProductsViewModel:IInfrastructureViewModels
     {
         public string Id { get; set; }
-        public List<IOrderItemViewModel> OrderMealsViews { get; set; }
-        public List<IOrderItemViewModel> OrderDrinksViewModels { get; set; }
+        public List<OrderMealsViewModel> OrderMealsViews { get; set; }
+        public List<OrderDrinksViewModel> OrderDrinksViewModels { get; set; }
         
     }
     

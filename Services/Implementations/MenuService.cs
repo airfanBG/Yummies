@@ -23,7 +23,8 @@ namespace Services.Implementations
         }
         public async Task<List<MenuViewModel>> GetMenu()
         {
-            var res= MapperConfigurator.Mapper.Map<List<MenuViewModel>>(await ServiceConnector.Menus.GetAll());
+            var menus = await ServiceConnector.Context.Set<Menu>().Include(x => x.MenuMealCategories).ToListAsync();
+            var res= MapperConfigurator.Mapper.Map<List<MenuViewModel>>(menus);
             return res;
         }
         public async Task<List<DrinkCategoryViewModel>> GetDrinkCategories()

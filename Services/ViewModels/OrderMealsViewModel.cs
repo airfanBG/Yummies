@@ -12,8 +12,8 @@ namespace Services.ViewModels
         public string OrderId { get; set; }
        
         public string MealId { get; set; }
-        public IMealViewModel Meal { get; set; }
-        public List<IMealViewModel> Meals { get; set; }
+        public MealViewModel Meal { get; set; }
+        public List<MealViewModel> Meals { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }
         public Statuses Statuses { get; set; }

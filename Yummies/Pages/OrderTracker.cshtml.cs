@@ -15,7 +15,7 @@ namespace Yummies.Pages
 {
     public class OrderTrackerModel : PageModel
     {
-        public IOrderViewModel Order{ get; set; }
+        public OrderViewModel Order{ get; set; }
         private OrderService OrderService { get; }
         private UserManager<User> UserManager { get; }
         public OrderTrackerModel(OrderService service, UserManager<User> userManager)

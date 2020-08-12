@@ -81,11 +81,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (IOrderViewModel order in Model.Orders)
+                @foreach (OrderViewModel order in Model.Orders)
                 {
                     orderId = order.Id;
 
-                    @foreach (IOrderMeal meal in order.OrderedMeals)
+                    @foreach (OrderMealsViewModel meal in order.OrderedMeals)
                     {
                         <tr id="order" data-id="@order.Id">
                             <td>@counter</td>

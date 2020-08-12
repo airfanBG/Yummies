@@ -10,7 +10,7 @@ namespace Services.ViewModels
         public string CategoryName { get; set; }
         public string Image { get; set; }
         
-        public ICollection<DrinkCategoryViewModel> DrinkCategories { get; set; }
+        public List<DrinkCategoryViewModel> DrinkCategories { get; set; }
         public string Id { get; set; }
     }
 }

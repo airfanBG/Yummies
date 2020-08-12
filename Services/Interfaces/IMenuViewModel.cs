@@ -1,13 +1,12 @@
-﻿using Services.Interfaces;
+﻿using Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Services.ViewModels
+namespace Services.Interfaces
 {
-    public class MenuViewModel:IMenuViewModel
+    public interface IMenuViewModel:IBaseViewModel
     {
-        public string Id { get; set; }
         public string MenuName { get; set; }
         public string Image { get; set; }
         public List<MenuMealCategoryViewModel> MenuMealCategoryViewModels { get; set; }

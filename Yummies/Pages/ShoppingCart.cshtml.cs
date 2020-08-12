@@ -29,7 +29,7 @@ namespace Yummies.Pages
         private string userId;
 
         [BindProperty]
-        public ICollection<IOrderViewModel> Orders { get; set; }
+        public List<OrderViewModel> Orders { get; set; }
         [BindProperty]
         public decimal Total { get; set; } = 0;
         [BindProperty(SupportsGet =true)]

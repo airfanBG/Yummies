@@ -20,10 +20,10 @@ namespace Yummies.Pages
         private MenuService MenuService { get; }
 
         [BindProperty]
-        public ICollection<MenuViewModel> Menus { get; set; }
+        public List<MenuViewModel> Menus { get; set; }
 
         [BindProperty]
-        public ICollection<DrinkCategoryViewModel> DrinkCategories { get; set; }
+        public List<DrinkCategoryViewModel> DrinkCategories { get; set; }
         public MenuModel(MenuService service)
         {
             MenuService = service;

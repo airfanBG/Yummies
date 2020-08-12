@@ -11,6 +11,6 @@ namespace Services.ViewModels
         public string MealName { get; set; }
         public string Description { get; set; }
         public string TimeForPrepare { get; set; }
-        public ICollection<RecepeeIngradientsViewModel> RecepeeIngradients { get; set; }
+        public List<RecepeeIngradientsViewModel> RecepeeIngradients { get; set; }
     }
 }

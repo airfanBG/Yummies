@@ -9,8 +9,8 @@ namespace Services.ViewModels
     {
         public string Id { get; set; }
         public string OrderId { get; set; }
-        public IOrderItemViewModel Order { get; set; }
-        public IRestaurantItem Drink { get; set; }
+        public OrderDrinksViewModel Order { get; set; }
+        public DrinkViewModel Drink { get; set; }
         public string DrinkId { get; set; }
         public int Quantity { get; set; }
         public decimal SubTotal { get; set; }

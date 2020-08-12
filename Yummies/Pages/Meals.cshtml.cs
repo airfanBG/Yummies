@@ -15,7 +15,7 @@ namespace Yummies.Pages
     {
         private MealService MealService { get; }
         [BindProperty]
-        public ICollection<MealViewModel> MealViewModels { get; set; }
+        public List<MealViewModel> MealViewModels { get; set; }
         public MealsModel(MealService mealService)
         {
             MealService = mealService;

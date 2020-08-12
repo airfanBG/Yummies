@@ -18,7 +18,7 @@ namespace Yummies.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IndexService _indexService;
         [BindProperty]
-        public List<IMealViewModel> TopOrdered { get; set; }
+        public List<MealViewModel> TopOrdered { get; set; }
         public IndexModel(ILogger<IndexModel> logger, IndexService service)
         {
             _logger = logger;
