@@ -1,0 +1,22 @@
+﻿@page
+@model Yummies.Areas.Admin.Pages.MealsAdministrationModel
+@{
+    ViewData["Title"] = "Meals Administration";
+    Layout = @"~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row" style="font-size:20px;">
+            <div class="col-md-3">
+                <a asp-page="Add"><span class="fa fa-plus"></span>Add new product</a>
+            </div>
+            <div class="col-md-3">
+                <a href="#"><span class="fa fa-edit"></span>Edit product</a>
+            </div>
+            <div class="col-md-3">
+                <a href="#"><span class="fa fa-remove"></span>Delete product</a>
+            </div>
+        </div>
+    </div>
+</div>
