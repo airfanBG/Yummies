@@ -16,7 +16,7 @@ namespace Yummies.Areas.Admin.Pages
     public class IndexModel : PageModel
     {
         private AdminService adminService;
-        private PaginationService<SoldProductsViewModel,PaginateViewModel> PaginationService;
+        private PaginationService<SoldProductsViewModel> PaginationService;
 
         [BindProperty]
         public int TotalNewUsers { get; set; }
@@ -39,7 +39,7 @@ namespace Yummies.Areas.Admin.Pages
 
 
 
-        public IndexModel(AdminService service, PaginationService<SoldProductsViewModel,PaginateViewModel> paginationService)
+        public IndexModel(AdminService service, PaginationService<SoldProductsViewModel> paginationService)
         {
             adminService = service;
             PaginationService = paginationService;
@@ -53,22 +53,31 @@ namespace Yummies.Areas.Admin.Pages
             TotalMonthIncomes = await adminService.GetByMonthIncomes();
 
             SelectList = new SelectList(TotalMonthIncomes.Select(x => new {Id=x.MonthModel.MonthId,Name=x.MonthModel.Month }),"Id","Name");
-            //SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(DateTime.UtcNow.Date.ToString()), 1, PageSize);
+            SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(DateTime.UtcNow.Date.ToString()), 1, PageSize);
+            Count = PaginationService.TotalSalesCount;
             return Page();
         }
-        public async Task<IActionResult> OnGetDailySales(string date, int page=1)
+        public async Task<IActionResult> OnGetDailySales(string date, int selectedPage=1)
         {
+            
             if (date==null)
             {
                 return Page();
             }
             if (date!=null)
             {
-                SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), page, PageSize);
-            }           
+                SoldProducts = PaginationService.GetPaginatedResult(await adminService.GetByDateIncomes(date), selectedPage , PageSize);
+                Count = PaginationService.TotalSalesCount;
+            }
+           
 
-            return Partial("_SalesByDate",SoldProducts);
+            return Partial("_SalesByDate",new PaginationData() { Count=TotalPages,Products=SoldProducts});
         }
 
+    }
+    public class PaginationData
+    {
+        public List<PaginateViewModel> Products { get; set; }
+        public int Count { get; set; }
     }
 }

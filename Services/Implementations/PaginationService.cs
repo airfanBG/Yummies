@@ -8,42 +8,40 @@ using System.Threading.Tasks;
 
 namespace Services.Implementations
 {
-    public class PaginationService<T,Tout>:IPaginationService<T, Tout> where T:IInfrastructureViewModels  where Tout: ICombinedRestaurantStatistics
+    public class PaginationService<T>:IPaginationService<T> where T:IInfrastructureViewModels 
     {
-        public List<Tout> GetPaginatedResult(List<T> data,int currentPage, int pageSize = 10)
+        public int TotalSalesCount { get;private set; }
+        public List<PaginateViewModel> GetPaginatedResult(List<T> data,int currentPage, int pageSize = 10)
         {
-            var rr = data.SelectMany(x => x.OrderMealsViews, (a, b) => new
+            var res = data.SelectMany(x => x.OrderMealsViews, (a, b) => new 
             {
+
                 SoldProducts = a.OrderMealsViews.Select(z => new PaginateViewModel()
                 {
                     CreatedAt = z.CreatedAt,
                     Id = z.Id,
                     Quantity = z.Quantity,
-                    SubTotal = z.SubTotal
+                    SubTotal = z.SubTotal,
+                    Name=z.Meal.Name
                 }).Union(a.OrderDrinksViewModels.Select(z => new PaginateViewModel()
                 {
                     CreatedAt = z.CreatedAt,
                     Id = z.Id,
                     Quantity = z.Quantity,
-                    SubTotal = z.SubTotal
+                    SubTotal = z.SubTotal,
+                    Name=z.Drink.Name
                 })),
-                //SoldDrinks = a.OrderDrinksViewModels.Select(z => new PaginateViewModel()
-                //{
-                //    CreatedAt = z.CreatedAt,
-                //    Id = z.Id,
-                //    Quantity = z.Quantity,
-                //    SubTotal = z.SubTotal
-                //})
-            }).FirstOrDefault();
-            var t = data.Select(x => x.OrderDrinksViewModels.Select(z => new PaginateViewModel() { })).FirstOrDefault();
-            var res = data.SelectMany(x => x.OrderDrinksViewModels, (a, b) => new PaginateViewModel()
-            {
-         
-                //  CreatedAt=a.OrderDrinksViewModels.
-            });
-            return null;
-            //return data.OrderBy(d => d.Id).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-        }
 
+            }).FirstOrDefault();
+            if (res!=null)
+            {
+                TotalSalesCount = res.SoldProducts.Count();
+
+                return res.SoldProducts.OrderBy(d => d.Id).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            }
+            return new List<PaginateViewModel>();
+           
+        }
+       
     }
 }

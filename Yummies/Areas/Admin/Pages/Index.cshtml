@@ -124,17 +124,7 @@
             </div>
 
         </div>
-        <div>
-            <ul class="pagination">
-
-                @for (var i = 1; i <= TotalPages; i++)
-                {
-                    <li class="page-item">
-                        <a href="#" id="pageNumber" class="page-link" data-id="@i">@i</a>
-                    </li>
-                }
-            </ul>
-        </div>
+       
         <!-- /.row -->
         <!-- row -->
         <div class="row">
@@ -235,12 +225,13 @@
         $(document).on("click", "#pageNumber", function (e) {
             e.preventDefault();
             var date = $("#datepicker").val();
-            var pageNumber = $(this).attr("id");
+            var page = $(this).attr("data-id");
 
             $.ajax({
                 method: "GET",
                 url: "/Admin/Index?handler=DailySales",
-                data: { date: date, page: pageNumber },
+
+                data: jQuery.param({ date: date, selectedPage: page }),
                 success: function (data) {
                     $("#dateSales").html(data);
                 }

@@ -1,5 +1,5 @@
-﻿@model List<SoldProductsViewModel>
-
+﻿@*@model List<PaginateViewModel>*@
+@model Yummies.Areas.Admin.Pages.PaginationData
 
 <table class="table ">
     <thead>
@@ -11,34 +11,32 @@
         </tr>
     </thead>
     <tbody>
-
-        @foreach (SoldProductsViewModel sales in Model)
+     
+        @foreach (PaginateViewModel sales in Model.Products)
         {
-           
-                @foreach (OrderMealsViewModel orderMeals in sales.OrderMealsViews)
-                {
-                    <tr>
-                        <td class="txt-oflo">@orderMeals.Meal.Name</td>
-                        <td>@orderMeals.Quantity</td>
-                        <td class="txt-oflo">@orderMeals.CreatedAt</td>
-                        <td><span class="text-success">@orderMeals.SubTotal</span></td>
-                    </tr>
-                }
-           
-                @foreach (OrderDrinksViewModel orderDrinks in sales.OrderDrinksViewModels)
-                {
-                    <tr>
-                        <td class="txt-oflo">@orderDrinks.Drink.Name</td>
-                        <td>@orderDrinks.Quantity</td>
-                        <td class="txt-oflo">@orderDrinks.CreatedAt</td>
-                        <td><span class="text-success">@orderDrinks.SubTotal</span></td>
-                    </tr>
-                }
-            
+
+            <tr>
+                <td class="txt-oflo">@sales.Name</td>
+                <td>@sales.Quantity</td>
+                <td class="txt-oflo">@sales.CreatedAt</td>
+                <td><span class="text-success">@sales.SubTotal</span></td>
+            </tr>
+
+
 
         }
 
     </tbody>
 </table>
+<div>
+    <ul class="pagination">
 
+        @for (var i = 1; i <= Model.Count; i++)
+        {
+            <li class="page-item">
+                <a href="#" id="pageNumber" class="page-link" data-id="@i">@i</a>
+            </li>
+        }
+    </ul>
+</div>
 

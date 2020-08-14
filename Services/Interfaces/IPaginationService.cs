@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IPaginationService<T,Tout> where T: IInfrastructureViewModels where Tout: ICombinedRestaurantStatistics
+    public interface IPaginationService<T> where T: IInfrastructureViewModels
     {
-        List<Tout> GetPaginatedResult(List<T> data,int currentPage, int pageSize = 10);
+        List<PaginateViewModel> GetPaginatedResult(List<T> data,int currentPage, int pageSize = 10);
        
     }
 }
