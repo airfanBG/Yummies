@@ -3,33 +3,50 @@
 @{
     Layout = @"~/Areas/Admin/Pages/Shared/_Layout.cshtml";
 }
-    <div id="page-wrapper">
-        <div class="container-fluid">
-            <div class="col-md-4">
-             
-                <form class="text-center border border-light p-5" action="#!">
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-4">
 
-                    <p class="h4 mb-4">Add product</p>
+            <form class="text-center border border-light p-5" method="post" enctype="multipart/form-data">
 
-                    <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Product name">
+                <p class="h4 mb-4">Add product</p>
 
-                    <input type="text" id="defaultContactFormEmail" class="form-control mb-4" placeholder="Category">
+                <input type="text" id="defaultContactFormName" class="form-control mb-4" asp-for="Name" placeholder="Product name">
 
-                    <label>Product type</label>
-                    <select class="btn btn-secondary dropdown-toggle">
-                        <option class="dropdown-menu" value="" disabled>Choose option</option>
-                        <option class="dropdown-item" value="1" selected>Meal</option>
-                        <option class="dropdown-item" value="2">Drink</option>
 
-                    </select>
-                   
-                    <div class="form-group">
-                        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Description"></textarea>
-                    </div>
+                <label>Product type</label>
+                <select id="productTypes" asp-for="Type" asp-items="Model.Types">
+                    <option value="">Choose a type</option>
+                </select>
 
-                    <div><button class="btn btn-info btn-block" type="submit">Add</button></div>
+                <div class="row" id="categories"></div>
 
-                </form>
-            </div>
+                <input type="file" asp-for="Images" multiple />
+                <input type="text" asp-for="Price" min="0" value="0" />
+                <div class="form-group">
+                    <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" asp-for="Description"></textarea>
+                </div>
+
+                <div><button class="btn btn-info btn-block" type="submit">Add</button></div>
+
+            </form>
         </div>
     </div>
+</div>
+@section Scripts{
+    <script>
+        $("#productTypes").change(function () {
+           
+            $.ajax({
+                method: "get",
+                contentType: "text",
+                data: {type: $("#productTypes").val() },
+                url: "/Admin/Add?handler=ProductType",
+                success: function (data) {
+                    $("#categories").empty();
+                    $("#categories").html(data);
+                }
+            });
+        });
+    </script>
+}

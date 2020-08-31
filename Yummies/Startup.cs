@@ -75,8 +75,11 @@ namespace Yummies
             services.AddScoped<PaginationService<SoldProductsViewModel>>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddScoped<AdminService>();
+            services.AddScoped<FilesManager>();
+            
             //email services
             services.AddTransient<IEmailSender, EmailSender>();
+            
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             //common
